@@ -9,6 +9,6 @@ class UsuarioController extends Controller
 {
     
     public function loginView(Request $request) {
-        return view('usuarios.login');
+        return view('usuarios.login', ['uno' => 1]);
     }
 }
