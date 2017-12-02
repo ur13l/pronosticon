@@ -1,0 +1,22 @@
+extend /layouts/app
+
+block title
+    title Administrador
+
+block content
+    
+    div.container
+        br
+        br
+        div.value-props.row
+            
+            div.four.columns.value-prop
+                img.center.value-img(src=(url('/img/user.png')) height="200")
+                br
+                button.ten.columns.offset-by-one(href="/") Usuarios
+            div.four.columns.value-prop
+                img.value-img(src=(url('/img/user.png')))
+                | Quinielas
+            div.four.columns.value-prop
+                img.value-img(src=(url('/img/user.png')))
+                | Ligas

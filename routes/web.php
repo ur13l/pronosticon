@@ -11,6 +11,9 @@
 |
 */
 
+Route::middleware('auth.codigo')->get('/', 'UsuarioController@index');
+
 Route::group(['prefix' => 'usuario'], function() {
-    Route::get('/login', 'UsuarioController@loginView');
+    Route::middleware('guest')->get('/login', 'UsuarioController@login');
+    Route::post('/signin', 'UsuarioController@signIn');
 });

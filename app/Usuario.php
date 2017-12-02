@@ -25,7 +25,7 @@ class Usuario extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'email', 'codigo', 'created_at', 'updated_at'];
+    protected $fillable = ['nombre', 'email', 'codigo', 'admin', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

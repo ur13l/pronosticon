@@ -6,17 +6,24 @@ block title
 block content
     
     div.container
-        div.row
-            img.four.columns.offset-by-four(src=(url('/img/logo.png')))
-        div.row
-            h1.six.columns.offset-by-three.center Pronosticón
-        div.row
-            h6.six.columns.offset-by-three.center Introduzca su código de acceso
-        div.row
-            input.six.columns.offset-by-three(type="text" )
         br
-        div.row
-            button.six.columns.offset-by-three.primary-color-background#btn-ingresar Ingresar
+        br
+        form(action=(url('/usuario/signin')) method="post")
+            input(type="hidden" name="_token" value=csrf_token())
+            div.row
+                img.four.columns.offset-by-four(src=(url('/img/logo.png')))
+            div.row
+                h1.six.columns.offset-by-three.center Pronosticón
+            div.row
+                h6.six.columns.offset-by-three.center Introduzca su código de acceso
+            div.row
+                input.six.columns.offset-by-three(type="text" name="codigo" value=old('codigo'))
+            br
+            div.row
+                input.six.columns.offset-by-three.primary-color-background(type="submit" value="Ingresar")
+            br
+            each error in errors.all()
+                p.error.center =error
 
 
 
