@@ -22,4 +22,7 @@ Route::group(['prefix' => 'login'], function() {
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], function() {
     Route::get('/', 'UsuarioController@index');
     Route::get('/buscar', 'UsuarioController@buscar');
+    Route::get('/nuevo', 'UsuarioController@nuevo');
+    Route::get('/editar/{id}', 'UsuarioController@editar');
+    Route::post('/createorupdate', 'UsuarioController@createOrUpdate');
 });

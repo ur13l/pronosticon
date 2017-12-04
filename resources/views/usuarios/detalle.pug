@@ -1,0 +1,10 @@
+extends /layouts/app
+
+block title
+    if usuario != null
+       title= usuario.nombre
+    else
+        title Nuevo usuario
+
+block content
+    input.big-input(type="text")

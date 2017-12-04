@@ -30,5 +30,24 @@ class UsuarioController extends Controller
         $usuarios = Usuario::where('nombre', 'like', "%$q%")->paginate(9);      
         return View::make('usuarios.lista', ['usuarios' => $usuarios])->render();      
       }
+
+    /**
+     * Método que devuelve la vista para crear un nuevo usuario.
+     */
+    public function nuevo(Request $request) {
+        return view('usuarios.detalle', ['usuario' => null]);
+    }
+
+    public function editar($id) {
+        $usuario = Usuario::find($id);
+        return view('usuarios.detalle', ['usuario' => $usuario]);
+    }
+
+    /**
+     * Método para crear o actualizar a un usuario.
+     */
+    public function createOrUpdate(Request $request) {
+
+    }
    
 }
