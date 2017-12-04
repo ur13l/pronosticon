@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Usuario;
 
-class Auth
+class AuthAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,10 @@ class Auth
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->session()->get('codigo','');
-        if (!$user) {
-            return redirect('/login?redirectTo='.\Request::route()->getName());
+        $code = $request->session()->get('codigo','');
+        $user = Usuario::where('codigo', $code)->first();
+        if (!$code || !$user->admin) {
+            return redirect('/');
         }
 
         return $next($request);

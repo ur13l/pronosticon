@@ -11,9 +11,15 @@
 |
 */
 
-Route::middleware('auth.codigo')->get('/', 'UsuarioController@index');
+Route::middleware('auth.codigo')->get('/', 'HomeController@index')->name('index');
 
-Route::group(['prefix' => 'usuario'], function() {
-    Route::middleware('guest')->get('/login', 'UsuarioController@login');
-    Route::post('/signin', 'UsuarioController@signIn');
+Route::group(['prefix' => 'login'], function() {
+    Route::middleware('guest')->get('/', 'LoginController@login')->name('login');
+    Route::post('/signin', 'LoginController@signIn');
+    Route::get('/logout', 'LoginController@logout');
+});
+
+Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], function() {
+    Route::get('/', 'UsuarioController@index');
+    Route::get('/buscar', 'UsuarioController@buscar');
 });

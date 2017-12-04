@@ -3,51 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use App\Usuario;
 
 class UsuarioController extends Controller
 {
-    
     /**
-     * Método que devuelve la vista de login
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function login(Request $request) {
-        return view('usuarios.login');
-    }
-
-    /**
-     * Devuelve el index, ya sea vista de jugador o administrador.
+     * Muestra el dashboard de usuarios para el administrador
      *
      * @param Request $request
      * @return void
      */
     public function index(Request $request) {
-        $codigo = $request->session()->get('codigo', '');
-        $usuario = Usuario::where('codigo', $codigo)->first();
-        if($usuario->admin) {
-            return view('usuarios.home.admin');
-        }
-        return view('usuarios.home.jugador');
+        $usuarios = Usuario::paginate(9);
+        return view('usuarios.index', ['usuarios' => $usuarios]);
     }
 
     /**
-     * Método post que procesa el logueo.
+     * Método llamado por AJAX para devolver la lista de usuarios
      *
      * @param Request $request
      * @return void
      */
-    public function signIn(Request $request) {
-        $codigo = $request->codigo;
-        $usuario = Usuario::where('codigo', $codigo)->first();
-        if($usuario) {
-            $request->session()->put('codigo', $codigo);
-            return redirect('/');
-        }
-        $request->flash();
-        $errors = ['El código de usuario no es válido.'];
-        return back()->withInput()->withErrors($errors);
-    }
+    public function buscar(Request $request){
+        $q = $request->q;
+        $usuarios = Usuario::where('nombre', 'like', "%$q%")->paginate(9);      
+        return View::make('usuarios.lista', ['usuarios' => $usuarios])->render();      
+      }
+   
 }

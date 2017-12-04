@@ -1,0 +1,10 @@
+if usuarios[(3*i) + j]
+    div.frame.grey-color-background.four.columns(onclick="location.href='"+ url('/usuarios/editar/') + "/" +usuarios[(3*1) + j].id + "'")
+        div.row.one-line
+            span #{usuarios[(3*i) + j].codigo}
+            h5 #{usuarios[(3*i) + j].nombre} 
+            span #{usuarios[(3*i) + j].email}
+            br
+            span 
+                each quiniela in usuario.quinielas
+                    Quiniela1, Quiniela2, Quiniela3

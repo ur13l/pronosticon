@@ -8,8 +8,9 @@ block content
     div.container
         br
         br
-        form(action=(url('/usuario/signin')) method="post")
+        form(action=(url('/login/signin')) method="post")
             input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" name="redirectTo" value=redirectTo)
             div.row
                 img.four.columns.offset-by-four(src=(url('/img/logo.png')))
             div.row
