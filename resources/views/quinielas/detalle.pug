@@ -17,20 +17,48 @@ block content
             input(type="hidden" id="id" name="id" value= quiniela.id)
             div.row
                 div.six.columns.offset-by-three
-                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (quiniela.nombre? quiniela.nombre : old('nombre')))
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value=(quiniela.nombre? quiniela.nombre : old('nombre')))
             br
             br
             div.row
                 div.six.columns.offset-by-three
                     each error in errors.all()
                     span.error #{error}
-                    label(for="descripcion") descripcion:
-                    input.twelve.columns.center(type="text" name="descripcion" id="descripcion" value= (quiniela.descripcion? quiniela.descripcion : old('descripcion')))
+                    label(for="descripcion") Descripción:
+                    textarea.twelve.columns.center(name="descripcion" id="descripcion")
+                        = (quiniela.descripcion? quiniela.descripcion : old('descripcion'))
+            if !quiniela
+                br
+                div.row
+                    div.six.columns.offset-by-three
+                        label(for="id_liga") Liga:
+                        select.twelve.columns.center(name="id_liga" id="id_liga")
+                            each liga in ligas
+                                option(value=liga.id) #{liga.nombre}
+                br
+                div.row
+                    div.six.columns.offset-by-three
+                        label(for="id_tipo_quiniela") Tipo de quiniela:
+                        select.twelve.columns.center(name="id_tipo_quiniela" id="id_tipo_quiniela")
+                            each tipo in tipo_quiniela
+                                option(value=tipo.id) #{tipo.nombre}
+                br
+                div.row
+                    div.six.columns.offset-by-three
+                        input(type="checkbox" name="permitir_marcador") 
+                        span  Permitir marcador
+                        
             br
             div.row
                 div.six.columns.offset-by-three
-                    label(for="cantidad_reponches") Código:
-                    input.twelve.columns.center(type="text" name="cantidad_reponches" maxlength="9" id="cantidad_reponches" value= (quiniela.cantidad_reponches? quiniela.cantidad_reponches : old('cantidad_reponches')))
+                    label(for="cantidad_reponches") Número de reponches:
+                    input.twelve.columns.center(type="number" name="cantidad_reponches" maxlength="3" id="cantidad_reponches" value= (quiniela.cantidad_reponches? quiniela.cantidad_reponches : old('cantidad_reponches')))
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="bolsa") Bolsa:
+                    input.twelve.columns.center(type="number" name="bolsa" maxlength="7" id="bolsa" value= (quiniela.bolsa? quiniela.bolsa.cantidad : old('bolsa.cantidad')))
+ 
 
             br
             div.row

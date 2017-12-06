@@ -17,7 +17,8 @@ label {
 }
 
 input[type="text"],  input[type="text"]:focus, input[type="search"],  input[type="search"]:focus,
-input[type="email"],  input[type="email"]:focus {
+input[type="email"],  input[type="email"]:focus, textarea,  textarea:focus,
+input[type="number"],  input[type="number"]:focus, input[type="file"],  input[type="file"]:focus {
     border: 0;
     border-bottom: 1px solid #47525E;
     border-radius: 0;

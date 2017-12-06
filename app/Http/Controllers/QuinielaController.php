@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\View;
 use App\Quiniela;
+use App\TipoQuiniela;
+use App\Liga;
 
 class QuinielaController extends Controller
 {
@@ -36,10 +38,14 @@ class QuinielaController extends Controller
     * Método que devuelve la vista para crear un nuevo quiniela.
     */
    public function nuevo(Request $request) {
-       $random = str_random(9);
-       return view('quinielas.detalle', ['quiniela' => null, 'random' => $random]);
+       $ligas = Liga::all();
+       $tipo_quiniela = TipoQuiniela::all();
+       return view('quinielas.detalle', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela]);
    }
 
+   /**
+    * Manda la vista para editar una quiniela.  
+    */
    public function editar($id) {
        $quiniela = Quiniela::find($id);
        return view('quinielas.detalle', ['quiniela' => $quiniela]);
@@ -48,31 +54,30 @@ class QuinielaController extends Controller
    /**
     * Método para crear o actualizar a un quiniela.
     */
-   public function createOrUpdate(Request $request) {
-       $quiniela = Quiniela::find($request->id);
-       if($quiniela) {
-           $rules = [
-               "nombre" => "required",
-               "email" => "required|email",
-               "codigo" => "required"
-           ];
-           $request->validate($rules);
-       }
-       else {
-           $rules = [
-               "nombre" => "required",
-               "email" => "required|unique:usuario",
-               "codigo" => "required|unique:usuario"
-           ];
-           $request->validate($rules);
-           $quiniela = new Quiniela();
-       }
+   public function create(Request $request) {
+       
+        $rules = [
+            "nombre" => "required|unique:quiniela",
+            "id_liga" => "required",
+            "id_tipo_quiniela" => "required",
+            "permitir_marcador" => "required",
+            "bolsa" => "required"
+        ];
+        $request->validate($rules);
+        $quiniela = new Quiniela();
+       
        
        $quiniela->nombre = $request->nombre;
-       $quiniela->email = $request->email;
-       $quiniela->codigo = $request->codigo;
-
+       $quiniela->id_liga = $request->id_liga;
+       $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
+       $quiniela->permitir_marcador = $request->permitir_marcador;
        $quiniela->save();
+
+       $bolsa = Bolsa::create([
+            'cantidad' => $request->bolsa,
+            'id_quiniela' => $quiniela->id
+        ]);
+
 
        return redirect()->route('quinielas.index');
    }
