@@ -1,0 +1,41 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/quinielas/detalle.js'))
+
+block title
+    if quiniela != null
+       title= quiniela.nombre
+    else
+        title Nueva quiniela
+
+block content
+    div.container
+        br
+        form(action=url('/quinielas/createorupdate') method="POST")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" id="id" name="id" value= quiniela.id)
+            div.row
+                div.six.columns.offset-by-three
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (quiniela.nombre? quiniela.nombre : old('nombre')))
+            br
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    each error in errors.all()
+                    span.error #{error}
+                    label(for="descripcion") descripcion:
+                    input.twelve.columns.center(type="text" name="descripcion" id="descripcion" value= (quiniela.descripcion? quiniela.descripcion : old('descripcion')))
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="cantidad_reponches") Código:
+                    input.twelve.columns.center(type="text" name="cantidad_reponches" maxlength="9" id="cantidad_reponches" value= (quiniela.cantidad_reponches? quiniela.cantidad_reponches : old('cantidad_reponches')))
+
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    button.primary-color-background.twelve.columns(type="submit") Guardar
+        
+        if quiniela
+            #include /quinielas/quinielas
