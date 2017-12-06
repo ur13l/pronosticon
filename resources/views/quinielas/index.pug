@@ -1,0 +1,25 @@
+extend /layouts/app
+
+block title
+    title Quinielas
+
+block scripts
+    script(src=url('/js/quinielas/index.js'))
+
+block content
+    
+    div.container
+        h1.center Quinielas
+        div.row
+            input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
+            button.three.columns.offset-by-five.primary-color-background(onclick="location.href='"+ url('/quinielas/nuevo') +"'") Nuevo usuario
+        div.lista 
+            if count(quinielas) == 0 
+                br
+                br
+                br
+                h4 No hay quinielas disponibles
+            include /quinielas/lista
+
+
+

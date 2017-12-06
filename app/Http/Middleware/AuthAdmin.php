@@ -18,7 +18,7 @@ class AuthAdmin
     {
         $code = $request->session()->get('codigo','');
         $user = Usuario::where('codigo', $code)->first();
-        if (!$code || !$user->admin) {
+        if (!$user || !$user->admin) {
             return redirect('/');
         }
 

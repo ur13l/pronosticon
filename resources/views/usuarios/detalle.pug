@@ -1,5 +1,8 @@
 extends /layouts/app
 
+block scripts
+    script(src= url('/js/usuarios/detalle.js'))
+
 block title
     if usuario != null
        title= usuario.nombre
@@ -7,4 +10,32 @@ block title
         title Nuevo usuario
 
 block content
-    input.big-input(type="text")
+    div.container
+        br
+        form(action=url('/usuarios/createorupdate') method="POST")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" id="id" name="id" value= usuario.id)
+            div.row
+                div.six.columns.offset-by-three
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (usuario.nombre? usuario.nombre : old('nombre')))
+            br
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    each error in errors.all()
+                    span.error #{error}
+                    label(for="email") Email:
+                    input.twelve.columns.center(type="email" name="email" id="email" placeholder="user@example.com" value= (usuario.email? usuario.email : old('email')))
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="codigo") Código:
+                    input.twelve.columns.center(type="text" name="codigo" maxlength="9" id="codigo" value= (usuario.codigo? usuario.codigo : random))
+
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    button.primary-color-background.twelve.columns(type="submit") Guardar
+        
+        if usuario
+            include /usuarios/quinielas

@@ -35,7 +35,8 @@ class UsuarioController extends Controller
      * Método que devuelve la vista para crear un nuevo usuario.
      */
     public function nuevo(Request $request) {
-        return view('usuarios.detalle', ['usuario' => null]);
+        $random = str_random(9);
+        return view('usuarios.detalle', ['usuario' => null, 'random' => $random]);
     }
 
     public function editar($id) {
@@ -47,7 +48,32 @@ class UsuarioController extends Controller
      * Método para crear o actualizar a un usuario.
      */
     public function createOrUpdate(Request $request) {
+        $usuario = Usuario::find($request->id);
+        if($usuario) {
+            $rules = [
+                "nombre" => "required",
+                "email" => "required|email",
+                "codigo" => "required"
+            ];
+            $request->validate($rules);
+        }
+        else {
+            $rules = [
+                "nombre" => "required",
+                "email" => "required|unique:usuario",
+                "codigo" => "required|unique:usuario"
+            ];
+            $request->validate($rules);
+            $usuario = new Usuario();
+        }
+        
+        $usuario->nombre = $request->nombre;
+        $usuario->email = $request->email;
+        $usuario->codigo = $request->codigo;
 
+        $usuario->save();
+
+        return redirect()->route('usuarios.index');
     }
    
 }

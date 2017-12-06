@@ -7,7 +7,9 @@ html
         link(href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet")
         block styles
         script(src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js")
+        script(src=(url('/js/utils/jquery.validate.strings.js')))
         block scripts
     body
-        input(type="hidden" id="_url" val=url('/'))
+        input(type="hidden" id="_url" value=url('/'))
         block content

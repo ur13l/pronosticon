@@ -20,9 +20,17 @@ Route::group(['prefix' => 'login'], function() {
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], function() {
-    Route::get('/', 'UsuarioController@index');
+    Route::get('/', 'UsuarioController@index')->name('usuarios.index');
     Route::get('/buscar', 'UsuarioController@buscar');
     Route::get('/nuevo', 'UsuarioController@nuevo');
     Route::get('/editar/{id}', 'UsuarioController@editar');
     Route::post('/createorupdate', 'UsuarioController@createOrUpdate');
+});
+
+Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], function() {
+    Route::get('/', 'QuinielaController@index')->name('quinielas.index');
+    Route::get('/buscar', 'QuinielaController@buscar');
+    Route::get('/nuevo', 'QuinielaController@nuevo');
+    Route::get('/editar/{id}', 'QuinielaController@editar');
+    Route::post('/createorupdate', 'QuinielaController@createOrUpdate');
 });

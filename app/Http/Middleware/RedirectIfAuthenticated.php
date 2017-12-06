@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Usuario;
 
 class RedirectIfAuthenticated
 {
@@ -17,7 +18,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $user = $request->session()->get('codigo','');
+        $code = $request->session()->get('codigo','');
+        $user = Usuario::where('codigo', $code)->first();
         if ($user) {
             return redirect('/');
         }
