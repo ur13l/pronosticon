@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Support\Facades\View;
 use App\Quiniela;
 use App\TipoQuiniela;
+use App\Bolsa;
 use App\Liga;
 
 class QuinielaController extends Controller
@@ -40,15 +41,15 @@ class QuinielaController extends Controller
    public function nuevo(Request $request) {
        $ligas = Liga::all();
        $tipo_quiniela = TipoQuiniela::all();
-       return view('quinielas.detalle', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela]);
+       return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela]);
    }
 
-   /**
-    * Manda la vista para editar una quiniela.  
+  /**
+    * Devuelve la vista de editar una quiniela.
     */
-   public function editar($id) {
-       $quiniela = Quiniela::find($id);
-       return view('quinielas.detalle', ['quiniela' => $quiniela]);
+    public function editar($id) {   
+        $quiniela = Quiniela::find($id);
+        return view('quinielas.editar', ['quiniela' => $quiniela]);
    }
 
    /**
@@ -60,17 +61,19 @@ class QuinielaController extends Controller
             "nombre" => "required|unique:quiniela",
             "id_liga" => "required",
             "id_tipo_quiniela" => "required",
-            "permitir_marcador" => "required",
             "bolsa" => "required"
         ];
         $request->validate($rules);
         $quiniela = new Quiniela();
        
-       
+       $imagen = $request->file("imagen")->store('quinielas');
        $quiniela->nombre = $request->nombre;
+       $quiniela->descripcion = $request->descripcion;
        $quiniela->id_liga = $request->id_liga;
+       $quiniela->imagen = $request->imagen;
        $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
-       $quiniela->permitir_marcador = $request->permitir_marcador;
+       $quiniela->permitir_marcador = $request->permitir_marcador ? true : false;
+       $quiniela->cantidad_reponches = $request->cantidad_reponches;
        $quiniela->save();
 
        $bolsa = Bolsa::create([
@@ -81,4 +84,6 @@ class QuinielaController extends Controller
 
        return redirect()->route('quinielas.index');
    }
+
+ 
 }

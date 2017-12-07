@@ -32,5 +32,6 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], fun
     Route::get('/buscar', 'QuinielaController@buscar');
     Route::get('/nuevo', 'QuinielaController@nuevo');
     Route::get('/editar/{id}', 'QuinielaController@editar');
-    Route::post('/createorupdate', 'QuinielaController@createOrUpdate');
+    Route::post('/create', 'QuinielaController@create');
+    Route::post('/update/{id}', 'QuinielaController@update');
 });

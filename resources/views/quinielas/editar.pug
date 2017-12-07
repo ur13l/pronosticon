@@ -1,0 +1,21 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/quinielas/editar.js'))
+
+block title
+    title= quiniela.nombre
+    
+block content
+    div.banner.row
+        img.banner_img(src=quiniela.imagen)
+        div.banner_mask
+        h1.banner_title.white-color-text.center= quiniela.nombre
+    div.container
+    br
+    div.row
+        div.four.columns.center 
+        div.four.columns.center 
+        div.four.columns.center 
+        
+        
