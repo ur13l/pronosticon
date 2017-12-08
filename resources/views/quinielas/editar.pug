@@ -14,8 +14,28 @@ block content
     div.container
     br
     div.row
+        div.four.columns.offset-by-eight
+            button.primary-color-background Ver liga
+        div.four.columns.offset-by-four
+            button.primary-color-background Agregar Usuario
+    br
+    div.row
         div.four.columns.center 
+            h4 Participantes
+            table.ten.columns.offset-by-one
+                thead
+                    tr
+                        th Nombre
+                        th Pts.
+                tbody
+                    each participacion in quiniela.participacions
+                        tr
+                            td participacion.usuario.nombre
+                            td participacion.puntuacion
         div.four.columns.center 
+            h4 Próxima jornada
         div.four.columns.center 
-        
+            h4 Bolsa
+            span $
+            input.center(type="text" value=quiniela.bolsas.first().cantidad)
         
