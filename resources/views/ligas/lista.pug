@@ -1,0 +1,8 @@
+br
+div.row
+    each i in [0, 1, 2]
+        br
+        div.row
+            each j in [0, 1, 2]
+                include /ligas/item
+div!= ligas.links()

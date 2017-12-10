@@ -1,0 +1,71 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/equipos/detalle.js'))
+
+block title
+    if equipo != null
+       title= equipo.nombre
+    else
+        title Nuevo equipo
+
+block content
+    br
+    if equipo
+        div#dialog_eliminar(title="¿Eliminar?")
+            p ¿Estás seguro que deseas eliminar al equipo #{equipo.nombre}?
+
+ 
+        div.row
+            a.two.columns.offset-by-ten.center.error#eliminar_equipo(data-id=equipo.id) Eliminar
+            form(action=url('/equipos/eliminar') id="form_eliminar" method="post")
+                input(type="hidden" name="_token" value=csrf_token())
+                input(type="hidden" name="id" value=equipo.id)
+    div.container
+        br
+        form(action=url('/equipos/createorupdate') method="POST" id="form_detalle" enctype="multipart/form-data")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" id="id" name="id" value= equipo.id)
+            if equipo
+            br
+            div.row.center
+                if equipo
+                    img(src=url('storage/'+equipo.imagen) id="img_container" style="max-height:200px")
+                else
+                    img(id="img_container" style="max-height:200px")
+                
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value=(equipo.nombre? equipo.nombre : old('nombre')))
+            br
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="imagen") Imagen:
+                    input.twelve.columns.center(type="file" name="imagen" id="imagen" placeholder="imagen" value=(old('imagen')))
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    each error in errors.all()
+                    span.error #{error}
+                    label(for="descripcion") Liga:
+                    input.twelve.columns(type="text" readonly value=liga.nombre)
+                    input(type="hidden" name="id_liga" id="id_liga" value= liga.id)
+            br
+            
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="siglas") Siglas:
+                    input.twelve.columns.center(type="text" name="siglas" maxlength="4" id="siglas" value= (equipo.siglas? equipo.siglas : old('siglas')))
+
+            br
+            div.row
+                div.six.columns.offset-by-three.center
+                    if !equipo
+                        button.primary-color-background.twelve.columns(type="submit") Guardar y agregar otro
+                    else 
+                        button.primary-color-background.twelve.columns(type="submit") Guardar
+                    div.small-space
+                    a.center(href=url('/ligas/editar/' + liga.id)) Regresar a liga
+        

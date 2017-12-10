@@ -7,35 +7,96 @@ block title
     title= quiniela.nombre
     
 block content
+    input(type="hidden" id="_id_quiniela" name="_id_quiniela" value=quiniela.id)
     div.banner.row
         img.banner_img(src=quiniela.imagen)
         div.banner_mask
         h1.banner_title.white-color-text.center= quiniela.nombre
     div.container
-    br
-    div.row
-        div.four.columns.offset-by-eight
-            button.primary-color-background Ver liga
-        div.four.columns.offset-by-four
-            button.primary-color-background Agregar Usuario
-    br
-    div.row
-        div.four.columns.center 
-            h4 Participantes
-            table.ten.columns.offset-by-one
-                thead
-                    tr
-                        th Nombre
-                        th Pts.
-                tbody
-                    each participacion in quiniela.participacions
-                        tr
-                            td participacion.usuario.nombre
-                            td participacion.puntuacion
-        div.four.columns.center 
-            h4 Próxima jornada
-        div.four.columns.center 
-            h4 Bolsa
-            span $
-            input.center(type="text" value=quiniela.bolsas.first().cantidad)
-        
+        br
+        div.row
+            div.four.columns.center 
+                h4 Participantes
+                if count(quiniela.participacions) == 0
+                    h6 No hay participantes registrados
+                else
+                    table.ten.columns.offset-by-one
+                        thead
+                            tr
+                                th Nombre
+                                th Pts.
+                        tbody
+                            
+                            each participacion in quiniela.participacions
+                                tr
+                                    td= participacion.usuario.nombre
+                                    td= participacion.puntuacion
+                h6 Agregar participante
+                form(action=url('/quinielas/agregarparticipante') method="post" id="form_agregar_participante")
+                    input(type="hidden" name="_token" value=csrf_token())
+                    div.ui-widget
+                        input.twelve.columns(type="text" placeholder="Introduzca el nombre " id="id_usuario_autocomplete" name="id_usuario_autocomplete")
+                        input(type="hidden" id="id_usuario" name="id_usuario")
+                        input(type="hidden" name="id_quiniela" value=quiniela.id)
+                div.space
+                
+            div.four.columns.center 
+                h4 Próxima jornada
+                if count(quiniela.liga.proximaJornada.partidos) == 0
+                    h6 No hay jornadas registradas
+                else
+                    table.ten.columns.offset-by-one
+                        thead
+                            tr
+                                th Local
+                                th 
+                                th Visita
+                        tbody
+                            each partido in quiniela.liga.proximaJornada.partidos
+                                tr
+                                    td
+                                        img(src=partido.equipoLocal.imagen height="80")
+                                    td vs
+                                    td
+                                         img(src=partido.equipoVisita.imagen height="80")
+                
+                h4 Última jornada
+                if count(quiniela.liga.ultimaJornada.partidos) == 0
+                    h6 No hay jornadas registradas
+                else
+                    table.ten.columns.offset-by-one
+                        thead
+                            tr
+                                th Local
+                                th 
+                                th Visita
+                        tbody
+                            each partido in quiniela.liga.ultimaJornada.partidos
+                                tr
+                                    td
+                                        img(src=partido.equipoLocal.imagen height="80")
+                                    if quiniela.liga.ultimaJornada.registrada
+                                        td 
+                                            #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
+                                    else
+                                        td vs
+                                    td
+                                         img(src=partido.equipoVisita.imagen height="80")
+                if quiniela.liga.ultimaJornada != null
+                    button.primary-color-background(onclick="location.href='"+ url('/jornadas/' + quiniela.liga.ultimaJornada.id) +"'")
+                        | Actualizar resultados
+                else
+                    button.primary-color-background(onclick="location.href='"+ url('/ligas') +"'")
+                        | Actualizar jornadas
+                div.space
+            div.four.columns.center 
+                form(action=url('/quinielas/actualizarbolsa') id="form_actualizar_bolsa" method="post")
+                    h4 Bolsa
+                    input(type="hidden" name="_token" value=csrf_token())
+                    input(type="hidden" name="id_quiniela" value=quiniela.id)
+                    input.twelve.columns.center(type="number" placeholder="$" id="cantidad" name="cantidad" value=quiniela.bolsas.first().cantidad)
+                    div.small-space
+                    button.twelve.columns.primary-color-background(type="submit")
+                            | Actualizar 
+                div.space
+            

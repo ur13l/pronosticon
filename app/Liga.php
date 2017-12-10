@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 /**
  * @property int $id
@@ -34,7 +35,7 @@ class Liga extends Model
      */
     public function equipos()
     {
-        return $this->hasMany('App\Equipo', 'id_liga');
+        return $this->hasMany('App\Equipo', 'id_liga')->orderBy('siglas');
     }
 
     /**
@@ -43,6 +44,20 @@ class Liga extends Model
     public function jornadas()
     {
         return $this->hasMany('App\Jornada', 'id_liga');
+    }
+
+    public function proximaJornada() 
+    {
+        return $this->hasOne('App\Jornada', 'id_liga')
+            ->where('fecha_inicio', '>', Carbon::now('America/Mexico_City'))
+            ->orderBy('fecha_inicio', 'asc');
+    }
+
+    public function ultimaJornada() 
+    {
+        return $this->hasOne('App\Jornada', 'id_liga')
+            ->where('fecha_fin', '<', Carbon::now('America/Mexico_City'))
+            ->orderBy('fecha_fin', 'asc');
     }
 
     /**

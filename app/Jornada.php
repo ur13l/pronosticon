@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $nombre
  * @property string $fecha_inicio
  * @property string $fecha_fin
+ * @property boolean $registrada
  * @property string $created_at
  * @property string $updated_at
  * @property Liga $liga
@@ -27,7 +28,7 @@ class Jornada extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_liga', 'nombre', 'fecha_inicio', 'fecha_fin', 'created_at', 'updated_at'];
+    protected $fillable = ['id_liga', 'nombre', 'fecha_inicio', 'fecha_fin', 'registrada', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

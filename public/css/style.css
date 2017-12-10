@@ -8,8 +8,8 @@ body, html, .full-height {
 }
 
 a {
-    color:#bfdbf7;
-    text-decoration: none;
+    color:#47525E;
+    text-decoration: underline;
 }
 
 label {
@@ -114,6 +114,9 @@ input.big-input {
     color: #F44A4A;
 }
 
+a.error {
+    cursor:pointer;
+}
 .menu-container {
     padding-top: 2rem;
 }
@@ -143,4 +146,20 @@ input.big-input {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.small-space {
+    height:50px;
+}
+
+.space {
+    height:100px;
+}
+
+.success-background {
+    background: #039050;
+}
+
+.warning-background {
+    background: #e0b030;
 }

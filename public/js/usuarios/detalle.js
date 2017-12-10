@@ -19,14 +19,6 @@ $(function() {
             }
             
         },
-        messages:{
-            titulo: "Este campo es obligatorio",
-            "fecha_inicio": "Este campo es obligatorio",
-            "fecha_cierre": "Este campo es obligatorio",
-            descripcion: "Este campo es obligatorio",
-            imagen: "Este campo es obligatorio",
-            documentos: "Este campo es obligatorio",
-        },
         errorElement : 'div',
         errorPlacement: function(error, element) {
             var placement = $(element).data('error');

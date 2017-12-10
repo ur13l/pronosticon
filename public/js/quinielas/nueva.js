@@ -1,3 +1,8 @@
+/**
+ * Archivo para la vista de generar una nueva quiniela.
+ * Autor: Uriel Infante
+ */
+
 $(function() {
 
     //Validación para hacer que la imagen aparezca.

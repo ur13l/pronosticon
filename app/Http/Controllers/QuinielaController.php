@@ -9,6 +9,7 @@ use App\Quiniela;
 use App\TipoQuiniela;
 use App\Bolsa;
 use App\Liga;
+use App\Participacion;
 
 class QuinielaController extends Controller
 {
@@ -16,7 +17,7 @@ class QuinielaController extends Controller
     * Muestra el dashboard de quinielas para el administrador
     *
     * @param Request $request
-    * @return void
+    * @return Response
     */
    public function index(Request $request) {
        $quinielas = Quiniela::paginate(9);
@@ -27,7 +28,7 @@ class QuinielaController extends Controller
     * Método llamado por AJAX para devolver la lista de quinielas
     *
     * @param Request $request
-    * @return void
+    * @return Response
     */
    public function buscar(Request $request){
        $q = $request->q;
@@ -37,6 +38,9 @@ class QuinielaController extends Controller
 
    /**
     * Método que devuelve la vista para crear un nuevo quiniela.
+    *
+    * @param Request $request
+    * @return Response
     */
    public function nuevo(Request $request) {
        $ligas = Liga::all();
@@ -46,6 +50,9 @@ class QuinielaController extends Controller
 
   /**
     * Devuelve la vista de editar una quiniela.
+    *
+    * @param Request $request
+    * @return Response
     */
     public function editar($id) {   
         $quiniela = Quiniela::find($id);
@@ -54,6 +61,9 @@ class QuinielaController extends Controller
 
    /**
     * Método para crear o actualizar a un quiniela.
+    *
+    * @param Request $request
+    * @return Response
     */
    public function create(Request $request) {
        
@@ -85,5 +95,58 @@ class QuinielaController extends Controller
        return redirect()->route('quinielas.index');
    }
 
+
+   /**
+    * Permite agregar un nuevo participante a la quiniela seleccionada.
+    *
+    * @param Request $request
+    * @return void
+    */
+   public function agregarParticipante(Request $request) {
+        $rules = [
+            "id_usuario" => "required",
+            "id_quiniela" => "required"
+        ];
+        $request->validate($rules);
+
+        $part = Participacion::where('id_usuario', $request->id_usuario)
+            ->where('id_usuario', $request->id_quiniela)->first();
+        
+        if(!$part) {
+            Participacion::create($request->all() + [
+                'puntuacion' => 0,
+                'activo' => true,
+                'no_reponches' => 0,
+            ]);
+        }
+        return back();
+   }
+
+
+   /**
+    * Método para actualizar la cantidad en la bolsa
+    *
+    * @param Request $request
+    * @return Response
+    */
+   public function actualizarBolsa(Request $request) {
+        $rules = [
+            "cantidad" => "required",
+            "id_quiniela" => "required"
+        ];
+        $request->validate($rules);
+
+        $bolsa = Bolsa::where('id_quiniela', $request->id_quiniela)->first();
+        if(!$bolsa) {
+            $bolsa = Bolsa::create([
+                "id_quiniela" => $request->id_quiniela,
+                "cantidad" => $request->cantidad
+            ]);
+        }
+        $bolsa->cantidad = $request->cantidad;
+        $bolsa->save();
+
+        return back();
+   }
  
 }

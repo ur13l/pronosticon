@@ -35,7 +35,7 @@ class Partido extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function equipo()
+    public function equipoLocal()
     {
         return $this->belongsTo('App\Equipo', 'id_equipo_local');
     }
@@ -43,7 +43,7 @@ class Partido extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function equipo()
+    public function equipoVisita()
     {
         return $this->belongsTo('App\Equipo', 'id_equipo_visita');
     }

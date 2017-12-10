@@ -12,7 +12,7 @@ class UsuarioController extends Controller
      * Muestra el dashboard de usuarios para el administrador
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function index(Request $request) {
         $usuarios = Usuario::paginate(9);
@@ -23,7 +23,7 @@ class UsuarioController extends Controller
      * Método llamado por AJAX para devolver la lista de usuarios
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function buscar(Request $request){
         $q = $request->q;
@@ -46,6 +46,9 @@ class UsuarioController extends Controller
 
     /**
      * Método para crear o actualizar a un usuario.
+     * 
+     * @param Request $request
+     * @return Response
      */
     public function createOrUpdate(Request $request) {
         $usuario = Usuario::find($request->id);
@@ -75,5 +78,26 @@ class UsuarioController extends Controller
 
         return redirect()->route('usuarios.index');
     }
+
+    /**
+     * Método que devuelve la lista de usuarios en formato para mostrarse en el autocomplete de jQueryUI
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function autocomplete(Request $request) {
+        $usuarios = Usuario::where('usuario.nombre', 'like', '%' . $request->term . '%')
+        ->select(['usuario.nombre', 'usuario.id'])->get();
+        
+        $usuariosFormat = [];
+        foreach($usuarios as $usuario) {
+            $usuariosFormat[] = [
+                "label" => $usuario->nombre,
+                "value" => $usuario->id
+            ];
+        }
+
+        return response()->json($usuariosFormat);
+    }   
    
 }

@@ -25,6 +25,7 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], func
     Route::get('/nuevo', 'UsuarioController@nuevo');
     Route::get('/editar/{id}', 'UsuarioController@editar');
     Route::post('/createorupdate', 'UsuarioController@createOrUpdate');
+    Route::get('/autocomplete', 'UsuarioController@autocomplete');
 });
 
 Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], function() {
@@ -34,4 +35,23 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], fun
     Route::get('/editar/{id}', 'QuinielaController@editar');
     Route::post('/create', 'QuinielaController@create');
     Route::post('/update/{id}', 'QuinielaController@update');
+    Route::post('/agregarparticipante', 'QuinielaController@agregarParticipante');
+    Route::post('/actualizarbolsa', 'QuinielaController@actualizarBolsa');
+});
+
+Route::group(['prefix' => 'ligas', 'middleware' => 'auth.codigo.admin'], function() {
+    Route::get('/', 'LigaController@index')->name('ligas.index');
+    Route::get('/buscar', 'LigaController@buscar');
+    Route::get('/nuevo', 'LigaController@nuevo');
+    Route::get('/editar/{id}', 'LigaController@editar');
+    Route::post('/create', 'LigaController@create');
+    Route::post('/update/{id}', 'LigaController@update');
+    Route::post('/agregarjornada', 'LigaController@agregarJornada');
+});
+
+Route::group(['prefix' => 'equipos', 'middleware' => 'auth.codigo.admin'], function() {
+    Route::get('/nuevo', 'EquipoController@nuevo');
+    Route::get('/editar/{id}', 'EquipoController@editar');
+    Route::post('/createorupdate', 'EquipoController@createOrUpdate');
+    Route::post('/eliminar', 'EquipoController@eliminar');
 });
