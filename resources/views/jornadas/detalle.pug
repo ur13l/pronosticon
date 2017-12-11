@@ -1,0 +1,60 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/jornadas/detalle.js'))
+
+block title
+    if jornada != null
+       title= jornada.nombre
+    else
+        title Nueva jornada
+
+block content
+    br
+    if jornada
+        div#dialog_eliminar(title="Eliminar")
+            p ¿Estás seguro que deseas eliminar la jornada #{jornada.nombre}?
+
+ 
+        div.row
+            a.two.columns.offset-by-ten.center.error#eliminar_jornada(data-id=jornada.id) Eliminar
+            form(action=url('/jornadas/eliminar') id="form_eliminar" method="post")
+                input(type="hidden" name="_token" value=csrf_token())
+                input(type="hidden" name="id" value=jornada.id)
+    div.container
+        br
+        form(action=url('/jornadas/createorupdate') method="POST" id="form_detalle" enctype="multipart/form-data")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" id="id" name="id" value= jornada.id)
+            if jornada
+           
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value=(jornada.nombre? jornada.nombre : old('nombre')))
+            br
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    each error in errors.all()
+                    span.error #{error}
+                    label(for="descripcion") Liga:
+                    input.twelve.columns(type="text" readonly value=liga.nombre)
+                    input(type="hidden" name="id_liga" id="id_liga" value= liga.id)
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="fecha_inicio") Liga:
+                    input.twelve.columns.center(type="text" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio" value=(jornada.fecha_inicio? jornada.fecha_inicio : old('fecha_inicio')))
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="fecha_fin") Liga:
+                    input.twelve.columns.center(type="text" name="fecha_fin" id="fecha_fin" placeholder="Fecha de finalización" value=(jornada.fecha_fin? jornada.fecha_fin : old('fecha_fin')))
+            br
+            div.row
+                div.six.columns.offset-by-three.center
+                    button.primary-color-background.twelve.columns(type="submit") Guardar y agregar partidos
+                    div.small-space
+                    a.center(href=url('/ligas/editar/' + liga.id)) Regresar a liga
+        

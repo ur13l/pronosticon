@@ -93,7 +93,6 @@ block content
                                 th Nombre
                                 th 
                         tbody
-                            
                             each jornada in liga.jornadas
                                 if jornada.registrada
                                     tr.success-background
@@ -106,7 +105,7 @@ block content
                                         td
                                             a(href=url('/jornadas/capturar/' + jornada.id)) Editar
 
-                button.primary-color-background(onclick="location.href='"+ url('/equipos/nuevo') +"'") Agregar jornada
+                button.primary-color-background(onclick="location.href='"+ url('/jornadas/nuevo?id_liga=' + liga.id) +"'") Agregar jornada
                 div.space
                 
             

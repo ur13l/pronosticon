@@ -55,3 +55,10 @@ Route::group(['prefix' => 'equipos', 'middleware' => 'auth.codigo.admin'], funct
     Route::post('/createorupdate', 'EquipoController@createOrUpdate');
     Route::post('/eliminar', 'EquipoController@eliminar');
 });
+
+Route::group(['prefix' => 'jornadas', 'middleware' => 'auth.codigo.admin'], function() {
+    Route::get('/nuevo', 'JornadaController@nuevo');
+    Route::get('/editar/{id}', 'JornadaController@editar');
+    Route::post('/createorupdate', 'JornadaController@createOrUpdate');
+    Route::post('/eliminar', 'JornadaController@eliminar');
+});
