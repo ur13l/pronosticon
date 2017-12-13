@@ -98,12 +98,18 @@ block content
                                     tr.success-background
                                         td= jornada.nombre
                                         td
-                                            a(href=url('/jornadas/editar/' + jornada.id)) Editar
-                                else if !jornada.registrada && jornada.fecha_fin < new Date()
+                                            a(href=url('/jornadas/editar/' + jornada.id)) Resultados
+                                else if jornada.fecha_fin.isPast()
                                     tr.warning-background
                                         td= jornada.nombre
                                         td
-                                            a(href=url('/jornadas/capturar/' + jornada.id)) Editar
+                                            a(href=url('/jornadas/capturar/' + jornada.id)) Resultados
+                                else 
+                                    tr
+                                        td= jornada.nombre
+                                        td
+                                            a(href=url('/jornadas/editar/partidos/' + jornada.id)) Editar
+                                
 
                 button.primary-color-background(onclick="location.href='"+ url('/jornadas/nuevo?id_liga=' + liga.id) +"'") Agregar jornada
                 div.space

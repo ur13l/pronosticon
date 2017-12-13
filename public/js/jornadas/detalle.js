@@ -4,8 +4,17 @@
  */
 
 $(function() {
+
+    $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
     $("#fecha_inicio, #fecha_fin").datepicker();    
     $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
+    if($("#fecha_inicio").val()){
+        $("#fecha_inicio").datepicker('setDate', moment($("#fecha_inicio").val(), 'DD/MM/YYYY').format('MM/DD/YYYY'));
+    }
+
+    if($("#fecha_fin").val()) {
+        $("#fecha_fin").datepicker('setDate', moment($("#fecha_fin").val(), 'DD/MM/YYYY').format('MM/DD/YYYY'));        
+    }
 
     jQuery.validator.addMethod("fechaMayorQue", function(value, element, params) {
         
@@ -67,7 +76,7 @@ $(function() {
           }
       });
 
-    $("#eliminar_equipo").click(function() {
+    $("#eliminar_jornada").click(function() {
         $("#dialog_eliminar").dialog("open");
     });
 });

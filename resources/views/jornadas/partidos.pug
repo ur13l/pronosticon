@@ -1,0 +1,25 @@
+extends /layouts/app
+
+block scripts
+    script(src=url('/js/jornadas/partidos.js'))
+
+block title
+    title= jornada.nombre + " - Partidos"
+    
+block content
+    input(type="hidden" id="_id_jornada" name="_id_jornada" value=jornada.id)
+    div.banner.row
+        img.banner_img(src=jornada.liga.imagen)
+        div.banner_mask
+        h1.banner_title.white-color-text.center= jornada.nombre
+    div.container
+        br
+        div.row
+            h5.ten.columns.center Del 
+                b= jornada.fecha_inicio.format("d/m/Y") 
+                |   al  
+                b= jornada.fecha_fin.format("d/m/Y")
+            a.two.columns.center(href=url('/jornadas/editar/' + jornada.id)) Editar datos de la jornada
+        br
+        div.row
+            include /jornadas/lista_partidos

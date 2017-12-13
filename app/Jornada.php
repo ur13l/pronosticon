@@ -25,6 +25,8 @@ class Jornada extends Model
      */
     protected $table = 'jornada';
 
+    protected $dates=['fecha_inicio', 'fecha_fin'];
+
     /**
      * @var array
      */

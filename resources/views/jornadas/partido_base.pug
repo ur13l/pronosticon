@@ -1,0 +1,18 @@
+div.row#partido_base(style="display:none;")
+    div.three.columns 
+        select(name="id_equipo_local[]")
+            each equipo in jornada.liga.equipos
+                option(value= equipo.id)= equipo.nombre   
+    div.one.column  vs
+    div.three.columns  
+        select(name="id_equipo_visita[]")
+            each equipo in jornada.liga.equipos
+                option(value= equipo.id)= equipo.nombre
+    div.two.columns
+        select(name="fecha")
+            each fecha in fechas
+                option(value= fecha)= fecha
+    div.two.columns
+        input(type="text")
+    div.one.column
+        span Eliminar

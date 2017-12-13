@@ -1,0 +1,11 @@
+include /jornadas/partido_base
+
+form(action="/jornadas/actualizar_equipos" method="post")
+    if count(jornada.partidos) === 0 
+        h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
+        div#table_partidos
+    else
+        div#table_partidos
+            each partido in jornada.partidos
+                    
+    button.six.columns.offset-by-three.center#agregar_partido(type="button") Agregar partido

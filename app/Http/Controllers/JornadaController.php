@@ -29,7 +29,7 @@ class JornadaController extends Controller
     /**
     * Método que devuelve la vista para editar una jornada.
     *
-    * @param Request $request
+    * @param Integer $id
     * @return Response
     */
     public function editar($id) {
@@ -64,6 +64,9 @@ class JornadaController extends Controller
         $jornada->id_liga = $request->id_liga;
         $jornada->fecha_inicio = Carbon::createFromFormat('d/m/Y', $request->fecha_inicio);
         $jornada->fecha_fin = Carbon::createFromFormat('d/m/Y', $request->fecha_fin);
+        $jornada->fecha_fin->hour = 23;
+        $jornada->fecha_fin->minute = 59;
+        $jornada->fecha_fin->second = 59;
         $jornada->save();
 
         if($another) {
@@ -83,5 +86,23 @@ class JornadaController extends Controller
         $id_liga = $jornada->id_liga;
         $jornada->delete();
         return redirect('/ligas/editar/' . $id_liga);
+    
+    }
+
+    /**
+     * Devuelve la vista para editar los partidos de una jornada.
+     *
+     * @param Integer $id
+     * @return Response
+     */
+    public function editarPartidos($id) {
+        $jornada = Jornada::find($id);
+        $fechas = [];
+        
+        for($date = $jornada->fecha_inicio; $date->lte($jornada->fecha_fin); $date->addDay()) {
+            $fechas[] = $date->format('d/m/Y');
+        }
+        
+        return view('jornadas.partidos', ["jornada" => $jornada, "fechas" => $fechas]);
     }
 }
