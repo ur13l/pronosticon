@@ -4,6 +4,9 @@
 
  $(function() {
 
+    /**
+     * Funcionalidad de botón para agregar partido.
+     */
     $("#agregar_partido").click(function(e) {
         var div = $("<div/>");
         div.addClass('div_partido');
@@ -11,4 +14,6 @@
         $("#table_partidos").append(div);
         $("#empty_partidos").hide();
     });
+
+   $(".select_equipo").selectric();
  });

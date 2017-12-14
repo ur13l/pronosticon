@@ -1,11 +1,11 @@
 div.row#partido_base(style="display:none;")
     div.three.columns 
-        select(name="id_equipo_local[]")
+        select.select_equipo(name="id_equipo_local[]")
             each equipo in jornada.liga.equipos
                 option(value= equipo.id)= equipo.nombre   
     div.one.column  vs
     div.three.columns  
-        select(name="id_equipo_visita[]")
+        select.select_equipo(name="id_equipo_visita[]")
             each equipo in jornada.liga.equipos
                 option(value= equipo.id)= equipo.nombre
     div.two.columns

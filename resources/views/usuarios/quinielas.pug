@@ -1,1 +1,8 @@
-h1 HOLA
+div.row
+    div.six.columns.offset-by-three
+        h5 Quinielas activas
+        table
+            tbody
+                each participacion in usuario.participacions
+                    tr
+                        span= participacion.quiniela.nombre
