@@ -59,6 +59,12 @@ input.big-input {
     width: 100%;
     font-style: bold;
 }
+
+.partido_editar {
+    background:grey;
+    padding:20px;
+}
+
 .pagination li {
     display:inline;
     font-size: 30px;

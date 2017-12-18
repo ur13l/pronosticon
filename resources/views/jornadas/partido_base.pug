@@ -1,4 +1,4 @@
-div.row#partido_base(style="display:none;")
+div.rowr#partido_base(style="display:none;")
     div.three.columns 
         select.select_equipo(name="id_equipo_local[]")
             each equipo in jornada.liga.equipos
@@ -7,7 +7,7 @@ div.row#partido_base(style="display:none;")
     div.three.columns  
         select.select_equipo(name="id_equipo_visita[]")
             each equipo in jornada.liga.equipos
-                option(value= equipo.id)= equipo.nombre
+                option(data-img-src= url(equipo.imagen) value= equipo.id)= equipo.nombre
     div.two.columns
         select(name="fecha")
             each fecha in fechas

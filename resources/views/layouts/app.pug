@@ -9,14 +9,16 @@ html
         link(href=(url('/css/libs/normalize.css')) rel="stylesheet" type="text/css")
         link(href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet")
         link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
-        link(rel="stylesheet" href=url('/css/libs/selectric.css'))
+        link(rel="stylesheet" href=url('/css/libs/chosen.css'))
+        link(rel="stylesheet" href=url('/css/libs/imageselect.css'))
         block styles
         script(src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js")
         script(src=(url('/js/utils/jquery.validate.strings.js')))
         script(src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous")
         script(src="https://momentjs.com/downloads/moment-with-locales.js")
-        script(src=url('/js/lib/jquery.selectric.js'))
+        script(src=url('/js/lib/chosen.jquery.js'))
+        script(src=url('/js/lib/imageselect.jquery.js'))
         block scripts
     body
         input(type="hidden" id="_url" value=url('/'))
