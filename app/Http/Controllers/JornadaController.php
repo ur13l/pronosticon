@@ -105,4 +105,19 @@ class JornadaController extends Controller
         
         return view('jornadas.partidos', ["jornada" => $jornada, "fechas" => $fechas]);
     }
+
+    /**
+     * Método POST para actualizar la lista de equipos cargada desde la vista.
+     * 
+     * @param Request $request
+     * @return Response
+     */
+    public function actualizarEquipos(Request $request) {
+        $jornada = Jornada::find($request->id);
+        dd($request);
+        foreach($request->id_equipo_local as $key => $id_equipo_local) {
+            
+        }
+    }
+
 }

@@ -1,18 +1,19 @@
 div.rowr#partido_base(style="display:none;")
     div.three.columns 
-        select.select_equipo(name="id_equipo_local[]")
+        select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_local[]")
             each equipo in jornada.liga.equipos
-                option(value= equipo.id)= equipo.nombre   
-    div.one.column  vs
+                option(data-img-src= url(equipo.imagen) value= equipo.id)= equipo.nombre   
+    .one.column.center
+        span  vs
     div.three.columns  
-        select.select_equipo(name="id_equipo_visita[]")
+        select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_visita[]")
             each equipo in jornada.liga.equipos
                 option(data-img-src= url(equipo.imagen) value= equipo.id)= equipo.nombre
-    div.two.columns
-        select(name="fecha")
+    div.two.columns.center
+        select.twelve.columns.margin-responsive(name="fecha[]")
             each fecha in fechas
                 option(value= fecha)= fecha
-    div.two.columns
-        input(type="text")
+    div.two.columns.center
+        input.twelve.columns.margin-responsive(type="time" name="hora[]" value="12:00")
     div.one.column
-        span Eliminar
+        span.twelve.columns.center.close.margin-responsive(data-id= (partido? partido.id : null)) Quitar
