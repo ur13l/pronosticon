@@ -43,5 +43,34 @@
         }
     });
 
+    $( "#dialog_eliminar" ).dialog({
+        autoOpen: false,
+        modal: true,
+        show: {
+          effect: "fade",
+          duration: 200
+        },
+        hide: {
+          effect: "explode",
+          duration: 200
+        },
+        buttons: {
+            "Eliminar": function() {
+                var id = $("#id_eliminar").val();
+                var id_equipos_eliminar = JSON.parse($("#id_equipos_eliminar").val());
+                id_equipos_eliminar.push(id);
+                $("#id_equipos_eliminar").val(JSON.stringify(id_equipos_eliminar));
+            },
+            "Cancelar": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+      });
+
+    $(".quitar").click(function() {
+        $("#dialog_eliminar").dialog("open");
+        $("#id_eliminar").val($(this).data('id'));
+    });
+
  });
 
