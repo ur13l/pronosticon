@@ -32,6 +32,7 @@ class Partido extends Model
      */
     protected $fillable = ['id_equipo_local', 'id_equipo_visita', 'id_jornada', 'fecha_hora', 'created_at', 'updated_at'];
 
+    protected $dates = ['fecha_hora'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

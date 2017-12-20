@@ -1,14 +1,14 @@
-div.rowr#partido_base(style="display:none;")
+div.row#partido_base(style="display:none;")
     div.three.columns 
         select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_local[]")
             each equipo in jornada.liga.equipos
-                option(data-img-src= url(equipo.imagen) value= equipo.id)= equipo.nombre   
+                option(data-img-src= url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre   
     .one.column.center
         span  vs
     div.three.columns  
         select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_visita[]")
             each equipo in jornada.liga.equipos
-                option(data-img-src= url(equipo.imagen) value= equipo.id)= equipo.nombre
+                option(data-img-src=  url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre
     div.two.columns.center
         select.twelve.columns.margin-responsive(name="fecha[]")
             each fecha in fechas

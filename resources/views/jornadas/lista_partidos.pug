@@ -2,12 +2,42 @@ include /jornadas/partido_base
 
 form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
     input(type="hidden" name="_token" value= csrf_token()) 
+    input(type="hidden" name="id_jornada" value= jornada.id) 
     if count(jornada.partidos) === 0 
         h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
         div#table_partidos
     else
         div#table_partidos
-            each partido in jornada.partidos            
+            each partido in jornada.partidos   
+                input(type="hidden" name="id_partido_mod[]" value= partido.id)
+                div.partido_editar.partido_mod.row
+                    div.three.columns 
+                        select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_local_mod[]")
+                            each equipo in jornada.liga.equipos
+                                if partido.id_equipo_local == equipo.id
+                                    option(data-img-src= url('/storage/' + equipo.imagen) selected value= equipo.id)= equipo.nombre   
+                                else
+                                    option(data-img-src= url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre   
+                    .one.column.center
+                        span  vs
+                    div.three.columns  
+                        select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_visita_mod[]")
+                            each equipo in jornada.liga.equipos
+                                if partido.id_equipo_visita == equipo.id
+                                    option(data-img-src=  url('/storage/' + equipo.imagen) selected value= equipo.id)= equipo.nombre
+                                else
+                                    option(data-img-src=  url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre
+                    div.two.columns.center
+                        select.twelve.columns.margin-responsive(name="fecha_mod[]")
+                            each fecha in fechas
+                                if fecha == partido.fecha_hora.format('d/m/Y')
+                                    option(value= fecha selected)= fecha
+                                else
+                                    option(value= fecha)= fecha
+                    div.two.columns.center
+                        input.twelve.columns.margin-responsive(type="time" name="hora_mod[]" value= partido.fecha_hora.format('H:i'))
+                    div.one.column
+                        span.twelve.columns.center.close.margin-responsive(data-id= (partido? partido.id : null)) Quitar 
     div.row
         button.four.columns.offset-by-four#agregar_partido(type="button") Agregar partido
     br

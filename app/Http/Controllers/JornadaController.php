@@ -113,11 +113,30 @@ class JornadaController extends Controller
      * @return Response
      */
     public function actualizarEquipos(Request $request) {
-        $jornada = Jornada::find($request->id);
-        dd($request);
-        foreach($request->id_equipo_local as $key => $id_equipo_local) {
-            
+        $jornada = Jornada::find($request->id_jornada);
+        if($request->id_equipo_local) {
+            foreach($request->id_equipo_local as $key => $id_equipo_local) {
+                Partido::create([
+                    'id_equipo_local' => $request->id_equipo_local[$key],
+                    'id_equipo_visita' => $request->id_equipo_visita[$key],
+                    'id_jornada' => $request->id_jornada,
+                    'fecha_hora' => Carbon::createFromFormat('d/m/Y H:i', $request->fecha[$key] . " " . $request->hora[$key])
+                ]);
+            }
         }
+
+        if($request->id_equipo_local_mod) {
+            foreach($request->id_equipo_local_mod as $key => $id_equipo_local) {
+                $partido = Partido::find($request->id_partido_mod[$key]);
+                $partido->id_equipo_local = $request->id_equipo_local_mod[$key];
+                $partido->id_equipo_visita = $request->id_equipo_visita_mod[$key];
+                $partido->id_jornada = $request->id_jornada;
+                $partido->fecha_hora = Carbon::createFromFormat('d/m/Y H:i', $request->fecha_mod[$key] . " " . $request->hora_mod[$key]);
+                $partido->save();
+            }
+        }
+
+        return back();
     }
 
 }

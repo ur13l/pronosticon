@@ -4,6 +4,9 @@
 
  $(function() {
 
+    $(`.partido_mod select`).chosen();
+    $(`.partido_mod .chosen-container`).addClass('twelve columns margin-responsive').css('width','');
+
     /**
      * Funcionalidad de botón para agregar partido.
      */
