@@ -1,11 +1,16 @@
 include /jornadas/partido_base
 
-form(action="/jornadas/actualizar_equipos" method="post")
+form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
+    input(type="hidden" name="_token" value= csrf_token()) 
     if count(jornada.partidos) === 0 
         h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
         div#table_partidos
     else
         div#table_partidos
-            each partido in jornada.partidos
-                    
-    button.six.columns.offset-by-three.center#agregar_partido(type="button") Agregar partido
+            each partido in jornada.partidos            
+    div.row
+        button.four.columns.offset-by-four#agregar_partido(type="button") Agregar partido
+    br
+    br
+    div.row
+        button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Enviar

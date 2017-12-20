@@ -18,15 +18,20 @@ label {
 
 input[type="text"],  input[type="text"]:focus, input[type="search"],  input[type="search"]:focus,
 input[type="email"],  input[type="email"]:focus, textarea,  textarea:focus,
-input[type="number"],  input[type="number"]:focus {
+input[type="number"],  input[type="number"]:focus, input[type="time"],  input[type="time"]:focus {
     border: 0;
     border-bottom: 1px solid #47525E;
     border-radius: 0;
     outline: 0;
 }
 
-input[type="text"]:focus, input[type="search"]:focus,  input[type="email"]:focus   {
+input[type="text"]:focus, input[type="search"]:focus,  input[type="email"]:focus, input[type="number"]:focus,
+input[type="time"]:focus   {
     border-bottom: 1px solid #bfdbf7;
+}
+
+input[type="time"], select {
+    height:25px;
 }
 
 input.big-input {
@@ -59,6 +64,15 @@ input.big-input {
     width: 100%;
     font-style: bold;
 }
+
+.partido_editar {
+    margin-bottom: 10px;
+    padding:28px;
+    position: relative;
+    background: #fafafa;
+    box-shadow: 2px 4px 2px -2px #47525E ;
+}
+
 .pagination li {
     display:inline;
     font-size: 30px;
@@ -117,6 +131,15 @@ input.big-input {
 a.error {
     cursor:pointer;
 }
+
+.close {
+    color: #F44A4A;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+
 .menu-container {
     padding-top: 2rem;
 }
@@ -154,6 +177,10 @@ a.error {
 
 .space {
     height:100px;
+}
+
+.margin-responsive {
+    margin-bottom: 12px;
 }
 
 .success-background {
