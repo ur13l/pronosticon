@@ -70,9 +70,9 @@ class JornadaController extends Controller
         $jornada->save();
 
         if($another) {
-            return redirect('/jornadas/partidos/' . $jornada->id_liga);
+            return redirect('/jornadas/editar/partidos/' . $jornada->id_liga);
         }
-        return redirect('/jornadas/partidos/' . $jornada->id_liga);
+        return redirect('/jornadas/editar/partidos/' . $jornada->id_liga);
     }
 
     /**
@@ -97,13 +97,27 @@ class JornadaController extends Controller
      */
     public function editarPartidos($id) {
         $jornada = Jornada::find($id);
+        $today = Carbon::now('America/Mexico_City');
         $fechas = [];
         
         for($date = $jornada->fecha_inicio; $date->lte($jornada->fecha_fin); $date->addDay()) {
             $fechas[] = $date->format('d/m/Y');
         }
         
-        return view('jornadas.partidos', ["jornada" => $jornada, "fechas" => $fechas]);
+        return view('jornadas.partidos', ["jornada" => $jornada, "fechas" => $fechas, 'today' => $today]);
+    }
+
+    /**
+     * Devuelve la vista para editar los resultados de una jornada.
+     *
+     * @param Integer $id
+     * @return Response
+     */
+    public function editarResultados($id) {
+        $jornada = Jornada::find($id);
+        $today = Carbon::now('America/Mexico_City');
+        
+        return view('jornadas.resultados', ["jornada" => $jornada, 'today' => $today]);
     }
 
     /**
@@ -133,6 +147,14 @@ class JornadaController extends Controller
                 $partido->id_jornada = $request->id_jornada;
                 $partido->fecha_hora = Carbon::createFromFormat('d/m/Y H:i', $request->fecha_mod[$key] . " " . $request->hora_mod[$key]);
                 $partido->save();
+            }
+        }
+
+        $id_partidos_eliminar = json_decode($request->id_partidos_eliminar);
+        if($id_partidos_eliminar) {
+            foreach ($id_partidos_eliminar as $id_partido) {
+                $partido = Partido::find($id_partido);
+                $partido->delete();
             }
         }
 

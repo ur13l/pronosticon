@@ -2,10 +2,10 @@ extends /layouts/app
 
 block scripts
     script(src=url('/js/utils/guid.js'))
-    script(src=url('/js/jornadas/partidos.js'))
+    script(src=url('/js/jornadas/resultados.js'))
 
 block title
-    title= jornada.nombre + " - Partidos"
+    title= jornada.nombre + " - Resultados"
     
 block content
     input(type="hidden" id="_id_jornada" name="_id_jornada" value=jornada.id)

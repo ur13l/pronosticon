@@ -45,6 +45,6 @@ class Jornada extends Model
      */
     public function partidos()
     {
-        return $this->hasMany('App\Partido', 'id_jornada');
+        return $this->hasMany('App\Partido', 'id_jornada')->orderBy('fecha_hora');
     }
 }

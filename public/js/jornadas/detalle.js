@@ -7,7 +7,6 @@ $(function() {
 
     $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
     $("#fecha_inicio, #fecha_fin").datepicker();    
-    $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
     if($("#fecha_inicio").val()){
         $("#fecha_inicio").datepicker('setDate', moment($("#fecha_inicio").val(), 'DD/MM/YYYY').format('MM/DD/YYYY'));
     }
@@ -16,6 +15,7 @@ $(function() {
         $("#fecha_fin").datepicker('setDate', moment($("#fecha_fin").val(), 'DD/MM/YYYY').format('MM/DD/YYYY'));        
     }
 
+    $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
     jQuery.validator.addMethod("fechaMayorQue", function(value, element, params) {
         
         if (moment(value, 'DD/MM/YYYY') > moment($(params).val(),'DD/MM/YYYY')) {

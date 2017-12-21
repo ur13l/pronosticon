@@ -71,6 +71,7 @@ input.big-input {
     position: relative;
     background: #fafafa;
     box-shadow: 2px 4px 2px -2px #47525E ;
+    border-radius: 8px;
 }
 
 .pagination li {
@@ -189,4 +190,13 @@ a.error {
 
 .warning-background {
     background: #e0b030;
+}
+
+.warning-block {
+    width: 100%;
+    background: #e0b030;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
 }

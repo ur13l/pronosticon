@@ -62,5 +62,6 @@ Route::group(['prefix' => 'jornadas', 'middleware' => 'auth.codigo.admin'], func
     Route::post('/createorupdate', 'JornadaController@createOrUpdate');
     Route::post('/eliminar', 'JornadaController@eliminar');
     Route::get('/editar/partidos/{id}', 'JornadaController@editarPartidos');
+    Route::get('/editar/resultados/{id}', 'JornadaController@editarResultados');
     Route::post('/actualizar_equipos', 'JornadaController@actualizarEquipos');
 });

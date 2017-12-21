@@ -43,7 +43,7 @@ class Liga extends Model
      */
     public function jornadas()
     {
-        return $this->hasMany('App\Jornada', 'id_liga');
+        return $this->hasMany('App\Jornada', 'id_liga')->orderBy('fecha_inicio');
     }
 
     public function proximaJornada() 

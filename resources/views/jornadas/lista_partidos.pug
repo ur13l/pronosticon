@@ -3,15 +3,16 @@ include /jornadas/partido_base
 form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
     input(type="hidden" name="_token" value= csrf_token()) 
     input(type="hidden" name="id_jornada" value= jornada.id) 
+    input#id_partidos_eliminar(type="hidden" name="id_partidos_eliminar" value= "[]") 
     if count(jornada.partidos) === 0 
         h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
         div#table_partidos
     else
         div#table_partidos
             each partido in jornada.partidos   
-                input(type="hidden" name="id_partido_mod[]" value= partido.id)
                 div.partido_editar.partido_mod.row
                     div.three.columns 
+                        input(type="hidden" name="id_partido_mod[]" value= partido.id)
                         select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_local_mod[]")
                             each equipo in jornada.liga.equipos
                                 if partido.id_equipo_local == equipo.id
@@ -43,4 +44,4 @@ form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
     br
     br
     div.row
-        button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Enviar
+        button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Guardar

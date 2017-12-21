@@ -7,12 +7,20 @@
     $(`.partido_mod select`).chosen();
     $(`.partido_mod .chosen-container`).addClass('twelve columns margin-responsive').css('width','');
 
+
+    /**
+     * Iteración para darle un id a cada partido para editar
+     */
+    $(".partido_mod").each((item, val) => {
+        $(val).attr('id', guid());
+    });
+     
     /**
      * Funcionalidad de botón para agregar partido.
      */
-    $("#agregar_partido").click(function(e) {
-        var div = $("<div/>").addClass('row').addClass('partido_editar');
-        var id = guid();
+    $("#agregar_partido").click(e => {
+        let div = $("<div/>").addClass('row').addClass('partido_editar'),
+             id = guid();
         div.attr('id', id);
         div.append($("#partido_base").html());
         $("#table_partidos").append(div);
@@ -24,15 +32,13 @@
 
     //Validación de formulario para nueva quiniela
     $("#form_partidos").validate({
-        submitHandler: function(form) {
-            form.submit();
-        },
+        submitHandler: form => form.submit(),
         rules: {
             "hora[]": "required"
         },     
         errorElement : 'div',
-        errorPlacement: function(error, element) {
-            var placement = $(element).data('error');
+        errorPlacement: (error, element) => {
+            let placement = $(element).data('error');
             $(element).addClass('invalid');
             $(error).css('color', '#F44336 ');
             if (placement) {
@@ -56,10 +62,15 @@
         },
         buttons: {
             "Eliminar": function() {
-                var id = $("#id_eliminar").val();
-                var id_equipos_eliminar = JSON.parse($("#id_equipos_eliminar").val());
-                id_equipos_eliminar.push(id);
-                $("#id_equipos_eliminar").val(JSON.stringify(id_equipos_eliminar));
+                let id = $("#id_eliminar").val(),
+                    id_partidos_eliminar = JSON.parse($("#id_partidos_eliminar").val()),
+                    elem = $("#" + $("#cont_eliminar").val());
+                if(id) {
+                    id_partidos_eliminar.push(id);
+                    $("#id_partidos_eliminar").val(JSON.stringify(id_partidos_eliminar));    
+                }
+                elem.hide('slideUp', () => elem.remove()); 
+                $( this ).dialog( "close" );
             },
             "Cancelar": function() {
               $( this ).dialog( "close" );
@@ -67,9 +78,10 @@
           }
       });
 
-    $(".quitar").click(function() {
+    $(document).on('click', ".quitar", (event) => {
         $("#dialog_eliminar").dialog("open");
-        $("#id_eliminar").val($(this).data('id'));
+        $("#id_eliminar").val($(event.currentTarget).data('id'));
+        $("#cont_eliminar").val($(event.currentTarget).parent().parent().attr('id'));
     });
 
  });
