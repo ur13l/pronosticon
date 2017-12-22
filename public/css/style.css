@@ -22,6 +22,7 @@ input[type="number"],  input[type="number"]:focus, input[type="time"],  input[ty
     border: 0;
     border-bottom: 1px solid #47525E;
     border-radius: 0;
+    background-color: none !important;
     outline: 0;
 }
 
@@ -37,6 +38,7 @@ input[type="time"], select {
 input.big-input {
     font-size:3em;
     height: 1.3em;
+    background: none;
 }
 
 .banner {
@@ -199,4 +201,14 @@ a.error {
     padding: 20px;
     border-radius: 8px;
     box-sizing: border-box;
+}
+
+.resultado-height {
+    height:170px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.resultado-height *{
 }

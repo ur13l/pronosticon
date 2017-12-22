@@ -1,0 +1,29 @@
+form#form_partidos(action= url("/jornadas/actualizar_resultados") method="post")
+    input(type="hidden" name="_token" value= csrf_token()) 
+    input(type="hidden" name="id_jornada" value= jornada.id) 
+    if count(jornada.partidos) === 0 
+        h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
+        div#table_partidos
+    else
+        div#table_partidos
+            each partido in jornada.partidos   
+                div.partido_editar.partido_mod.row
+                    .row
+                        div.three.columns 
+                            input(type="hidden" name="id_partido[]" value= partido.id)
+                            img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                        .two.columns
+                            .resultado-height
+                                input.big-input.center.twelve.columns(type="text")
+                        .two.columns.center
+                            .resultado-height
+                                span  -
+                        .two.columns
+                            .resultado-height
+                                input.big-input.center.twelve.columns(type="text")
+                        div.three.columns  
+                            img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen)) 
+    br
+    br
+    div.row
+        button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Guardar
