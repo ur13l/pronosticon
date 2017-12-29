@@ -7,8 +7,13 @@ block scripts
     script(src=url('/js/ligas/index.js'))
 
 block content
-    
-    div.container
+    br
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio 
+            li
+                a.active(href=url('/ligas/')) Ligas
         h1.center Ligas
         div.row
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")

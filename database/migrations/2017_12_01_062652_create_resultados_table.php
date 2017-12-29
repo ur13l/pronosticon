@@ -19,7 +19,7 @@ class CreateResultadosTable extends Migration
             $table->foreign('id_partido')->references('id')->on('partido');
             $table->integer('resultado_local');
             $table->integer('resultado_visita');
-            $table->integer('id_equipo_ganador')->unsigned();
+            $table->integer('id_equipo_ganador')->unsigned()->nullable();
             $table->foreign('id_equipo_ganador')->references('id')->on('equipo');
             $table->timestamps();
         });

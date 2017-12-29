@@ -36,7 +36,7 @@ $(function() {
                 descripcion: "required",
                 id_liga: "required",
                 id_tipo_quiniela: "required",
-                bolsa: "required"
+                bolsa1: "required"
                 
             },     
             errorElement : 'div',

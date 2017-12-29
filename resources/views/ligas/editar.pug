@@ -12,7 +12,14 @@ block content
         img.banner_img(src=liga.imagen)
         div.banner_mask
         h1.banner_title.white-color-text.center= liga.nombre
-    div.container
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a(href=url('/ligas/')) Ligas
+            li
+                a.active(href=url('/ligas/editar' + liga.id))= liga.nombre
         br
         div.row
             div.four.columns.center 
@@ -36,52 +43,54 @@ block content
                 button.primary-color-background(onclick="location.href='"+ url('/equipos/nuevo?id_liga=' + liga.id) +"'") Agregar equipo
                 div.space
                 
-            div.four.columns.center 
-                h4 Próxima jornada
-                if count(liga.proximaJornada.partidos) == 0
-                    h6 No hay jornadas registradas
-                else
-                    table.ten.columns.offset-by-one
-                        thead
-                            tr
-                                th Local
-                                th 
-                                th Visita
-                        tbody
-                            each partido in liga.proximaJornada.partidos
+            div.four.columns.center
+                div.row
+                    h4 Próxima jornada
+                    if count(liga.proximaJornada.partidos) == 0
+                        h6 No hay jornadas registradas
+                    else
+                        table.ten.columns.offset-by-one
+                            thead
                                 tr
-                                    td
-                                        img(src=partido.equipoLocal.imagen height="80")
-                                    td vs
-                                    td
-                                         img(src=partido.equipoVisita.imagen height="80")
-                
-                h4 Última jornada
-                if count(liga.ultimaJornada.partidos) == 0
-                    h6 No hay jornadas registradas
-                else
-                    table.ten.columns.offset-by-one
-                        thead
-                            tr
-                                th Local
-                                th 
-                                th Visita
-                        tbody
-                            each partido in liga.ultimaJornada.partidos
+                                    th.center(colspan=3)= liga.proximaJornada.nombre
+                            tbody
+                                each partido in liga.proximaJornada.partidos
+                                    tr
+                                        td.center
+                                            img(src=url('/storage/' +partido.equipoLocal.imagen) height="50")
+                                        td.center vs
+                                        td.center
+                                            img(src=url('/storage/' +partido.equipoVisita.imagen) height="50")
+                        if liga.proximaJornada != null
+                            button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/jornadas/editar/partidos/' + liga.proximaJornada.id) +"'")
+                                | Editar partidos
+                br
+                div.row
+                    h4 Última jornada
+                    if count(liga.ultimaJornada.partidos) == 0
+                        h6 No hay jornadas registradas
+                    else
+                        table.ten.columns.offset-by-one
+                            thead
                                 tr
-                                    td
-                                        img(src=partido.equipoLocal.imagen height="80")
-                                    if liga.ultimaJornada.registrada
-                                        td 
-                                            #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
-                                    else
-                                        td vs
-                                    td
-                                         img(src=partido.equipoVisita.imagen height="80")
-                if liga.ultimaJornada != null
-                    button.primary-color-background(onclick="location.href='"+ url('/jornadas/' + quiniela.liga.ultimaJornada.id) +"'")
-                        | Actualizar resultados
-                div.space
+                                    th.center(colspan="3")= liga.ultimaJornada.nombre
+                            tbody
+                                each partido in liga.ultimaJornada.partidos
+                                    tr
+                                        td.center
+                                            img(src=url('/storage/' + partido.equipoLocal.imagen) height="50")
+                                        if liga.ultimaJornada.registrada
+                                            td.center 
+                                               | #{partido.resultados.first().resultado_local} - #{partido.resultados.first().resultado_visita}
+                                        else
+                                            td.center vs
+                                        td.center
+                                            img(src=url('/storage/' + partido.equipoVisita.imagen) height="50")
+                        
+                    if liga.ultimaJornada != null
+                        button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/jornadas/editar/resultados/' + liga.ultimaJornada.id) +"'")
+                            | Actualizar resultados
+                    div.space
             div.four.columns.center 
                 h4 Jornadas
                 if count(liga.jornadas) == 0
@@ -95,13 +104,13 @@ block content
                         tbody
                             each jornada in liga.jornadas
                                 if jornada.registrada
-                                    tr.success-background
-                                        td= jornada.nombre
+                                    tr
+                                        td.success-text= jornada.nombre
                                         td
-                                            a(href=url('/jornadas/editar/' + jornada.id)) Resultados
+                                            a(href=url('/jornadas/editar/resultados/' + jornada.id)) Resultados
                                 else if jornada.fecha_fin.isPast()
-                                    tr.warning-background
-                                        td= jornada.nombre
+                                    tr
+                                        td.warning-text= jornada.nombre
                                         td
                                             a(href=url('/jornadas/editar/resultados/' + jornada.id)) Resultados
                                 else 
@@ -111,7 +120,7 @@ block content
                                             a(href=url('/jornadas/editar/partidos/' + jornada.id)) Editar
                                 
 
-                button.primary-color-background(onclick="location.href='"+ url('/jornadas/nuevo?id_liga=' + liga.id) +"'") Agregar jornada
+                button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/jornadas/nuevo?id_liga=' + liga.id) +"'") Agregar jornada
                 div.space
                 
             

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $id_quiniela
+ * @property int $premio
  * @property float $cantidad
  * @property string $created_at
  * @property string $updated_at
@@ -24,7 +25,7 @@ class Bolsa extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_quiniela', 'cantidad', 'created_at', 'updated_at'];
+    protected $fillable = ['id_quiniela', 'cantidad', 'premio', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

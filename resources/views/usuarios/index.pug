@@ -7,8 +7,13 @@ block scripts
     script(src=url('/js/usuarios/index.js'))
 
 block content
-    
-    div.container
+    br
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a.active(href=url('/usuarios/')) Usuarios
         h1.center Usuarios
         div.row
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")

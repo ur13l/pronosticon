@@ -7,22 +7,28 @@ form#form_partidos(action= url("/jornadas/actualizar_resultados") method="post")
     else
         div#table_partidos
             each partido in jornada.partidos   
+                input(type="hidden" name="id_partido[]" value= partido.id)
+                input(type="hidden" name="id_resultado[]" value= partido.resultado.id)
                 div.partido_editar.partido_mod.row
                     .row
                         div.three.columns 
-                            input(type="hidden" name="id_partido[]" value= partido.id)
-                            img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                            div.row.twelve.columns.center
+                                img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                            h6.row.twelve.columns.center= partido.equipoLocal.nombre
+
                         .two.columns
                             .resultado-height
-                                input.big-input.center.twelve.columns(type="text")
+                                input.big-input.center.twelve.columns(type="text" name="resultado_local[]" value=partido.resultados.first().resultado_local)
                         .two.columns.center
                             .resultado-height
-                                span  -
+                                h1  -
                         .two.columns
                             .resultado-height
-                                input.big-input.center.twelve.columns(type="text")
-                        div.three.columns  
-                            img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen)) 
+                                input.big-input.center.twelve.columns(type="text" name="resultado_visita[]" value=partido.resultados.first().resultado_visita)
+                        div.three.columns 
+                            div.row.twelve.columns.center
+                                img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                            h6.row.twelve.columns.center= partido.equipoVisita.nombre
     br
     br
     div.row

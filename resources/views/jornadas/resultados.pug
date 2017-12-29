@@ -9,15 +9,28 @@ block title
     
 block content
     input(type="hidden" id="_id_jornada" name="_id_jornada" value=jornada.id)
-    div#dialog_eliminar(title="Eliminar")
-        input#id_eliminar(type="hidden")
-        input#cont_eliminar(type="hidden")
-        p ¿Estás seguro que deseas eliminar el partido?
     div.banner.row
         img.banner_img(src=jornada.liga.imagen)
         div.banner_mask
         h1.banner_title.white-color-text.center= jornada.nombre
-    div.container
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            if f != null
+                li
+                    a(href=url('/quinielas/')) Quinielas
+                li
+                    a(href=url('/quinielas/editar/' + f.id))= f.nombre
+                li
+                    a.active(href=url('/jornadas/editar/resultados/' + jornada.id))= jornada.nombre
+            else
+                li
+                    a(href=url('/ligas/')) Ligas
+                li
+                    a(href=url('/ligas/editar/' + jornada.liga.id))= jornada.liga.nombre
+                li
+                    a.active(href=url('/jornadas/editar/resultados/' + jornada.id))= jornada.nombre
         br
         div.row
             h5.ten.columns Del 

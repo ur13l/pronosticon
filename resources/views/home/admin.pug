@@ -5,10 +5,11 @@ block title
 
 block content
     br
-    div.row
-        a.two.columns.offset-by-ten.center.logout(href=url('/login/logout')) Salir
+    .container.white-background
 
-    div.container
+        br
+        div.row
+            a.two.columns.offset-by-ten.center.logout(href=url('/login/logout')) Salir
         br
         h1.center ¡Bienvenido #{usuario.nombre}!
         div.row.menu-container

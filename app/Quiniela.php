@@ -55,7 +55,7 @@ class Quiniela extends Model
      */
     public function bolsas()
     {
-        return $this->hasMany('App\Bolsa', 'id_quiniela');
+        return $this->hasMany('App\Bolsa', 'id_quiniela')->orderBy('premio');
     }
 
     /**

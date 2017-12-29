@@ -10,7 +10,16 @@ block title
         title Nuevo usuario
 
 block content
-    div.container
+    br
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a(href=url('/usuarios/')) Usuarios
+            li
+                a.active(href=url('/usuarios/' + (usuario.id? "editar/" + usuario.id : "nuevo")))= (usuario.nombre? usuario.nombre: "Nuevo")
+        
         br
         form(action=url('/usuarios/createorupdate') method="POST")
             input(type="hidden" name="_token" value=csrf_token())

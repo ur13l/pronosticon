@@ -10,7 +10,8 @@ block title
         title Nueva quiniela
 
 block content
-    div.container
+    br
+    div.container.white-background
         br
         form(action=url('/quinielas/create') method="POST"  enctype="multipart/form-data")
             input(type="hidden" name="_token" value=csrf_token())
@@ -64,9 +65,16 @@ block content
             br
             div.row
                 div.six.columns.offset-by-three
-                    label(for="bolsa") Bolsa:
-                    input.twelve.columns.center(type="number" name="bolsa" maxlength="7" id="bolsa" value= (quiniela.bolsa? quiniela.bolsa.cantidad : old('bolsa.cantidad')))
- 
+                    h6 Bolsa
+                    label(for="bolsa") 1er lugar:
+                    input.twelve.columns.center(type="number" name="bolsa1" maxlength="7" id="bolsa1" value= (quiniela.bolsa1? quiniela.bolsa1.cantidad : old('bolsa1.cantidad')))
+
+                    label(for="bolsa") 2do lugar:
+                    input.twelve.columns.center(type="number" name="bolsa2" maxlength="7" id="bolsa2" value= (quiniela.bolsa2? quiniela.bolsa2.cantidad : old('bolsa2.cantidad')))
+                    
+                    label(for="bolsa") 3er lugar:
+                    input.twelve.columns.center(type="number" name="bolsa3" maxlength="7" id="bolsa3" value= (quiniela.bolsa3? quiniela.bolsa3.cantidad : old('bolsa3.cantidad')))
+
 
             br
             div.row

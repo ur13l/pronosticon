@@ -11,17 +11,28 @@ block title
 
 block content
     br
-    if equipo
-        div#dialog_eliminar(title="¿Eliminar?")
-            p ¿Estás seguro que deseas eliminar al equipo #{equipo.nombre}?
+    
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio 
+            li
+                a(href=url('/ligas/')) Ligas
+            li
+                a(href=url('/ligas/editar/' + liga.id))= liga.nombre
+            li
+                a.active(href=url('/equipos/editar/' + (equipo? equipo.id : "nuevo")))= (equipo? equipo.nombre : "Nuevo")
+       
+        if equipo
+            div#dialog_eliminar(title="¿Eliminar?")
+                p ¿Estás seguro que deseas eliminar al equipo #{equipo.nombre}?
 
- 
-        div.row
-            a.two.columns.offset-by-ten.center.error#eliminar_equipo(data-id=equipo.id) Eliminar
-            form(action=url('/equipos/eliminar') id="form_eliminar" method="post")
-                input(type="hidden" name="_token" value=csrf_token())
-                input(type="hidden" name="id" value=equipo.id)
-    div.container
+    
+            div.row
+                a.two.columns.offset-by-ten.center.error#eliminar_equipo(data-id=equipo.id) Eliminar
+                form(action=url('/equipos/eliminar') id="form_eliminar" method="post")
+                    input(type="hidden" name="_token" value=csrf_token())
+                    input(type="hidden" name="id" value=equipo.id)
         br
         form(action=url('/equipos/createorupdate') method="POST" id="form_detalle" enctype="multipart/form-data")
             input(type="hidden" name="_token" value=csrf_token())

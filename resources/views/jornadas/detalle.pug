@@ -16,12 +16,23 @@ block content
             p ¿Estás seguro que deseas eliminar la jornada #{jornada.nombre}?
 
  
+        
+    div.container.white-background
+    
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio 
+            li
+                a(href=url('/ligas/')) Ligas
+            li
+                a(href=url('/ligas/editar/' + liga.id))= liga.nombre
+            li
+                a.active(href=url('/jornada/editar/' + (jornada? jornada.id : "nuevo")))= (jornada? jornada.nombre : "Nueva")
         div.row
             a.two.columns.offset-by-ten.center.error#eliminar_jornada(data-id=jornada.id) Eliminar
             form(action=url('/jornadas/eliminar') id="form_eliminar" method="post")
                 input(type="hidden" name="_token" value=csrf_token())
                 input(type="hidden" name="id" value=jornada.id)
-    div.container
         br
         form(action=url('/jornadas/createorupdate') method="POST" id="form_detalle" enctype="multipart/form-data")
             input(type="hidden" name="_token" value=csrf_token())

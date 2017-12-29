@@ -71,7 +71,7 @@ class QuinielaController extends Controller
             "nombre" => "required|unique:quiniela",
             "id_liga" => "required",
             "id_tipo_quiniela" => "required",
-            "bolsa" => "required"
+            "bolsa1" => "required"
         ];
         $request->validate($rules);
         $quiniela = new Quiniela();
@@ -86,8 +86,21 @@ class QuinielaController extends Controller
        $quiniela->cantidad_reponches = $request->cantidad_reponches;
        $quiniela->save();
 
-       $bolsa = Bolsa::create([
-            'cantidad' => $request->bolsa,
+       $bolsa1 = Bolsa::create([
+            'cantidad' => $request->bolsa1,
+            'premio' => 1,
+            'id_quiniela' => $quiniela->id
+        ]);
+
+        $bolsa2 = Bolsa::create([
+            'cantidad' => $request->bolsa2,
+            'premio' => 2,
+            'id_quiniela' => $quiniela->id
+        ]);
+
+        $bolsa3 = Bolsa::create([
+            'cantidad' => $request->bolsa3,
+            'premio' => 3,
             'id_quiniela' => $quiniela->id
         ]);
 
@@ -136,15 +149,18 @@ class QuinielaController extends Controller
         ];
         $request->validate($rules);
 
-        $bolsa = Bolsa::where('id_quiniela', $request->id_quiniela)->first();
-        if(!$bolsa) {
-            $bolsa = Bolsa::create([
-                "id_quiniela" => $request->id_quiniela,
-                "cantidad" => $request->cantidad
-            ]);
+        foreach ($request->cantidad as $key => $cantidad) {
+            $bolsa = Bolsa::find($request->id_bolsa[$key]);
+            if(!$bolsa) {
+                $bolsa = Bolsa::create([
+                    "id_quiniela" => $request->id_quiniela,
+                    "cantidad" => $request->cantidad
+                ]);
+            }
+            $bolsa->cantidad = $cantidad;
+            $bolsa->save();
         }
-        $bolsa->cantidad = $request->cantidad;
-        $bolsa->save();
+        
 
         return back();
    }
