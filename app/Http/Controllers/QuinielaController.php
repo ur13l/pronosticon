@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\View;
 use App\Quiniela;
 use App\TipoQuiniela;
 use App\Bolsa;
+use App\Usuario;
+use App\Jornada;
 use App\Liga;
+use Carbon\Carbon;
 use App\Participacion;
 
 class QuinielaController extends Controller
@@ -165,4 +168,30 @@ class QuinielaController extends Controller
         return back();
    }
  
+   /**
+    * Método que devuelve la vista del usuario para contestar la jornada de una quiniela
+    * 
+    * @param Integer $id_jornada
+    * @param Integer $codigo
+    */
+    public function contestar($id_jornada, $id_quiniela, Request $request) {
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first();
+        $quiniela = Quiniela::find($id_quiniela);
+        $participacion = Participacion::where('id_usuario', $usuario->id)->where('id_quiniela', $quiniela->id)->first();
+        if($quiniela->usuarioParticipa($usuario)) {
+            $jornada = Jornada::find($id_jornada);
+            $today = Carbon::now('America/Mexico_City');
+            if($quiniela->tipoQuiniela->nombre == "Survivor") {
+
+            }
+            else {
+                return view('quinielas.contestar_regular', ['participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today]);
+            }
+       }
+       else {
+            //TODO: Error cuando el usuario no participa en la quiniela.
+       }
+        
+   }
 }

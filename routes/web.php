@@ -66,3 +66,9 @@ Route::group(['prefix' => 'jornadas', 'middleware' => 'auth.codigo.admin'], func
     Route::post('/actualizar_equipos', 'JornadaController@actualizarEquipos');
     Route::post('/actualizar_resultados', 'JornadaController@actualizarResultados');
 });
+
+
+
+Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo'], function() {
+    Route::get('/contestar/{id_jornada}/{id_quiniela}', 'QuinielaController@contestar');
+});

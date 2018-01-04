@@ -66,4 +66,12 @@ class Quiniela extends Model
         return $this->hasMany('App\Participacion', 'id_quiniela');
     }
 
+    public function usuarioParticipa(Usuario $usuario) {
+        foreach($this->participacions as $participacion) {
+            if ($usuario->id == $participacion->usuario->id) {
+                return true;
+            }
+        }
+        return false;
+    }    
 }

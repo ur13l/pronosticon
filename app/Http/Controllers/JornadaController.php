@@ -84,7 +84,13 @@ class JornadaController extends Controller
      * @return Response
      */
     public function eliminar(Request $request) {
-        $jornada = jornada::find($request->id);
+        $jornada = Jornada::find($request->id);
+        
+        foreach($jornada->partidos as $partido) {
+            Resultado::whereIn('id_partido',[$partido->id])->delete();
+        }
+        Partido::whereIn('id_jornada',[$jornada->id])->delete();
+ 
         $id_liga = $jornada->id_liga;
         $jornada->delete();
         return redirect('/ligas/editar/' . $id_liga);

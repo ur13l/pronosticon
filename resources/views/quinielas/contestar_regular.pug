@@ -1,0 +1,40 @@
+extends /layouts/app
+
+block scripts
+    script(src=url('/js/utils/guid.js'))
+    script(src=url('/js/quinielas/contestar_regular.js'))
+
+block title
+    title= jornada.nombre + " - " + jornada.liga.nombre
+    
+block content
+    input(type="hidden" id="_id_jornada" name="_id_jornada" value=jornada.id)
+    div.banner.row
+        img.banner_img(src=jornada.liga.imagen)
+        div.banner_mask
+        h1.banner_title.white-color-text.center= jornada.nombre
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            
+        br
+        if today.gt(jornada.fecha_inicio) 
+            div.warning-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
+        br
+        div#error_placement.error-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
+        br
+        div.row
+            if today.gt(jornada.fecha_fin)
+                h5.center Esta jornada ya terminó, prueba tu suerte enviando el pronóstico de la 
+                    if jornada.liga.proximaJornada 
+                        a(href=url('/quinielas/contestar/' +jornada.liga.proximaJornada.id+ '/' + quiniela.id + '/')) siguiente jornada
+                    else
+                        | &nbsp siguiente jornada
+                        |, o bien regresa a la pantalla de 
+                        a(href=url('/')) inicio
+                        |.
+                .space
+            else
+                h5 Contesta tu quiniela. Suerte
+                include /quinielas/contestar_lista_partidos

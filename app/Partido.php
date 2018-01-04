@@ -72,4 +72,5 @@ class Partido extends Model
     {
         return $this->hasMany('App\Resultado', 'id_partido');
     }
+
 }
