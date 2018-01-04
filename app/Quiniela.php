@@ -65,4 +65,5 @@ class Quiniela extends Model
     {
         return $this->hasMany('App\Participacion', 'id_quiniela');
     }
+
 }

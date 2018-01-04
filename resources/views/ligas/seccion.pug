@@ -1,1 +1,25 @@
-section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; height:450px")
+section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; height:600px")
+    div.mask
+        br
+        br
+        div.row.white-background
+            div.six.columns
+                div.row
+                    h4.ten.columns.offset-by-one= participacion.quiniela.nombre
+                div.row
+                    if count(participacion.quiniela.participacions) == 0
+                        h6 No hay participantes registrados
+                    else
+                        table.ten.columns.offset-by-one
+                            thead
+                                tr
+                                    th Nombre
+                                    th Pts.
+                            tbody
+                                each p in participacion.quiniela.participacions
+                                    tr
+                                        td= p.usuario.nombre
+                                        td= p.puntuacion
+            div.six.columns
+
+    
