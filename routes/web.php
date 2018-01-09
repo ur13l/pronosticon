@@ -70,5 +70,6 @@ Route::group(['prefix' => 'jornadas', 'middleware' => 'auth.codigo.admin'], func
 
 
 Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo'], function() {
-    Route::get('/contestar/{id_jornada}/{id_quiniela}', 'QuinielaController@contestar');
+    Route::get('/contestar/{id_jornada}/{id_quiniela}', 'QuinielaController@contestar')->name('contestar');
+    Route::post('/contestarquiniela', 'QuinielaController@contestarQuiniela');
 });

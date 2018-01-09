@@ -184,36 +184,37 @@ class JornadaController extends Controller
         $resultado_visita = $request->resultado_visita;
 
         foreach($id_resultado as $key=>$item) {
-            $partido = Partido::find($id_partido[$key]);
-            $id_equipo_ganador = null;
-            if($resultado_local[$key] > $resultado_visita[$key]){
-                $id_equipo_ganador = $partido->equipoLocal->id;
-            }
-            else if($resultado_local[$key] < $resultado_visita[$key]){
-                $id_equipo_ganador = $partido->equipoVisita->id;
-            }
+            if($resultado_local[$key] != null && $resultado_visita[$key] != null){
+                $partido = Partido::find($id_partido[$key]);
+                $id_equipo_ganador = null;
+                if($resultado_local[$key] > $resultado_visita[$key]){
+                    $id_equipo_ganador = $partido->equipoLocal->id;
+                }
+                else if($resultado_local[$key] < $resultado_visita[$key]){
+                    $id_equipo_ganador = $partido->equipoVisita->id;
+                }
 
-            $data = [
-                'id_partido' => $id_partido[$key],
-                'resultado_local' => $resultado_local[$key],
-                'resultado_visita' => $resultado_visita[$key],
-                'id_equipo_ganador' => $id_equipo_ganador
-            ];
+                $data = [
+                    'id_partido' => $id_partido[$key],
+                    'resultado_local' => $resultado_local[$key],
+                    'resultado_visita' => $resultado_visita[$key],
+                    'id_equipo_ganador' => $id_equipo_ganador
+                ];
 
-            //Cuando se tiene que actualizar el resultado
-            if($item) {
-                $resultado = Resultado::find($id_resultado[$key]);
-                $resultado->update($data);
-            }
-            //Cuando se genera un resultado nuevo.
-            else {            
-                $resultado = Resultado::create($data);
-            }
+                //Cuando se tiene que actualizar el resultado
+                if($item) {
+                    $resultado = Resultado::find($id_resultado[$key]);
+                    $resultado->update($data);
+                }
+                //Cuando se genera un resultado nuevo.
+                else {            
+                    $resultado = Resultado::create($data);
+                }
 
-            $resultado->partido->jornada->registrada = true;
-            $resultado->partido->jornada->save();
+                $resultado->partido->jornada->registrada = true;
+                $resultado->partido->jornada->save();
+            }
         }
-
         return redirect('/ligas/editar/' . $partido->jornada->liga->id);
 
     }

@@ -32,7 +32,7 @@ class LoginController extends Controller
         if($usuario) {
             $request->session()->put('codigo', $codigo);
             if($request->redirectTo) {
-                return redirect()->route($request->redirectTo);
+                return redirect($request->redirectTo);
             }
             return redirect('/');
         }

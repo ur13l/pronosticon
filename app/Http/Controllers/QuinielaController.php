@@ -10,6 +10,7 @@ use App\TipoQuiniela;
 use App\Bolsa;
 use App\Usuario;
 use App\Jornada;
+use App\Pronostico;
 use App\Liga;
 use Carbon\Carbon;
 use App\Participacion;
@@ -186,7 +187,7 @@ class QuinielaController extends Controller
 
             }
             else {
-                return view('quinielas.contestar_regular', ['participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today]);
+                return view('quinielas.contestar_regular', ['liga' => $jornada->liga, 'participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today]);
             }
        }
        else {
@@ -194,4 +195,55 @@ class QuinielaController extends Controller
        }
         
    }
+
+   /**
+    * Método POST que recibe las respuestas de la quiniela y las guarda.
+    *
+    * @param Request $request
+    * @return Response
+    */
+   public function contestarQuiniela(Request $request) {
+
+        foreach($request->id_partido as $key => $dummy) {
+            $id_participacion = $request->id_participacion[$key];
+            $id_partido = $request->id_partido[$key];
+            $data = [];
+            //Se comprueba si la quiniela tiene resultados
+            $participacion = Participacion::find($id_participacion);
+            $quiniela = $participacion->quiniela;
+            
+            $data['fecha'] = Carbon::now('America/Mexico_City');
+
+            if ($quiniela->permitir_resultados) {
+                $data['resultado_local'] = $resultado_local[$key];
+                $data['resultado_visita'] = $resultado_visita[$key];
+                if($resultado_local[$key] > $resultado_visita[$key]){
+                    $data['id_equipo_ganador'] = $partido->equipoLocal->id;
+                }
+                else if($resultado_local[$key] < $resultado_visita[$key]){
+                    $data['id_equipo_ganador'] = $partido->equipoVisita->id;
+                }
+            }
+            else {
+                $data['id_equipo_ganador'] = $request->id_equipo_ganador[$key];
+            }
+
+
+            $pronostico = Pronostico::where('id_partido', $id_partido)
+                ->where('id_participacion', $id_participacion)->first();
+            
+            //Si el usuario ya había contestado
+            if($pronostico) {
+                $pronostico->update($data);
+
+            }
+            else{
+                $data['puntos'] = 0;
+                $data['id_participacion'] = $request->id_participacion[$key];
+                $data['id_partido'] = $request->id_partido[$key];
+                Pronostico::create($data);
+            }
+        }
+        return redirect('/');
+    }
 }

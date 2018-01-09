@@ -19,7 +19,7 @@ class Auth
         $codigo = $request->session()->get('codigo','');
         $user = Usuario::where('codigo', $codigo)->first();
         if (!$user) {
-            return redirect('/login?redirectTo='.\Request::route()->getName());
+            return redirect('/login?redirectTo='.$request->path());
         }
 
         return $next($request);
