@@ -2,13 +2,16 @@
     form#form_contestar(action= url("/quinielas/contestarquiniela") method="post")
         input(type="hidden" name="_token" value= csrf_token()) 
         input(type="hidden" name="id_jornada" value= jornada.id) 
+        input(type="hidden" name="id_equipo_ganador_survivor") 
+        input(type="hidden" name="id_partido_survivor") 
+        input(type="hidden" name="id_participacion" value= participacion.id) 
         if count(jornada.partidos) === 0 
             h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
             div#table_partidos
         else
             div#table_partidos
                 each partido, key in jornada.partidos   
-                    if quiniela.permitir_marcador
+                    if quiniela.permitir_marcador && quiniela.tipoQuiniela.nombre != "Survivor"
                         include /quinielas/items/partido_permitir_marcador
                     else
                         include /quinielas/items/partido_sin_marcador

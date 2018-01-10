@@ -1,4 +1,5 @@
 $(function() {
+
     $("#form_contestar").validate({
         submitHandler: form => form.submit(),
         ignore: [],
@@ -12,19 +13,70 @@ $(function() {
         }
     });
 
-    $('[name^="resultado_local"]').each(function() {
-        $(this).rules('add', {
-            required: true,
-            maxlength: 2,
-            digits: true,
-        })
-    });
+    if($("#tipo_quiniela").val() == "Regular") {
 
-    $('[name^="resultado_visita"]').each(function() {
-        $(this).rules('add', {
-            required: true,
-            maxlength: 2,
-            digits: true,
-        })
-    });
+        //Se generan las validaciones cuando la quiniela permite marcador.
+        if($("#permitir_marcador").val() == 1) {
+            $('[name^="resultado_local"]').each(function() {
+                $(this).rules('add', {
+                    required: true,
+                    maxlength: 2,
+                    digits: true,
+                })
+            });
+        
+            $('[name^="resultado_visita"]').each(function() {
+                $(this).rules('add', {
+                    required: true,
+                    maxlength: 2,
+                    digits: true,
+                })
+            });
+        }
+
+        //Se genera cuando la quiniela no permite marcador y es regular
+        else {
+            $(".selectable").click(function() {
+                var key = $(this).data('key'),
+                    ganador = $(this).data('ganador');
+                    console.log(key);
+                $(this).siblings().css('background', 'white');
+                $(this).css('background', '#F5AB48');
+                $(this).css('color', 'white');
+                $(`[name='id_equipo_ganador[${key}]']`).val(ganador);
+                
+            });
+
+            $('[name^="id_equipo_ganador"]').each(function() {
+                $(this).rules('add', {
+                    required: true
+                })
+            });
+        }
+    }
+
+    //Las quinielas survivor nunca permiten marcador
+    else if($("#tipo_quiniela").val() == "Survivor") {
+        $(".selectable").click(function() {
+            var ganador = $(this).data('ganador'),
+                id_partido = $(this).closest('.partido_editar').siblings('[name^="id_partido"]').val();
+               
+            $('.selectable').css('background', 'white');
+            $(this).css('background', '#F5AB48');
+            $(this).css('color', 'white');
+            $(`[name='id_equipo_ganador_survivor']`).val(ganador);
+            $(`[name='id_partido_survivor']`).val(id_partido);
+            
+        });
+
+       
+        $("[name='id_equipo_ganador_survivor']").rules('add', {
+            required: true
+        });
+    }
+
+
+
+
+   
 });

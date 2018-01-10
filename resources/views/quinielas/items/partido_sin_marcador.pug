@@ -1,17 +1,36 @@
-input(type="hidden" name="id_partido[]" value= partido.id)
-input(type="hidden" name="id_participacion[]" value=participacion.id)
-input(type="hidden" name="id_equipo_ganador")
-div.partido_editar.partido_mod.row
-    .row
-        div.four.columns.selectable
-            div.row.twelve.columns.center
-                img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
-            h6.row.twelve.columns.center= partido.equipoLocal.nombre
+div
+    input(type="hidden" name="id_partido[]" value= partido.id)
+    input(type="hidden" name="id_equipo_ganador["+ key + "]")
+    div.partido_editar.partido_mod.row
+        .row
+            if quiniela.tipoQuiniela.nombre != "Survivor" 
+                div.four.columns.selectable(data-key=key, data-ganador= partido.equipoLocal.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                    h6.row.twelve.columns.center= partido.equipoLocal.nombre
+            else
+                div.five.columns.selectable(data-key=key, data-ganador= partido.equipoLocal.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                    h6.row.twelve.columns.center= partido.equipoLocal.nombre
 
-        .four.columns.selectable.center
-            .resultado-height
-                h1  Empate
-        div.four.columns.selectable 
-            div.row.twelve.columns.center
-                img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
-            h6.row.twelve.columns.center= partido.equipoVisita.nombre
+            
+            if quiniela.tipoQuiniela.nombre != "Survivor" 
+                .four.columns.selectable.center(data-key=key, data-ganador= "empate")
+                    .resultado-height
+                        h1  Empate
+            else
+                .two.columns.center
+                    .resultado-height
+                        h2 vs
+
+            if quiniela.tipoQuiniela.nombre != "Survivor" 
+                div.four.columns.selectable(data-key=key, data-ganador= partido.equipoVisita.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                    h6.row.twelve.columns.center= partido.equipoVisita.nombre
+            else 
+                div.five.columns.selectable(data-key=key, data-ganador= partido.equipoVisita.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                    h6.row.twelve.columns.center= partido.equipoVisita.nombre
