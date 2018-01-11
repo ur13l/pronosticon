@@ -44,7 +44,9 @@ Route::group(['prefix' => 'ligas', 'middleware' => 'auth.codigo.admin'], functio
     Route::get('/buscar', 'LigaController@buscar');
     Route::get('/nuevo', 'LigaController@nuevo');
     Route::get('/editar/{id}', 'LigaController@editar');
-    Route::post('/create', 'LigaController@create');
+    Route::get('/detalle/{id}', 'LigaController@detalle');
+    Route::post('/eliminar', 'LigaController@eliminar');
+    Route::post('/createorupdate', 'LigaController@createOrUpdate');
     Route::post('/update/{id}', 'LigaController@update');
     Route::post('/agregarjornada', 'LigaController@agregarJornada');
 });

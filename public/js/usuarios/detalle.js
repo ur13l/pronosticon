@@ -14,8 +14,8 @@ $(function() {
             },
             codigo: {
                 required: true,
-                maxlength: 9,
-                minlength: 9
+                maxlength: 10,
+                minlength: 5
             }
             
         },

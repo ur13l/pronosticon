@@ -10,6 +10,7 @@ use Carbon\Carbon;
  * @property string $nombre
  * @property string $logo
  * @property string $imagen
+ * @property string $id_deporte
  * @property string $created_at
  * @property string $updated_at
  * @property Equipo[] $equipos
@@ -28,7 +29,7 @@ class Liga extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'logo', 'imagen', 'created_at', 'updated_at'];
+    protected $fillable = ['nombre', 'logo', 'imagen', 'id_deporte', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -66,5 +67,10 @@ class Liga extends Model
     public function quinielas()
     {
         return $this->hasMany('App\Quiniela', 'id_liga');
+    }
+
+
+    public function deporte() {
+        return $this->belongsTo('App\Deporte', 'id_deporte');
     }
 }

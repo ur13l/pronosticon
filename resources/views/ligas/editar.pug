@@ -13,6 +13,9 @@ block content
         div.banner_mask
         h1.banner_title.white-color-text.center= liga.nombre
     div.container.white-background
+
+        div.row
+            a.two.columns.offset-by-ten.center.logout(href=url('/ligas/detalle/' + liga.id)) Editar Datos
         ul.breadcrumb
             li 
                 a(href=url('/')) Inicio

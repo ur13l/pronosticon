@@ -274,6 +274,9 @@ class QuinielaController extends Controller
                 Pronostico::create($data);
             }
         }
+
+        $participacion->registrada = true;
+        $participacion->save();
         return redirect('/');
     }
 }

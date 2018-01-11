@@ -3,7 +3,7 @@ div
     input(type="hidden" name="id_equipo_ganador["+ key + "]")
     div.partido_editar.partido_mod.row
         .row
-            if quiniela.tipoQuiniela.nombre != "Survivor" 
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
                 div.four.columns.selectable(data-key=key, data-ganador= partido.equipoLocal.id)
                     div.row.twelve.columns.center
                         img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
@@ -15,7 +15,7 @@ div
                     h6.row.twelve.columns.center= partido.equipoLocal.nombre
 
             
-            if quiniela.tipoQuiniela.nombre != "Survivor" 
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
                 .four.columns.selectable.center(data-key=key, data-ganador= "empate")
                     .resultado-height
                         h1  Empate
@@ -24,7 +24,7 @@ div
                     .resultado-height
                         h2 vs
 
-            if quiniela.tipoQuiniela.nombre != "Survivor" 
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
                 div.four.columns.selectable(data-key=key, data-ganador= partido.equipoVisita.id)
                     div.row.twelve.columns.center
                         img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))

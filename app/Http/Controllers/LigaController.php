@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Liga;
 use App\Quiniela;
+use App\Deporte;
 use Auth;
 use Carbon\Carbon;
 
@@ -40,9 +42,21 @@ public function buscar(Request $request){
  * @return Response
  */
 public function nuevo(Request $request) {
-    $ligas = Liga::all();
-    $tipo_quiniela = TipoQuiniela::all();
-    return view('ligas.nueva');
+    $deportes = Deporte::all();
+    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => null]);
+}
+
+
+/**
+ * Método que devuelve la vista para editar los datos de una liga.
+ *
+ * @param Request $request
+ * @return Response
+ */
+public function detalle($id) {
+    $deportes = Deporte::all();
+    $liga = Liga::find($id);
+    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => $liga]);
 }
 
 /**
@@ -57,40 +71,50 @@ public function nuevo(Request $request) {
 }
 
 /**
- * Método para crear o actualizar a un quiniela.
- *
- * @param Request $request
- * @return Response
- */
-public function create(Request $request) {
+    * Método para crear o actualizar a un equipo.
+    *
+    * @param Request $request
+    * @return Response
+    */
+    public function createOrUpdate(Request $request) {
+         $rules = [
+             "nombre" => "required",
+             "id_deporte" => "required",
+             "logo" => "required",
+             "imagen" => "required"
+         ];
+         $request->validate($rules);
     
-     $rules = [
-         "nombre" => "required|unique:quiniela",
-         "id_liga" => "required",
-         "id_tipo_quiniela" => "required",
-         "bolsa" => "required"
-     ];
-     $request->validate($rules);
-     $quiniela = new Quiniela();
+         $liga = Liga::find($request->id);
+         if(!$liga) {
+            $liga = new Liga();
+         }
+        
+        if($request->file("logo")) {
+            Storage::delete($liga->logo);
+            $logo = $request->file("logo")->store('ligas');
+            $liga->logo = url('storage/' . $logo);
+        }
+
+        if($request->file("imagen")) {
+            Storage::delete($liga->imagen);
+            $imagen = $request->file("imagen")->store('equipos');
+            $liga->imagen = url('storage/' .$imagen);
+        }
+        $liga->nombre = $request->nombre;
+        $liga->id_deporte = $request->id_deporte;
+        $liga->save();
     
-    $imagen = $request->file("imagen")->store('quinielas');
-    $quiniela->nombre = $request->nombre;
-    $quiniela->descripcion = $request->descripcion;
-    $quiniela->id_liga = $request->id_liga;
-    $quiniela->imagen = $request->imagen;
-    $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
-    $quiniela->permitir_marcador = $request->permitir_marcador ? true : false;
-    $quiniela->cantidad_reponches = $request->cantidad_reponches;
-    $quiniela->save();
-
-    $bolsa = Bolsa::create([
-         'cantidad' => $request->bolsa,
-         'id_quiniela' => $quiniela->id
-     ]);
-
-
-    return redirect()->route('quinielas.index');
-}
-
+        return redirect('/ligas');
+    }
+    
+        /** */
+        public function eliminar(Request $request) {
+            $liga = Liga::find($request->id);
+            $id_liga = $liga->id_liga;
+            $liga->delete();
+            return redirect('/ligas');
+    
+        }
 
 }

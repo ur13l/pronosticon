@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_quiniela
  * @property int $puntuacion
  * @property boolean $activo
+ * @property boolean $registrada
  * @property int $no_reponches
  * @property string $created_at
  * @property string $updated_at
@@ -29,7 +30,7 @@ class Participacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_usuario', 'id_quiniela', 'puntuacion', 'activo', 'no_reponches', 'created_at', 'updated_at'];
+    protected $fillable = ['id_usuario', 'id_quiniela', 'puntuacion', 'activo', 'no_reponches', 'registrada', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

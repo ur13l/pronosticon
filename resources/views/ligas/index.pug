@@ -17,7 +17,7 @@ block content
         h1.center Ligas
         div.row
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
-            //button.three.columns.offset-by-five.primary-color-background(onclick="location.href='"+ url('/ligas/nuevo') +"'") Nueva liga
+            button.three.columns.offset-by-five.primary-color-background(onclick="location.href='"+ url('/ligas/nuevo') +"'") Nueva liga
         div.lista 
             if count(ligas) == 0 
                 br

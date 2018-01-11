@@ -1,0 +1,67 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/ligas/detalle.js'))
+
+block title
+    if liga != null
+       title= liga.nombre
+    else
+        title Nueva liga
+
+block content
+    br
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a(href=url('/ligas/')) Ligas
+            li
+                a.active(href=url('/ligas/' + (liga.id? "editar/" + liga.id : "nuevo")))= (liga.nombre? liga.nombre: "Nuevo")
+        
+        br
+
+        if liga
+            div#dialog_eliminar(title="¿Eliminar?")
+                p ¿Estás seguro que deseas eliminar la liga #{liga.nombre}?
+
+    
+            div.row
+                a.two.columns.offset-by-ten.center.error#eliminar_liga(data-id=liga.id) Eliminar
+                form(action=url('/ligas/eliminar') id="form_eliminar" method="post")
+                    input(type="hidden" name="_token" value=csrf_token())
+                    input(type="hidden" name="id" value=liga.id)
+                    
+        form#form_crear(action=url('/ligas/createorupdate') enctype="multipart/form-data"  method="POST")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" id="id" name="id" value= liga.id)
+            div.row
+                div.six.columns.offset-by-three
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (liga.nombre? liga.nombre : old('nombre')))
+            br
+
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="logo") Logo:
+                    input.twelve.columns.center(type="file" name="logo" id="logo" placeholder="Logo" value=(old('logo')))
+            br
+
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="imagen") Imagen:
+                    input.twelve.columns.center(type="file" name="imagen" id="imagen" placeholder="imagen" value=(old('imagen')))
+        
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    label(for="id_deporte") Deporte:
+                    select.twelve.columns.center(name="id_deporte" id="id_deporte")
+                        each deporte in deportes
+                            option(value=deporte.id) #{deporte.nombre}
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    button.primary-color-background.twelve.columns(type="submit") Guardar
+        
+       
