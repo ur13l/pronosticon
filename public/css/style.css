@@ -315,3 +315,18 @@ input::-webkit-inner-spin-button {
     display: inline;
     margin: 8px;
 }
+
+.hideextra { white-space: nowrap; overflow: hidden; text-overflow:ellipsis; }
+
+
+.selected {
+    background: #ff8000;
+}
+
+.selected *{
+    color: white;
+}
+
+.item-jornada {
+    cursor: pointer;
+}

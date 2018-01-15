@@ -66,6 +66,15 @@ class Quiniela extends Model
         return $this->hasMany('App\Participacion', 'id_quiniela')->orderBy('puntuacion');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function participacionesSurvivor()
+    {
+        return $this->hasMany('App\Participacion', 'id_quiniela')->orderBy('activo', 'desc')
+            ->orderBy('no_reponches');
+    }
+
     public function usuarioParticipa(Usuario $usuario) {
         foreach($this->participacions as $participacion) {
             if ($usuario->id == $participacion->usuario->id) {

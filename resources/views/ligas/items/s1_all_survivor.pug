@@ -1,0 +1,24 @@
+div.twelve.columns.white-background
+    div
+        h4.ten.columns.offset-by-one= quiniela.nombre + " - Posiciones"
+    div.row
+        if count(quiniela.participacions) == 0
+            h6 No hay participantes registrados
+        else
+            table.ten.columns.offset-by-one
+                thead
+                    tr
+                        th Activo
+                        th Nombre
+                        th 
+                        th
+                tbody
+                    each p, key in quiniela.participacionesSurvivor
+                        tr
+                            td
+                                if p.activo
+                                    img(src=url('img/success.png') height="32")
+                                else
+                                    img(src=url('img/cancel.png') height="32")
+                            td= p.usuario.nombre
+                            td= p.ultimoPronostico.equipoGanador.nombre

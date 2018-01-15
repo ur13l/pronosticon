@@ -316,4 +316,13 @@ class QuinielaController extends Controller
         }
         return view('quinielas.info', ['participacion_jornada' => $participacionJornada, 'posicion' => $posicion, 'quiniela' => $quiniela, 'usuario' => $usuario, 'participacion' => $participacion]);
     }
+
+
+    public function datosJornada(Request $request) {
+        $participacionJornada = ParticipacionJornada::where('id_participacion', $request->id_participacion)
+            ->where('id_jornada', $request->id_jornada)->first();
+        $quiniela = $participacionJornada ? $participacionJornada->participacion->quiniela : null;
+        return view('quinielas.items.datos_jornada', ['participacion_jornada'=>$participacionJornada, 'quiniela' => $quiniela ]);
+
+    }
 }

@@ -47,4 +47,9 @@ class Jornada extends Model
     {
         return $this->hasMany('App\Partido', 'id_jornada')->orderBy('fecha_hora');
     }
+
+
+    public function participacionesJornada() {
+        return $this->hasMany('App\ParticipacionJornada', 'id_jornada');
+    }
 }
