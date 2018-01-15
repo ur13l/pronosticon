@@ -11,9 +11,11 @@ use App\Bolsa;
 use App\Usuario;
 use App\Jornada;
 use App\Pronostico;
+use App\Partido;
 use App\Liga;
 use Carbon\Carbon;
 use App\Participacion;
+use App\ParticipacionJornada;
 
 class QuinielaController extends Controller
 {
@@ -182,8 +184,9 @@ class QuinielaController extends Controller
         $participacion = Participacion::where('id_usuario', $usuario->id)->where('id_quiniela', $quiniela->id)->first();
         if($quiniela->usuarioParticipa($usuario)) {
             $jornada = Jornada::find($id_jornada);
+            $participacionJornada = ParticipacionJornada::where('id_jornada', $id_jornada)->where('id_participacion', $participacion->id)->first();
             $today = Carbon::now('America/Mexico_City');
-            return view('quinielas.contestar_regular', ['liga' => $jornada->liga, 'participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today]);
+            return view('quinielas.contestar_regular', ['participacion_jornada'=> $participacionJornada, 'liga' => $jornada->liga, 'participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today]);
        }
        else {
             //TODO: Error cuando el usuario no participa en la quiniela.
@@ -200,83 +203,117 @@ class QuinielaController extends Controller
    public function contestarQuiniela(Request $request) {
         //Se comprueba si la quiniela tiene resultados
         $id_participacion = $request->id_participacion;
+        $id_jornada = $request->id_jornada;
         $participacion = Participacion::find($id_participacion);
         $quiniela = $participacion->quiniela;
-        if($quiniela->tipoQuiniela->nombre != "Survivor") {
-            foreach($request->id_partido as $key => $dummy) {
-                
-                $id_partido = $request->id_partido[$key];
-                $data = [];
-                
-                
-                $data['fecha'] = Carbon::now('America/Mexico_City');
+        $today = Carbon::now('America/Mexico_City');
+        $participacionJornada = ParticipacionJornada::where('id_participacion', $id_participacion)
+            ->where('id_jornada', $id_jornada)->first();
+        if(!$participacionJornada) {
+            $participacionJornada = ParticipacionJornada::create([
+                'id_participacion' => $id_participacion,
+                'id_jornada' => $id_jornada,
+                'registrada' => false
+            ]);
+        }
+        
+        if (!$participacionJornada->registrada) {
 
-                    if ($quiniela->permitir_resultados) {
-                        $data['resultado_local'] = $resultado_local[$key];
-                        $data['resultado_visita'] = $resultado_visita[$key];
-                        if($resultado_local[$key] > $resultado_visita[$key]){
-                            $data['id_equipo_ganador'] = $partido->equipoLocal->id;
-                        }
-                        else if($resultado_local[$key] < $resultado_visita[$key]){
-                            $data['id_equipo_ganador'] = $partido->equipoVisita->id;
-                        }
-                    }
-                    else {
-                        $equipo_ganador =  $request->id_equipo_ganador[$key];
-                        if($equipo_ganador != "empate") {
-                            $data['id_equipo_ganador'] = $request->id_equipo_ganador[$key];
+            $data = [];
+            $data['id_participacion_jornada'] = $participacionJornada->id;
+            $data['id_participacion'] = $id_participacion;
+            if($quiniela->tipoQuiniela->nombre != "Survivor") {
+                foreach($request->id_partido as $key => $dummy) {
+
+                    $id_partido = $request->id_partido[$key];
+                    $partido = Partido::find($id_partido);
+                    
+                    if($today->lt($partido->fecha_hora)) {
+                        $data['fecha'] = Carbon::now('America/Mexico_City');
+
+                        if ($quiniela->permitir_marcador) {
+                            $data['resultado_local'] = $request->resultado_local[$key];
+                            $data['resultado_visita'] = $request->resultado_visita[$key];
+                            if($request->resultado_local[$key] > $request->resultado_visita[$key]){
+                                $data['id_equipo_ganador'] = $partido->equipoLocal->id;
+                            }
+                            else if($request->resultado_local[$key] < $request->resultado_visita[$key]){
+                                $data['id_equipo_ganador'] = $partido->equipoVisita->id;
+                            }
                         }
                         else {
-                            $data['id_equipo_ganador'] = null;
+                            $equipo_ganador =  $request->id_equipo_ganador[$key];
+                            if($equipo_ganador != "empate") {
+                                $data['id_equipo_ganador'] = $request->id_equipo_ganador[$key];
+                            }
+                            else {
+                                $data['id_equipo_ganador'] = null;
+                            }
+                        }
+                        
+                       
+
+
+                        $pronostico = Pronostico::where('id_partido', $id_partido)
+                            ->where('id_participacion', $id_participacion)->first();
+                        //Si el usuario ya había contestado
+                        if($pronostico) {
+                            $pronostico->update($data);
+
+                        }
+                        else{
+                            $data['puntos'] = 0;
+                            $data['id_partido'] = $request->id_partido[$key];
+                            Pronostico::create($data);
                         }
                     }
-                
-
-
-                $pronostico = Pronostico::where('id_partido', $id_partido)
-                    ->where('id_participacion', $id_participacion)->first();
-                
+                }
+            }
+            //SURVIVOR
+            else {
+                $data['id_partido'] = $request->id_partido_survivor;
+                $data['fecha'] = Carbon::now('America/Mexico_City');
+                $id_equipo_ganador = $request->id_equipo_ganador_survivor;
+                if($id_equipo_ganador != "empate") {
+                    $data['id_equipo_ganador'] = $id_equipo_ganador;
+                }
+                else {
+                    $data['id_equipo_ganador'] = null;
+                }
+                $pronostico = Pronostico::where('id_partido', $request->id_partido_survivor)
+                ->where('id_participacion', $request->id_participacion_survivor)->first();
+            
                 //Si el usuario ya había contestado
                 if($pronostico) {
                     $pronostico->update($data);
-
                 }
                 else{
                     $data['puntos'] = 0;
-                    $data['id_participacion'] = $request->id_participacion[$key];
-                    $data['id_partido'] = $request->id_partido[$key];
                     Pronostico::create($data);
                 }
             }
         }
-        //SURVIVOR
-        else {
-            $data = [];
-            $data['id_participacion'] = $id_participacion;
-            $data['id_partido'] = $request->id_partido_survivor;
-            $data['fecha'] = Carbon::now('America/Mexico_City');
-            $id_equipo_ganador = $request->id_equipo_ganador_survivor;
-            if($id_equipo_ganador != "empate") {
-                $data['id_equipo_ganador'] = $id_equipo_ganador;
-            }
-            else {
-                $data['id_equipo_ganador'] = null;
-            }
-            $pronostico = Pronostico::where('id_partido', $request->id_partido_survivor)
-            ->where('id_participacion', $request->id_participacion_survivor)->first();
-        
-            //Si el usuario ya había contestado
-            if($pronostico) {
-                $pronostico->update($data);
-            }
-            else{
-                $data['puntos'] = 0;
-                Pronostico::create($data);
-            }
-        }
 
-        $participacion->registrada = true;
-        $participacion->save();
+        $participacionJornada->registrada = true;
+        $participacionJornada->save();
         return redirect('/');
+    }
+
+
+
+    public function info($id, Request $request) {
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first();
+        $quiniela = Quiniela::find($id);
+        $participacion = Participacion::where('id_quiniela', $quiniela->id)->where('id_usuario', $usuario->id)->first();
+        $posicion = $participacion->calcularPosicion();
+        if($quiniela->liga->ultimaJornada) {
+            $participacionJornada = ParticipacionJornada::where('id_participacion', $participacion->id)
+            ->where('id_jornada', $quiniela->liga->ultimaJornada->id)->first();
+        }
+        else {
+            $participacionJornada = null;
+        }
+        return view('quinielas.info', ['participacion_jornada' => $participacionJornada, 'posicion' => $posicion, 'quiniela' => $quiniela, 'usuario' => $usuario, 'participacion' => $participacion]);
     }
 }

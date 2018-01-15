@@ -21,22 +21,25 @@ block content
                 a(href=url('/')) Inicio
             
         br
-        if today.gt(jornada.fecha_inicio) && today.lt(jornada.fecha_fin)
+        if !participacion.registrada && today.gt(jornada.fecha_inicio) && today.lt(jornada.fecha_fin)
             div.warning-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
         br
         div#error_placement.error-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
         br
         div.row
-            if today.gt(jornada.fecha_fin)
-                h5.center Esta jornada ya terminó, prueba tu suerte enviando el pronóstico de la 
-                    if jornada.liga.proximaJornada[1] != "proximaJornada"
-                        a(href=url('/quinielas/contestar/' +jornada.liga.proximaJornada.id+ '/' + quiniela.id + '/')) siguiente jornada
-                    else
-                        | &nbsp siguiente jornada
-                        |, o bien regresa a la pantalla de 
-                        a(href=url('/')) inicio
-                        |.
-                .space
+            if !participacion_jornada || !participacion_jornada.registrada 
+                if today.gt(jornada.fecha_fin)
+                    h5.center Esta jornada ya terminó, prueba tu suerte enviando el pronóstico de la 
+                        if jornada.liga.proximaJornada[1] != "proximaJornada"
+                            a(href=url('/quinielas/contestar/' +jornada.liga.proximaJornada.id+ '/' + quiniela.id + '/')) siguiente jornada
+                        else
+                            | &nbsp siguiente jornada
+                            |, o bien regresa a la pantalla de 
+                            a(href=url('/')) inicio
+                            |.
+                    .space
+                else
+                    h5 Contesta tu quiniela. Suerte
+                    include /quinielas/contestar_lista_partidos
             else
-                h5 Contesta tu quiniela. Suerte
-                include /quinielas/contestar_lista_partidos
+                include /quinielas/participacion_registrada

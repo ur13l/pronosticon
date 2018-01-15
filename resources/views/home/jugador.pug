@@ -8,5 +8,11 @@ block content
         div.row
             h4.six.columns PRONOSTICON
             h4.six.columns.right= usuario.nombre
-    each participacion in usuario.participacions
-        include /ligas/seccion
+    each participacion,key in usuario.participacions
+        section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; height:600px")
+            if key % 2 == 0
+                div.mask
+                    include /ligas/seccion
+            else
+                div.mask2
+                    include /ligas/seccion

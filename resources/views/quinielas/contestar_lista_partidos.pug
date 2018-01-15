@@ -12,10 +12,17 @@
             div#table_partidos
                 each partido, key in jornada.partidos   
                     if quiniela.permitir_marcador && quiniela.tipoQuiniela.nombre != "Survivor"
-                        include /quinielas/items/partido_permitir_marcador
+                        if today.lt(partido.fecha_hora)
+                            include /quinielas/items/partido_permitir_marcador
+                        else if quiniela.tipoQuiniela.nombre != "Survivor" 
+                            include /quinielas/items/partido_invalido
+                        else 
+                            h2 Esta jornada ya comenzó, no es posible contestar el Survivor de esta semana.
                     else
-                        include /quinielas/items/partido_sin_marcador
-                        
+                        if today.lt(partido.fecha_hora)
+                            include /quinielas/items/partido_sin_marcador
+                        else 
+                            include /quinielas/items/partido_invalido_sin_marcador
         br
         br
         div.row

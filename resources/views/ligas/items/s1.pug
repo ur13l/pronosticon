@@ -1,0 +1,23 @@
+div.ten.columns.offset-by-one.white-background
+    div
+        h4.ten.columns.offset-by-one= participacion.quiniela.nombre + " - Posiciones"
+    div.row
+        if count(participacion.quiniela.participacions) == 0
+            h6 No hay participantes registrados
+        else
+            table.ten.columns.offset-by-one
+                thead
+                    tr
+                        th #
+                        th Nombre
+                        th Pts.
+                tbody
+                    each p, key in participacion.quiniela.participacions
+                        if key < 10 || participacion.id == p.id
+                            tr
+                                td= key + 1
+                                td= p.usuario.nombre
+                                td= p.puntuacion
+    .row
+        button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+        .small-space

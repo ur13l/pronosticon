@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_participacion
  * @property int $id_partido
  * @property int $id_equipo_ganador
+ * @property int $id_participacion_jornada
  * @property int $puntos
  * @property int $resultado_local
  * @property int $resultado_visita
@@ -32,7 +33,7 @@ class Pronostico extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_participacion', 'id_partido', 'id_equipo_ganador', 'puntos', 'resultado_local', 'resultado_visita', 'victoria', 'fecha', 'created_at', 'updated_at'];
+    protected $fillable = ['id_participacion', 'id_partido', 'id_equipo_ganador', 'id_participacion_jornada', 'puntos', 'resultado_local', 'resultado_visita', 'victoria', 'fecha', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -56,5 +57,10 @@ class Pronostico extends Model
     public function partido()
     {
         return $this->belongsTo('App\Partido', 'id_partido');
+    }
+
+    public function participacionJornada() 
+    {
+        return $this->belongsTo('App\ParticipacionJornada', 'id_participacion_jornada');
     }
 }

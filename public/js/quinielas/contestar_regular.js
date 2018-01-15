@@ -39,15 +39,15 @@ $(function() {
             $(".selectable").click(function() {
                 var key = $(this).data('key'),
                     ganador = $(this).data('ganador');
-                    console.log(key);
                 $(this).siblings().css('background', 'white');
-                $(this).css('background', '#F5AB48');
-                $(this).css('color', 'white');
+                $(this).siblings().find('*').css('color', '#ff9000');
+                $(this).css('background', '#ff9000');
+                $(this).find('*').css('color', 'white');
                 $(`[name='id_equipo_ganador[${key}]']`).val(ganador);
                 
             });
 
-            $('[name^="id_equipo_ganador"]').each(function() {
+            $('[name^="id_equipo_ganador["]').each(function() {
                 $(this).rules('add', {
                     required: true
                 })
@@ -62,8 +62,9 @@ $(function() {
                 id_partido = $(this).closest('.partido_editar').siblings('[name^="id_partido"]').val();
                
             $('.selectable').css('background', 'white');
-            $(this).css('background', '#F5AB48');
-            $(this).css('color', 'white');
+            $('.selectable').find('*').css('color', '#ff9000');
+            $(this).css('background', '#FF9000');
+            $(this).find('*').css('color', 'white');
             $(`[name='id_equipo_ganador_survivor']`).val(ganador);
             $(`[name='id_partido_survivor']`).val(id_partido);
             

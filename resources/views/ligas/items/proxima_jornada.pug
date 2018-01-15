@@ -1,0 +1,109 @@
+
+
+div.twelve.columns.white-background
+    h4.ten.columns.offset-by-one Próxima Jornada
+    if count(quiniela.liga.proximaJornada.partidos) == 0
+        h6 No hay partidos registradas
+    else
+        if quiniela.tipoQuiniela.nombre != "Survivor" 
+
+            if quiniela.permitir_marcador
+
+                table.ten.columns.offset-by-one
+                    thead
+                        tr
+                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                    tbody
+                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                            tr  
+                                td.center
+                                    img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+                                td.center #{pronostico.resultado_local}
+                                td.center -
+                                td.center #{pronostico.resultado_visita}
+                                td.center
+                                    img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                                td.center
+                                    if pronostico.partido.resultado[1] != "resultado" 
+                                        if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
+                                            img(src=url('/img/success.png'))
+                                        else
+                                            img(src=url('/img/cancel.png'))
+                                    else
+                                        img(src=url('/img/wait.png'))
+
+            else
+                table.ten.columns.offset-by-one
+                    thead
+                        tr
+                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                    tbody
+                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                            tr  
+                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
+                                    td.center.orange-background
+                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+                                else
+                                    td.center
+                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+
+                                if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
+                                    td.center.orange-background Empate
+                                else
+                                    td.center Empate
+
+                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_visita
+                                    td.center.orange-background
+                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                                else
+                                    td.center
+                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                                
+
+                                td.center
+                                    if pronostico.partido.resultado[1] != "resultado" 
+                                        if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
+                                            img(src=url('/img/success.png'))
+                                        else
+                                            img(src=url('/img/cancel.png'))
+                                    else
+                                        img(src=url('/img/wait.png'))
+
+        else
+            table.ten.columns.offset-by-one
+                    thead
+                        tr
+                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                    tbody
+                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                            tr  
+                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
+                                    td.center.orange-background
+                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+                                else
+                                    td.center
+                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+
+                                if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
+                                    td.center.orange-background Empate
+                                else
+                                    td.center Empate
+
+                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_visita
+                                    td.center.orange-background
+                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                                else
+                                    td.center
+                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                                
+
+                                td.center
+                                    if pronostico.partido.resultado[1] != "resultado" 
+                                        if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
+                                            img(src=url('/img/success.png'))
+                                        else
+                                            img(src=url('/img/cancel.png'))
+                                    else
+                                        img(src=url('/img/wait.png'))
+
+                                    

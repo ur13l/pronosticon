@@ -57,8 +57,8 @@ class Liga extends Model
     public function ultimaJornada() 
     {
         return $this->hasOne('App\Jornada', 'id_liga')
-            ->where('fecha_fin', '<', Carbon::now('America/Mexico_City'))
-            ->orderBy('fecha_fin', 'asc');
+            ->where('fecha_inicio', '<', Carbon::now('America/Mexico_City'))
+            ->orderBy('fecha_inicio', 'desc');
     }
 
     /**

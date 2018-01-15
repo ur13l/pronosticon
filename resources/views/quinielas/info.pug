@@ -1,0 +1,51 @@
+extends /layouts/app
+
+block scripts
+    script(src= url('/js/quinielas/info.js'))
+
+block title
+    title= quiniela.nombre
+    
+block content
+    input(type="hidden" id="_id_quiniela" name="_id_quiniela" value=quiniela.id)
+    div.banner.row
+        img.banner_img(src=quiniela.imagen)
+        div.banner_mask
+        h1.banner_title.white-color-text.center= quiniela.nombre
+    div.container.white-background
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a.active(href=url('/quinielas/editar/' + quiniela.id))= quiniela.nombre
+        br
+        
+        div.row
+            .twelve.columns.orange-background
+                .row
+                    h1.five.columns.offset-by-one.white-color-text= "#" + posicion + " " + usuario.nombre
+                    h1.five.columns.white-color-text.right= participacion.puntuacion + "pts."
+        
+        br 
+
+        div.row
+            .six.columns
+                include /ligas/items/s1_all
+            .six.columns
+
+                if participacion.participacionProximaJOrnada[1] != "participacionProximaJornada"
+                    include /ligas/items/proxima_jornada
+                else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
+                    include /ligas/items/ultima_jornada
+
+        br
+        div.row
+            .twelve.colums.white-background
+                h4 Resultados por jornada
+                
+                ul.menu
+                    each jornada in quiniela.liga.jornadas
+                        li
+                            a(href="#")= jornada.nombre
+                
+                include /quinielas/items/datos_jornada

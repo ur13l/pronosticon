@@ -63,7 +63,7 @@ class Quiniela extends Model
      */
     public function participacions()
     {
-        return $this->hasMany('App\Participacion', 'id_quiniela');
+        return $this->hasMany('App\Participacion', 'id_quiniela')->orderBy('puntuacion');
     }
 
     public function usuarioParticipa(Usuario $usuario) {

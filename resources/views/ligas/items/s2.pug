@@ -1,0 +1,17 @@
+div.ten.columns.offset-by-one
+    div.center.row
+        img(src=participacion.quiniela.liga.logo height="200")
+
+    .center.row
+        if participacion.quiniela.liga.proximaJornada[1] != "proximaJornada"
+            //h5= var_dump(participacion.participacionProximaJornada)
+            if participacion.participacionProximaJornada[1] != "participacionProximaJornada"
+                button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quiniela/participacion/' + participacion.participacionProximaJornada.id) +"'") Ver últimos resultados
+
+            else 
+                 button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.proximaJornada.id + "/" + participacion.quiniela.id) +"'") Contestar quiniela de la semana
+
+
+        else 
+            h5 Espere al administrador para que cargue la próxima jornada.
+        

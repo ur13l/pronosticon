@@ -1,0 +1,38 @@
+div
+    input(type="hidden" name="id_partido[]" value= partido.id)
+ 
+    div.partido_editar.partido_mod.row.invalid
+        .row
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
+                div.four.columns(data-key=key, data-ganador= partido.equipoLocal.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                    h6.row.twelve.columns.center= partido.equipoLocal.nombre
+            else
+                div.five.columns(data-key=key, data-ganador= partido.equipoLocal.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoLocal.imagen))
+                    h6.row.twelve.columns.center= partido.equipoLocal.nombre
+
+            
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
+                .four.columns.center(data-key=key, data-ganador= "empate")
+                    .resultado-height
+                        h1  Empate
+            else
+                .two.columns.center
+                    .resultado-height
+                        h2 vs
+
+            if quiniela.tipoQuiniela.nombre != "Survivor" && quiniela.liga.deporte.nombre == "Futbol"
+                div.four.columns(data-key=key, data-ganador= partido.equipoVisita.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                    h6.row.twelve.columns.center= partido.equipoVisita.nombre
+            else 
+                div.five.columns(data-key=key, data-ganador= partido.equipoVisita.id)
+                    div.row.twelve.columns.center
+                        img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                    h6.row.twelve.columns.center= partido.equipoVisita.nombre
+        .row
+            h5 Este partido ya se jugó o se está jugando en este momento, ya no es posible contestarlo.
