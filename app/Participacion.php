@@ -91,5 +91,15 @@ class Participacion extends Model
             $pos += 1;
         }
     }
+
+    public function calcularPuntuacion() {
+        $participacionJornadas = $this->participacionJornadas;
+        $puntos = 0;
+        foreach ($participacionJornadas as $pj) {
+            $puntos += $pj->puntuacion;
+        }
+        $this->puntuacion = $puntos;
+        $this->save();
+    }
     
 }

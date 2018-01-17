@@ -1,0 +1,30 @@
+
+div(style="overflow-x: auto;")
+    table.ten.columns.offset-by-one
+        thead
+            tr
+                th.center(style="min-width: 100px") Jugador
+                each jornada in quiniela.liga.jornadas
+                    th.center(style="min-width: 100px")= jornada.nombre
+        tbody
+            each participacion in quiniela.participacions
+                tr 
+                    td.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
+                    each jornada in quiniela.liga.jornadas
+                        - x = false;
+                        each part in jornada.participacionesJornada
+                            if part.id_participacion == participacion.id
+                                each pronostico in part.pronosticos
+                                    - x = true;
+                                    if pronostico.resultado && pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
+                                        td.center.success-background
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
+                                    else if pronostico.resultado && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
+                                        td.center.error-background
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
+                                    else
+                                        td.center
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
+                                    
+                        if !x
+                            td.center

@@ -13,8 +13,9 @@ if participacion_jornada
                 each participacion in quiniela.participacions
                     tr 
                         td.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
+                        - x = false;
                         each partido in participacion_jornada.jornada.partidos
-                            - x = false;
+                            
                             each part in participacion_jornada.jornada.participacionesJornada
                                 if part.id_participacion == participacion.id
                                     each pronostico in part.pronosticos
@@ -33,8 +34,8 @@ if participacion_jornada
                                                     td.center
                                                         img(src= url('/storage' + partido.equipoVisita.imagen) height="32")
             
-                                if !x 
-                                    td.center 
+                            if !x 
+                                td.center 
 
 else
     h6 No es posible ver los resultados de esta jornada al no haber enviado tu quiniela.

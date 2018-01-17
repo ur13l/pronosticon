@@ -4,12 +4,20 @@ div.row
 
     if key % 2 == 0
         div.six.columns
-            include /ligas/items/s1
+            if participacion.quiniela.tipoQuiniela.nombre != "Survivor"
+                include /ligas/items/s1
+            else
+                .ten.columns.offset-by-one
+                    include /ligas/items/s1_survivor
         div.six.columns
             include /ligas/items/s2
     else
         div.six.columns
             include /ligas/items/s2
         div.six.columns
-            include /ligas/items/s1
+            if participacion.quiniela.tipoQuiniela.nombre != "Survivor"
+                include /ligas/items/s1
+            else
+                .ten.columns.offset-by-one
+                    include /ligas/items/s1_survivor
 

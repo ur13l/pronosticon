@@ -1,0 +1,29 @@
+- quiniela = participacion.quiniela
+div.twelve.columns.white-background
+    div
+        h4.ten.columns.offset-by-one= quiniela.nombre + " - Posiciones"
+    div.row
+        if count(quiniela.participacions) == 0
+            h6 No hay participantes registrados
+        else
+            table.ten.columns.offset-by-one
+                thead
+                    tr
+                        th Activo
+                        th Nombre
+                        th 
+                        th
+                tbody
+                    each p, key in quiniela.participacionesSurvivor
+                        if key < 10 || participacion.id == p.id
+                            tr
+                                td
+                                    if p.activo
+                                        img(src=url('img/success.png') height="24")
+                                    else
+                                        img(src=url('img/cancel.png') height="24")
+                                td= p.usuario.nombre
+                                td= p.ultimoPronostico.equipoGanador.nombre
+    .row
+    button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+    .small-space

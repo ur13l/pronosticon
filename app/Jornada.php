@@ -52,4 +52,35 @@ class Jornada extends Model
     public function participacionesJornada() {
         return $this->hasMany('App\ParticipacionJornada', 'id_jornada');
     }
+
+
+    public function calcularPuntuaciones() {
+        $participacionesJornada = ParticipacionJornada::where('id_jornada', $this->id)->get();
+        dd($participacionesJornada);
+        foreach($participacionesJornada as $pj) {
+            foreach($pj->pronosticos as $pronostico) {
+                $resultado = $pronostico->partido->resultado;
+                $puntos = 0;
+                if($resultado) {
+                    if($pronostico->id_equipo_ganador == $resultado->id_equipo_ganador) {
+                        $puntos += 3;
+                        if($pronostico->resultado_local == $resultado->resultado_local && 
+                            $pronostico->resultado_visita && $resultado->resultado_visita) {
+                                $puntos += 2;
+                        }
+                    }
+                }
+                $pj->puntuacion = $puntos;
+                $pj->save();
+            }
+        }
+
+        $quinielas = $this->liga->quinielas;
+
+        foreach($quinielas as $quiniela) {
+            foreach ($quiniela->participacions as $participacion) {
+                $participacion->calcularPuntuacion();
+            }
+        }
+    }
 }

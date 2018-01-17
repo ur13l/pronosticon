@@ -28,17 +28,39 @@ block content
                 if count(quiniela.participacions) == 0
                     h6 No hay participantes registrados
                 else
-                    table.ten.columns.offset-by-one
-                        thead
-                            tr
-                                th Nombre
-                                th Pts.
-                        tbody
-                            
-                            each participacion in quiniela.participacions
+                    if quiniela.tipoQuiniela.nombre != "Survivor"
+                        table.ten.columns.offset-by-one
+                            thead
                                 tr
-                                    td= participacion.usuario.nombre
-                                    td= participacion.puntuacion
+                                    th #
+                                    th Nombre
+                                    th Pts.
+                            tbody
+                                each p, key in quiniela.participacions
+                                    tr
+                                        td= key + 1
+                                        td= p.usuario.nombre
+                                        td= p.puntuacion
+
+                    else
+                        table.ten.columns.offset-by-one
+                            thead
+                                tr
+                                    th Activo
+                                    th Nombre
+                                    th 
+                                    th
+                            tbody
+                                each p, key in quiniela.participacionesSurvivor
+                                    tr
+                                        td
+                                            if p.activo
+                                                img(src=url('img/success.png') height="24")
+                                            else
+                                                img(src=url('img/cancel.png') height="24")
+                                        td= p.usuario.nombre
+                                        td= p.ultimoPronostico.equipoGanador.nombre
+
                 h6 Agregar participante
                 form(action=url('/quinielas/agregarparticipante') method="post" id="form_agregar_participante")
                     input(type="hidden" name="_token" value=csrf_token())

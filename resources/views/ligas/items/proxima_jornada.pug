@@ -84,10 +84,13 @@ div.twelve.columns.white-background
                                     td.center
                                         img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
 
-                                if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
-                                    td.center.orange-background Empate
+                                if quiniela.tipoQuiniela.nombre != "Survivor" && !quiniela.permitir_marcador
+                                    if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
+                                        td.center.orange-background Empate
+                                    else
+                                        td.center Empate
                                 else
-                                    td.center Empate
+                                    td.center vs
 
                                 if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_visita
                                     td.center.orange-background

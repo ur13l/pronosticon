@@ -182,6 +182,7 @@ class JornadaController extends Controller
         $id_partido = $request->id_partido;
         $resultado_local = $request->resultado_local;
         $resultado_visita = $request->resultado_visita;
+        $jornada = Jornada::find($request->id_jornada);
 
         foreach($id_resultado as $key=>$item) {
             if($resultado_local[$key] != null && $resultado_visita[$key] != null){
@@ -215,6 +216,8 @@ class JornadaController extends Controller
                 $resultado->partido->jornada->save();
             }
         }
+
+        $jornada->calcularPuntuaciones();
         return redirect('/ligas/editar/' . $partido->jornada->liga->id);
 
     }

@@ -49,16 +49,22 @@ block content
 
         br
         div.row
-            .twelve.colums.white-background
-                h4 Resultados por jornada
-                
-                ul.menu
-                    each jornada in quiniela.liga.jornadas
-                        if quiniela.liga.ultimaJornada.id == jornada.id
-                            li.item-jornada.selected(data-id= jornada.id)
-                                a= jornada.nombre
-                        else 
-                            li.item-jornada(data-id= jornada.id)
-                                a= jornada.nombre
-                div#datos_jornada
-                    include /quinielas/items/datos_jornada
+            if quiniela.tipoQuiniela.nombre != "Survivor"
+                .twelve.colums.white-background
+                    h4 Resultados por jornada
+                    
+                    ul.menu
+                        each jornada in quiniela.liga.jornadas
+                            if quiniela.liga.ultimaJornada.id == jornada.id
+                                li.item-jornada.selected(data-id= jornada.id)
+                                    a= jornada.nombre
+                            else 
+                                li.item-jornada(data-id= jornada.id)
+                                    a= jornada.nombre
+                    div#datos_jornada
+                        include /quinielas/items/datos_jornada
+            else
+                .twelve.columns.white-background
+                    h4 Seguimiento Survivor
+                    div#datos_survivor
+                        include /quinielas/items/datos_survivor

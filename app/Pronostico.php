@@ -63,4 +63,8 @@ class Pronostico extends Model
     {
         return $this->belongsTo('App\ParticipacionJornada', 'id_participacion_jornada');
     }
+
+    public function equipoGanador() {
+        return $this->belongsTo('App\Equipo', 'id_equipo_ganador');
+    }
 }
