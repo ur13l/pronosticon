@@ -66,13 +66,18 @@ class Participacion extends Model
         return $this->hasOne('App\ParticipacionJornada', 'id_participacion')->where('id_jornada', $id);
     }
 
+    public function participacionJornadaActual() {
+        $id = $this->quiniela->liga->jornadaActual ? $this->quiniela->liga->jornadaActual->id : null;
+        return $this->hasOne('App\ParticipacionJornada', 'id_participacion')->where('id_jornada', $id);
+    }
+
     public function participacionUltimaJornada() {
         $id = $this->quiniela->liga->ultimaJornada ?  $this->quiniela->liga->ultimaJornada->id : null;
         return $this->hasOne('App\ParticipacionJornada', 'id_participacion')->where('id_jornada', $id);
     }
 
     public function participacionJornada($id_jornada) {
-        return $this->hasOne('App\ParticipacionJornada', 'id_participacion')->where('id_jornada', $id_jornada);
+        return $this->hasOne('App\ParticipacionJornada', 'id_participacion')->where('id_jornada', $id_jornada)->first();
     }
 
     public function ultimoPronostico() {

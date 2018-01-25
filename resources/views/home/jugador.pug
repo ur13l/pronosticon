@@ -1,15 +1,14 @@
 extend /layouts/app
 
+block scripts
+    script(src=url('/js/home/jugador.js'))
+
 block title
     title Bienvenido
 
-block content
-    section.black-background
-        div.row
-            h4.six.columns PRONOSTICON
-            h4.six.columns.right= usuario.nombre
+block content   
     each participacion,key in usuario.participacions
-        section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; height:600px")
+        section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; ")
             if key % 2 == 0
                 div.mask
                     include /ligas/seccion

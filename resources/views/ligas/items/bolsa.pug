@@ -1,0 +1,16 @@
+
+div.twelve.columns.white-background
+    h4.ten.columns.offset-by-one Bolsa
+        table.ten.columns.offset-by-one
+                thead
+                    tr
+                        th Lugar
+                        th.center Premio
+                tbody
+                    each bolsa in quiniela.bolsas
+                        tr  
+                            td= "#" + bolsa.premio
+                            td.center= "$" + bolsa.cantidad
+.space
+                                
+                           

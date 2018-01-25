@@ -84,7 +84,7 @@ block content
                                             img(src=url('/storage/' + partido.equipoLocal.imagen) height="50")
                                         if liga.ultimaJornada.registrada
                                             td.center 
-                                               | #{partido.resultados.first().resultado_local} - #{partido.resultados.first().resultado_visita}
+                                               | #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
                                         else
                                             td.center vs
                                         td.center

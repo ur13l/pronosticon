@@ -8,17 +8,32 @@ div.twelve.columns.white-background
             table.ten.columns.offset-by-one
                 thead
                     tr
-                        th Activo
+                        th.center A
                         th Nombre
-                        th 
-                        th
+                        th.center 
+                        if usuario.admin == 1 && !p.activo
+                            th.center R
                 tbody
                     each p, key in quiniela.participacionesSurvivor
                         tr
-                            td
+                            td.startd.center
                                 if p.activo
-                                    img(src=url('img/success.png') height="24")
+                                    img(src=url('img/success.png') height="18")
                                 else
-                                    img(src=url('img/cancel.png') height="24")
+                                    img(src=url('img/cancel.png') height="18")
                             td= p.usuario.nombre
-                            td= p.ultimoPronostico.equipoGanador.nombre
+                                if p.no_reponches > 0
+                                    span= " (R" + p.no_reponches + ")"
+                            td.center
+                                if p.ultimoPronostico.id_equipo_ganador
+                                    img(src= url('/storage/' + p.ultimoPronostico.equipoGanador.imagen) height=32)
+                                else
+                                    span N/J
+                            if usuario.admin == 1 && !p.activo 
+                                td.center
+                                    if p.no_reponches < p.quiniela.cantidad_reponches
+                                        form(action= url('/usuarios/reponche') method='post')
+                                            input(type='hidden' name='id_participacion' value=p.id)
+                                            button(type='submit') Reponchar
+                                    else
+                                        span Eliminado

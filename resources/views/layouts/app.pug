@@ -7,7 +7,7 @@ html
         link(href=(url('/css/libs/skeleton.css')) rel="stylesheet" type="text/css") 
         link(href=(url('/css/style.css')) rel="stylesheet" type="text/css") 
         link(href=(url('/css/libs/normalize.css')) rel="stylesheet" type="text/css")
-        link(href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet")
+        link(href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet")
         link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
         link(rel="stylesheet" href=url('/css/libs/chosen.css'))
         link(rel="stylesheet" href=url('/css/libs/imageselect.css'))
@@ -21,5 +21,6 @@ html
         script(src=url('/js/lib/imageselect.jquery.js'))
         block scripts
     body
+        include /layouts/bar
         input(type="hidden" id="_url" value=url('/'))
         block content

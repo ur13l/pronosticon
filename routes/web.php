@@ -76,4 +76,5 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo'], function(
     Route::post('/contestarquiniela', 'QuinielaController@contestarQuiniela');
     Route::get('/info/{id}', 'QuinielaController@info');
     Route::post('/datos_jornada', 'QuinielaController@datosJornada');
+    Route::get('/reponche/{id_participacion}', 'QuinielaController@reponche');
 });

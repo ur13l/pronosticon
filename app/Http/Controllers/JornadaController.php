@@ -64,11 +64,16 @@ class JornadaController extends Controller
 
         $jornada->nombre = $request->nombre;
         $jornada->id_liga = $request->id_liga;
-        $jornada->fecha_inicio = Carbon::createFromFormat('d/m/Y', $request->fecha_inicio);
-        $jornada->fecha_fin = Carbon::createFromFormat('d/m/Y', $request->fecha_fin);
-        $jornada->fecha_fin->hour = 23;
-        $jornada->fecha_fin->minute = 59;
-        $jornada->fecha_fin->second = 59;
+        $fecha_inicio = Carbon::createFromFormat('d/m/Y', $request->fecha_inicio);
+        $fecha_inicio->hour = 0;
+        $fecha_inicio->minute = 0;
+        $fecha_inicio->second = 0;
+        $jornada->fecha_inicio = $fecha_inicio;
+        $fecha_fin = Carbon::createFromFormat('d/m/Y', $request->fecha_fin);
+        $fecha_fin->hour = 23;
+        $fecha_fin->minute = 59;
+        $fecha_fin->second = 59;
+        $jornada->fecha_fin = $fecha_fin;
         $jornada->save();
 
         if($another) {
@@ -154,7 +159,7 @@ class JornadaController extends Controller
                 $partido->id_equipo_local = $request->id_equipo_local_mod[$key];
                 $partido->id_equipo_visita = $request->id_equipo_visita_mod[$key];
                 $partido->id_jornada = $request->id_jornada;
-                $partido->fecha_hora = Carbon::createFromFormat('d/m/Y H:i', $request->fecha_mod[$key] . " " . $request->hora_mod[$key]);
+                $partido->fecha_hora = Carbon::createFromFormat('d/m/Y H:i', $request->fecha_mod[$key] . " " . $request->hora_mod[$key], 'America/Mexico_City');
                 $partido->save();
             }
         }
@@ -183,7 +188,6 @@ class JornadaController extends Controller
         $resultado_local = $request->resultado_local;
         $resultado_visita = $request->resultado_visita;
         $jornada = Jornada::find($request->id_jornada);
-
         foreach($id_resultado as $key=>$item) {
             if($resultado_local[$key] != null && $resultado_visita[$key] != null){
                 $partido = Partido::find($id_partido[$key]);
@@ -202,9 +206,9 @@ class JornadaController extends Controller
                     'id_equipo_ganador' => $id_equipo_ganador
                 ];
 
+                $resultado = Resultado::find($item);
                 //Cuando se tiene que actualizar el resultado
-                if($item) {
-                    $resultado = Resultado::find($id_resultado[$key]);
+                if($resultado) {
                     $resultado->update($data);
                 }
                 //Cuando se genera un resultado nuevo.

@@ -1,7 +1,5 @@
 br
-br
-div.row
-
+div.container
     if key % 2 == 0
         div.six.columns
             if participacion.quiniela.tipoQuiniela.nombre != "Survivor"
@@ -9,15 +7,27 @@ div.row
             else
                 .ten.columns.offset-by-one
                     include /ligas/items/s1_survivor
+            
+            .twelve.columns
+                .small-space
         div.six.columns
             include /ligas/items/s2
+            .twelve.columns
+                .small-space
+
     else
         div.six.columns
             include /ligas/items/s2
+
+            .twelve.columns
+                .small-space
         div.six.columns
             if participacion.quiniela.tipoQuiniela.nombre != "Survivor"
                 include /ligas/items/s1
             else
                 .ten.columns.offset-by-one
                     include /ligas/items/s1_survivor
-
+            
+            .twelve.columns
+                .small-space
+    

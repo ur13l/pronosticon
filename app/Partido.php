@@ -68,9 +68,9 @@ class Partido extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function resultados()
+    public function resultado()
     {
-        return $this->hasMany('App\Resultado', 'id_partido');
+        return $this->hasOne('App\Resultado', 'id_partido');
     }
 
 }

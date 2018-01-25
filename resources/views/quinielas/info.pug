@@ -31,6 +31,8 @@ block content
                         h1.five.columns.white-color-text.right= participacion.puntuacion + "pts."
                     else
                         h1.five.columns.white-color-text.right Activo
+                            if participacion.no_reponches > 0
+                                span= "R(" + participacion.no_reponches + ")"
         
         br 
 
@@ -41,8 +43,8 @@ block content
                 else
                     include /ligas/items/s1_all_survivor
             .six.columns
-
-                if participacion.participacionProximaJOrnada[1] != "participacionProximaJornada"
+                include /ligas/items/bolsa
+                if participacion.participacionProximaJornada[1] != "participacionProximaJornada"
                     include /ligas/items/proxima_jornada
                 else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
                     include /ligas/items/ultima_jornada
@@ -52,10 +54,9 @@ block content
             if quiniela.tipoQuiniela.nombre != "Survivor"
                 .twelve.colums.white-background
                     h4 Resultados por jornada
-                    
                     ul.menu
                         each jornada in quiniela.liga.jornadas
-                            if quiniela.liga.ultimaJornada.id == jornada.id
+                            if quiniela.liga.proximaJornada.id == jornada.id || quiniela.liga.jornadaActual.id == jornada.id 
                                 li.item-jornada.selected(data-id= jornada.id)
                                     a= jornada.nombre
                             else 

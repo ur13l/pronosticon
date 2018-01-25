@@ -56,31 +56,43 @@ class Jornada extends Model
 
     public function calcularPuntuaciones() {
         $participacionesJornada = ParticipacionJornada::where('id_jornada', $this->id)->get();
-        dd($participacionesJornada);
+        
         foreach($participacionesJornada as $pj) {
+            $puntos = 0;
             foreach($pj->pronosticos as $pronostico) {
                 $resultado = $pronostico->partido->resultado;
-                $puntos = 0;
-                if($resultado) {
+                if($resultado) {  
                     if($pronostico->id_equipo_ganador == $resultado->id_equipo_ganador) {
-                        $puntos += 3;
+                        $puntos += 1;
+
                         if($pronostico->resultado_local == $resultado->resultado_local && 
-                            $pronostico->resultado_visita && $resultado->resultado_visita) {
+                            $pronostico->resultado_visita == $resultado->resultado_visita) {
                                 $puntos += 2;
                         }
                     }
+                    else if($resultado->id_equipo_ganador != null && $pj->participacion->quiniela->tipoQuiniela->nombre == "Survivor") {
+                        $pj->participacion->activo = false;
+                        $pj->participacion->save();
+                    }
                 }
-                $pj->puntuacion = $puntos;
-                $pj->save();
+            }
+
+            $pj->puntuacion = $puntos;
+            $pj->save();
+            $pj->participacion->calcularPuntuacion();
+            
+            //Eliminar a los de survivor que no enviaron respuesta.
+            foreach($this->liga->quinielasSurvivor as $q ) {
+                foreach ($q->participacions as $p) {
+                    $pj = $p->participacionJornada($this->id);
+                    if (!$pj) {
+                        $p->activo = false;
+                        $p->save();
+                    }
+                }
             }
         }
 
-        $quinielas = $this->liga->quinielas;
-
-        foreach($quinielas as $quiniela) {
-            foreach ($quiniela->participacions as $participacion) {
-                $participacion->calcularPuntuacion();
-            }
-        }
+ 
     }
 }

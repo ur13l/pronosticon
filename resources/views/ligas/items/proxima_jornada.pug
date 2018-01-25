@@ -1,9 +1,13 @@
 
-
+- jornada = quiniela.liga.proximaJornada 
+- ppj = participacion.participacionProximaJornada
+if count(jornada.partidos) == 0 
+    - jornada = quiniela.liga.jornadaActual
+    - ppj = participacion.participacionJornadaActual
 div.twelve.columns.white-background
     h4.ten.columns.offset-by-one Próxima Jornada
-    if count(quiniela.liga.proximaJornada.partidos) == 0
-        h6 No hay partidos registradas
+    if count(jornada.partidos) == 0
+        h6.ten.columns.offset-by-one No hay partidos registrados
     else
         if quiniela.tipoQuiniela.nombre != "Survivor" 
 
@@ -12,9 +16,9 @@ div.twelve.columns.white-background
                 table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                            th.center(colspan=5)= jornada.nombre
                     tbody
-                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                        each pronostico in ppj.pronosticos
                             tr  
                                 td.center
                                     img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
@@ -36,9 +40,9 @@ div.twelve.columns.white-background
                 table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                            th.center(colspan=5)= jornada.nombre
                     tbody
-                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                        each pronostico in ppj.pronosticos
                             tr  
                                 if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
                                     td.center.orange-background
@@ -73,33 +77,13 @@ div.twelve.columns.white-background
             table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=5)= quiniela.liga.proximaJornada.nombre
+                            th.center(colspan=5)= jornada.nombre
                     tbody
-                        each pronostico in participacion.participacionProximaJornada.pronosticos
+                        each pronostico in ppj.pronosticos
                             tr  
-                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
-                                    td.center.orange-background
-                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
-                                else
-                                    td.center
-                                        img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
-
-                                if quiniela.tipoQuiniela.nombre != "Survivor" && !quiniela.permitir_marcador
-                                    if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
-                                        td.center.orange-background Empate
-                                    else
-                                        td.center Empate
-                                else
-                                    td.center vs
-
-                                if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_visita
-                                    td.center.orange-background
-                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
-                                else
-                                    td.center
-                                        img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
-                                
-
+                                td.center
+                                    img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+                               
                                 td.center
                                     if pronostico.partido.resultado[1] != "resultado" 
                                         if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador

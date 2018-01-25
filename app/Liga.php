@@ -61,6 +61,21 @@ class Liga extends Model
             ->orderBy('fecha_inicio', 'desc');
     }
 
+    public function jornadaActual() 
+    {
+        return $this->hasOne('App\Jornada', 'id_liga')
+            ->where('fecha_inicio', '<', Carbon::now('America/Mexico_City'))
+            ->where('fecha_fin', '>', Carbon::now('America/Mexico_City'))
+            ->orderBy('fecha_inicio', 'desc');
+    }
+
+    public function quinielasSurvivor() 
+    {
+        return $this->hasMany('App\Quiniela', 'id_liga')
+            ->where('id_tipo_quiniela', '11');
+            
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

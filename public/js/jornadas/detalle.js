@@ -18,7 +18,7 @@ $(function() {
     $("#fecha_inicio, #fecha_fin").datepicker("option", "dateFormat", "dd/mm/yy");
     jQuery.validator.addMethod("fechaMayorQue", function(value, element, params) {
         
-        if (moment(value, 'DD/MM/YYYY') > moment($(params).val(),'DD/MM/YYYY')) {
+        if (moment(value, 'DD/MM/YYYY') >= moment($(params).val(),'DD/MM/YYYY')) {
             return true;
         } else {
             return false;
