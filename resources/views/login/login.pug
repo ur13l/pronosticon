@@ -11,16 +11,16 @@ block content
             input(type="hidden" name="_token" value=csrf_token())
             input(type="hidden" name="redirectTo" value=redirectTo)
             div.row.center
-                img(src=(url('/img/logo.png')) height="120")
+                img(src=(url('/img/logo.png')) width="85%")
             br
             br
             div.row
-                h6.six.columns.offset-by-three.center Introduzca su código de acceso
+                h6.six.columns.offset-by-three.center.white-color-text Introduzca su código de acceso
             div.row
-                input.six.columns.offset-by-three(type="text" name="codigo" value=old('codigo'))
+                input.six.columns.offset-by-three.white-color-text(type="text" name="codigo" value=old('codigo'))
             br
             div.row
-                input.six.columns.offset-by-three.primary-color-background(type="submit" value="Ingresar")
+                button.six.columns.offset-by-three.primary-btn(type="submit") Ingresar
             br
             each error in errors.all()
                 p.error.center =error

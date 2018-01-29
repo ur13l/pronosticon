@@ -16,7 +16,9 @@ class UsuarioController extends Controller
      */
     public function index(Request $request) {
         $usuarios = Usuario::paginate(9);
-        return view('usuarios.index', ['usuarios' => $usuarios]);
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        return view('usuarios.index', ['usuarios' => $usuarios, 'usuario' => $usuario]);
     }
 
     /**
@@ -36,12 +38,16 @@ class UsuarioController extends Controller
      */
     public function nuevo(Request $request) {
         $random = str_random(9);
-        return view('usuarios.detalle', ['usuario' => null, 'random' => $random]);
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        return view('usuarios.detalle', ['user' => null, 'random' => $random, 'usuario' => $usuario]);
     }
 
-    public function editar($id) {
-        $usuario = Usuario::find($id);
-        return view('usuarios.detalle', ['usuario' => $usuario]);
+    public function editar(Request $request, $id) {
+        $user = Usuario::find($id);
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        return view('usuarios.detalle', ['user' => $user, 'usuario'=> $usuario]);
     }
 
     /**
@@ -56,7 +62,8 @@ class UsuarioController extends Controller
             $rules = [
                 "nombre" => "required",
                 "email" => "required|email",
-                "codigo" => "required"
+                "codigo" => "required",
+                'avatar' => 'required'
             ];
             $request->validate($rules);
         }
@@ -64,15 +71,23 @@ class UsuarioController extends Controller
             $rules = [
                 "nombre" => "required",
                 "email" => "required|unique:usuario",
-                "codigo" => "required|unique:usuario"
+                "codigo" => "required|unique:usuario",
+                'avatar' => 'required'
             ];
             $request->validate($rules);
             $usuario = new Usuario();
         }
+
+
+        $codigo = $request->session()->get('codigo','');
+        $u = Usuario::where('codigo', $codigo)->first(); 
         
-        $usuario->nombre = $request->nombre;
-        $usuario->email = $request->email;
-        $usuario->codigo = $request->codigo;
+        if($u->admin) {
+            $usuario->nombre = $request->nombre;
+            $usuario->email = $request->email;
+            $usuario->codigo = $request->codigo;
+        }
+        $usuario->avatar = $request->avatar;
 
         $usuario->save();
 

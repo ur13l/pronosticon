@@ -8,11 +8,15 @@ block title
     
 block content
     input(type="hidden" id="_id_quiniela" name="_id_quiniela" value=quiniela.id)
-    div.banner.row
-        img.banner_img(src=quiniela.imagen)
-        div.banner_mask
-        h1.banner_title.white-color-text.center= quiniela.nombre
+    input(type="hidden" id="_token" name="_token" value=csrf_token())
+   
     div.container.white-background
+        include /quinielas/banner
+        div.row
+            a.two.columns.offset-by-ten.center.error#eliminar_quiniela(data-id=quiniela.id) Eliminar
+            form(action=url('/quinielas/eliminar') id="form_eliminar" method="post")
+                input(type="hidden" name="_token" value=csrf_token())
+                input(type="hidden" name="id" value=quiniela.id)
         ul.breadcrumb
             li 
                 a(href=url('/')) Inicio
@@ -20,6 +24,16 @@ block content
                 a(href=url('/quinielas/')) Quinielas
             li
                 a.active(href=url('/quinielas/editar/' + quiniela.id))= quiniela.nombre
+    
+        div#dialog_eliminar(title="¿Eliminar?")
+            p ¿Estás seguro que deseas eliminar la quiniela #{quiniela.nombre}?
+
+        div#dialog_eliminar_participacion(title="¿Eliminar?")
+            p#usuario_eliminar 
+
+        form(action=url('/quinielas/eliminar_participacion') id="form_eliminar_participacion" method="post")
+            input(type="hidden" name="_token" value=csrf_token())
+            input(type="hidden" name="id_participacion" id="id_participacion")
     
         br
         div.row
@@ -33,7 +47,7 @@ block content
                         label(for="bolsa#{key + 1}") Premio ##{key + 1}
                         input.ten.columns.offset-by-one.center(type="number" placeholder="$" id="bolsa#{key + 1}" name="cantidad[]" value=bolsa.cantidad)
                     div.small-space
-                    button.ten.columns.offset-by-one.primary-color-background(type="submit")
+                    button.ten.columns.offset-by-one.primary-btn(type="submit")
                             | Actualizar 
                 div.space
             
@@ -48,12 +62,15 @@ block content
                                     th #
                                     th Nombre
                                     th Pts.
+                                    th &times;
                             tbody
                                 each p, key in quiniela.participacions
                                     tr
                                         td.startd= key + 1
                                         td= p.usuario.nombre
                                         td= p.puntuacion
+                                        td
+                                            span.eliminar_participacion.grey-color-text.span-button(data-id_participacion= p.id, data-nombre= p.usuario.nombre) &times;
 
                     else
                         table.ten.columns.offset-by-one
@@ -116,7 +133,7 @@ block content
                                         td.center
                                             img(src=url('/storage/' +partido.equipoVisita.imagen) height="50")
                         if quiniela.liga.proximaJornada != null
-                            button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/jornadas/editar/partidos/' + quiniela.liga.proximaJornada.id) +"?from=" + quiniela.id + "'")
+                            button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/partidos/' + quiniela.liga.proximaJornada.id) +"?from=" + quiniela.id + "'")
                                 | Editar partidos
                 br
                 div.row
@@ -142,7 +159,29 @@ block content
                                             img(src=url('/storage/' + partido.equipoVisita.imagen) height="50")
                         
                     if quiniela.liga.ultimaJornada != null
-                        button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/jornadas/editar/resultados/' + quiniela.liga.ultimaJornada.id) +"?from=" + quiniela.id + "'")
+                        button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/resultados/' + quiniela.liga.ultimaJornada.id) +"?from=" + quiniela.id + "'")
                             | Actualizar resultados
                 div.space 
-                
+            br
+        if count(quiniela.participacions) > 0 && count(quiniela.liga.jornadas) > 0
+            div.row
+                if quiniela.tipoQuiniela.nombre != "Survivor"
+                    .twelve.colums.white-background
+                        h4 Resultados por jornada
+                        ul.menu
+                            each jornada in quiniela.liga.jornadas
+                                if quiniela.liga.proximaJornada.id == jornada.id || quiniela.liga.jornadaActual.id == jornada.id 
+                                    li.item-jornada.selected(data-id= jornada.id)
+                                        a= jornada.nombre
+                                else 
+                                    li.item-jornada(data-id= jornada.id)
+                                        a= jornada.nombre
+                        div#datos_jornada
+                            - jornada = quiniela.liga.ultimaJornada[1] != "ultimaJornada" ? quiniela.liga.ultimaJornada: quiniela.liga.proximaJornada
+                            include /quinielas/items/datos_jornada_admin
+                else
+                    .twelve.columns.white-background
+                        h4 Seguimiento Survivor
+                        div#datos_survivor
+                            include /quinielas/items/datos_survivor
+                    

@@ -7,7 +7,7 @@ if quiniela.tipoQuiniela.nombre != "Survivor"
                 tr
                     th.center(colspan=5)= jornada.nombre
             tbody
-                each pronostico in participacion.pronosticos
+                each pronostico in participacion_jornada.pronosticos
                     tr  
                         td.center
                             img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
@@ -31,7 +31,7 @@ if quiniela.tipoQuiniela.nombre != "Survivor"
                 tr
                     th.center(colspan=5)= jornada.nombre
             tbody
-                each pronostico in participacion.pronosticos
+                each pronostico in participacion_jornada.pronosticos
                     tr  
                         if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
                             td.center.orange-background
@@ -68,28 +68,11 @@ else
                 tr
                     th.center(colspan=5)= jornada.nombre
             tbody
-                each pronostico in participacion.pronosticos
+                each pronostico in participacion_jornada.pronosticos
                     tr  
-                        if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
-                            td.center.orange-background
-                                img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
-                        else
-                            td.center
-                                img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
-
-                        if !pronostico.id_equipo_ganador[1] != "id_equipo_ganador"
-                            td.center.orange-background Empate
-                        else
-                            td.center Empate
-
-                        if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_visita
-                            td.center.orange-background
-                                img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
-                        else
-                            td.center
-                                img(src=url('/storage/' +pronostico.partido.equipoVisita.imagen) height="50")
+                        td.center
+                            img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
                         
-
                         td.center
                             if pronostico.partido.resultado[1] != "resultado" 
                                 if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
@@ -98,5 +81,3 @@ else
                                     img(src=url('/img/cancel.png'))
                             else
                                 img(src=url('/img/wait.png'))
-
-                            

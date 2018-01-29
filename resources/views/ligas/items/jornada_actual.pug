@@ -1,8 +1,8 @@
 
 
 div.twelve.columns.white-background
-    h4.ten.columns.offset-by-one Última Jornada
-    if count(quiniela.liga.ultimaJornada.partidos) == 0
+    h4.ten.columns.offset-by-one Jornada actual
+    if count(quiniela.liga.jornadaActual.partidos) == 0
         h6 No hay partidos registradas
     else
         if quiniela.tipoQuiniela.nombre != "Survivor" 
@@ -12,9 +12,9 @@ div.twelve.columns.white-background
                 table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=6)= quiniela.liga.ultimaJornada.nombre
+                            th.center(colspan=6)= quiniela.liga.jornadaActual.nombre
                     tbody
-                        each pronostico in participacion.participacionUltimaJornada.pronosticos
+                        each pronostico in participacion.participacionJornadaActual.pronosticos
                             tr  
                                 td.center
                                     img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
@@ -36,9 +36,9 @@ div.twelve.columns.white-background
                 table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=5)= quiniela.liga.ultimaJornada.nombre
+                            th.center(colspan=5)= quiniela.liga.jornadaActual.nombre
                     tbody
-                        each pronostico in participacion.participacionUltimaJornada.pronosticos
+                        each pronostico in participacion.participacionJornadaActual.pronosticos
                             tr  
                                 if pronostico.id_equipo_ganador == pronostico.partido.id_equipo_local
                                     td.center.orange-background
@@ -73,9 +73,9 @@ div.twelve.columns.white-background
             table.ten.columns.offset-by-one
                     thead
                         tr
-                            th.center(colspan=5)= quiniela.liga.ultimaJornada.nombre
+                            th.center(colspan=5)= quiniela.liga.jornadaActual.nombre
                     tbody
-                        each pronostico in participacion.participacionUltimaJornada.pronosticos
+                        each pronostico in participacion.participacionJornadaActual.pronosticos
                             tr  
                                 td.center
                                     img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
@@ -88,4 +88,5 @@ div.twelve.columns.white-background
                                             img(src=url('/img/cancel.png'))
                                     else
                                         img(src=url('/img/wait.png'))
+
                                     

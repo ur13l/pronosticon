@@ -23,10 +23,12 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], func
     Route::get('/', 'UsuarioController@index')->name('usuarios.index');
     Route::get('/buscar', 'UsuarioController@buscar');
     Route::get('/nuevo', 'UsuarioController@nuevo');
-    Route::get('/editar/{id}', 'UsuarioController@editar');
-    Route::post('/createorupdate', 'UsuarioController@createOrUpdate');
     Route::get('/autocomplete', 'UsuarioController@autocomplete');
 });
+
+
+Route::middleware('auth.codigo')->get('/usuarios/editar/{id}', 'UsuarioController@editar');
+Route::middleware('auth.codigo')->post('/usuarios/createorupdate', 'UsuarioController@createOrUpdate');
 
 Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], function() {
     Route::get('/', 'QuinielaController@index')->name('quinielas.index');
@@ -76,5 +78,9 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo'], function(
     Route::post('/contestarquiniela', 'QuinielaController@contestarQuiniela');
     Route::get('/info/{id}', 'QuinielaController@info');
     Route::post('/datos_jornada', 'QuinielaController@datosJornada');
+    Route::post('/datos_jornada_admin', 'QuinielaController@datosJornadaAdmin');
+    Route::post('/eliminar', 'QuinielaController@eliminar');
+    Route::post('/eliminar_participacion', 'QuinielaController@eliminarParticipacion');
     Route::get('/reponche/{id_participacion}', 'QuinielaController@reponche');
+    Route::get('/reglas/{id_quiniela}', 'QuinielaController@reglas');
 });

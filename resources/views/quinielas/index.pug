@@ -18,7 +18,7 @@ block content
         h1.center Quinielas
         div.row
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
-            button.three.columns.offset-by-five.primary-color-background(onclick="location.href='"+ url('/quinielas/nuevo') +"'") Nueva quiniela
+            button.three.columns.offset-by-five.primary-btn(onclick="location.href='"+ url('/quinielas/nuevo') +"'") Nueva quiniela
         div.lista 
             if count(quinielas) == 0 
                 br

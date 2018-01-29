@@ -13,12 +13,10 @@ block content
         input#id_eliminar(type="hidden")
         input#cont_eliminar(type="hidden")
         p ¿Estás seguro que deseas eliminar el partido?
-    div.banner.row
-        img.banner_img(src=jornada.liga.imagen)
-        div.banner_mask
-        h1.banner_title.white-color-text.center= jornada.nombre
+    
     div.container.white-background
-       
+        - liga = jornada.liga
+        include /ligas/banner
         ul.breadcrumb
             li 
                 a(href=url('/')) Inicio

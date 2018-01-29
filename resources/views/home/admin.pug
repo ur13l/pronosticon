@@ -7,9 +7,7 @@ block content
     br
     .container.white-background
 
-        br
-        div.row
-            a.two.columns.offset-by-ten.center.logout(href=url('/login/logout')) Salir
+        
         br
         h1.center ¡Bienvenido #{usuario.nombre}!
         div.row.menu-container
@@ -18,21 +16,21 @@ block content
                     img.center.value-img(src=(url('/img/user.png')) height="100")
                 br
                 div.row
-                    button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/usuarios') +"'") Usuarios
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/usuarios') +"'") Usuarios
                 div.space
             div.four.columns.menu-item.center
                 div.row
                     img.center.value-img(src=(url('/img/quiniela.png')) height="100")
                 br
                 div.row
-                    button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas') +"'") Quinielas
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas') +"'") Quinielas
                 div.space
             div.four.columns.menu-item.center
                 div.row
                     img.center.value-img(src=(url('/img/ligas.png')) height="100")
                 br
                 div.row
-                    button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/ligas') +"'") Ligas
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/ligas') +"'") Ligas
                 div.space
         br
         

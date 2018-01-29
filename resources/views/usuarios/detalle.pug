@@ -4,10 +4,10 @@ block scripts
     script(src= url('/js/usuarios/detalle.js'))
 
 block title
-    if usuario != null
-       title= usuario.nombre
+    if user != null
+       title= user.nombre
     else
-        title Nuevo usuario
+        title Nuevo Usuario
 
 block content
     br
@@ -18,15 +18,22 @@ block content
             li
                 a(href=url('/usuarios/')) Usuarios
             li
-                a.active(href=url('/usuarios/' + (usuario.id? "editar/" + usuario.id : "nuevo")))= (usuario.nombre? usuario.nombre: "Nuevo")
+                a.active(href=url('/usuarios/' + (user.id? "editar/" + user.id : "nuevo")))= (user.nombre? user.nombre: "Nuevo")
         
         br
         form(action=url('/usuarios/createorupdate') method="POST")
             input(type="hidden" name="_token" value=csrf_token())
-            input(type="hidden" id="id" name="id" value= usuario.id)
+            input(type="hidden" id="id" name="id" value= user.id)
             div.row
-                div.six.columns.offset-by-three
-                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (usuario.nombre? usuario.nombre : old('nombre')))
+                div.six.columns.offset-by-three.center
+                    if user.avatar
+                        img#img_avatar(src=  (user.avatar? user.avatar : old('avatar')) )
+                    else
+                        img#img_avatar
+                    if usuario.admin
+                        input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value= (user.nombre? user.nombre : old('nombre')))
+                    else
+                        input.big-input.twelve.columns.center(readonly type="text" name="nombre" id="nombre" placeholder="Nombre" value= (user.nombre? user.nombre : old('nombre')))
             br
             br
             div.row
@@ -34,17 +41,31 @@ block content
                     each error in errors.all()
                     span.error #{error}
                     label(for="email") Email:
-                    input.twelve.columns.center(type="email" name="email" id="email" placeholder="user@example.com" value= (usuario.email? usuario.email : old('email')))
+
+                    if usuario.admin
+                        input.twelve.columns.center(type="email" name="email" id="email" placeholder="user@example.com" value= (user.email? user.email : old('email')))
+                    else
+                        input.twelve.columns.center(readonly type="email" name="email" id="email" placeholder="user@example.com" value= (user.email? user.email : old('email')))
             br
             div.row
                 div.six.columns.offset-by-three
                     label(for="codigo") Código:
-                    input.twelve.columns.center(type="text" name="codigo" maxlength="9" id="codigo" value= (usuario.codigo? usuario.codigo : random))
+                    if usuario.admin
+                        input.twelve.columns.center(type="text" name="codigo" maxlength="9" id="codigo" value= (user.codigo? user.codigo : random))
+                    else
+                        input.twelve.columns.center(type="text" name="codigo" maxlength="9" id="codigo" value= (user.codigo? user.codigo : random))
 
             br
             div.row
                 div.six.columns.offset-by-three
-                    button.primary-color-background.twelve.columns(type="submit") Guardar
+                    label Avatar:
+                    div#avatars
+                    input#avatar(type="hidden" name='avatar')
+
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    button.primary-btn.twelve.columns(type="submit") Guardar
         
-        if usuario
+        if user
             include /usuarios/quinielas

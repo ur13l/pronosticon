@@ -11,11 +11,9 @@ block content
     input(type="hidden" id="_id_quiniela" name="_id_quiniela" value=quiniela.id)
     input(type="hidden" id="_id_participacion" name="_id_participacion" value=participacion.id)
     input(type="hidden" id="_url" name="_url" value=url('/'))
-    div.banner.row
-        img.banner_img(src=quiniela.imagen)
-        div.banner_mask
-        h1.banner_title.white-color-text.center= quiniela.nombre
+    
     div.container.white-background
+        include /quinielas/banner
         ul.breadcrumb
             li 
                 a(href=url('/')) Inicio
@@ -46,8 +44,13 @@ block content
                 include /ligas/items/bolsa
                 if participacion.participacionProximaJornada[1] != "participacionProximaJornada"
                     include /ligas/items/proxima_jornada
+                else if participacion.participacionJornadaActual[1] != "participacionJornadaActual"
+                    include /ligas/items/jornada_actual
                 else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
                     include /ligas/items/ultima_jornada
+                else 
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.jornadaActual.nombre}
+
 
         br
         div.row

@@ -45,5 +45,82 @@ $(function() {
                 error.insertAfter(element);
             }
         }
-});
+    });
+
+    $(".item-jornada").click(function(){ 
+        var id_jornada = $(this).data('id'),
+            id_quiniela = $('#_id_quiniela').val();
+        $("#datos_jornada").html("<h5>Cargando...</h5>")
+        $(".item-jornada").removeClass("selected");
+        $(this).addClass("selected");
+        $.ajax({
+            url: $("#_url").val() + "/quinielas/datos_jornada_admin",
+            method: 'POST',
+            data: {
+                id_quiniela: id_quiniela,
+                id_jornada: id_jornada,
+                _token: $("#_token").val()
+            },
+            success:function (data) {
+                $("#datos_jornada").html(data);
+            },
+            error: function(e) {
+            }
+        });
+    });
+
+    $( "#dialog_eliminar" ).dialog({
+        autoOpen: false,
+        modal: true,
+        show: {
+          effect: "fade",
+          duration: 200
+        },
+        hide: {
+          effect: "explode",
+          duration: 200
+        },
+        buttons: {
+            "Eliminar": function() {
+                $("#form_eliminar").submit();
+                $( this ).dialog( "close" );
+            },
+            "Cancelar": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+      });
+
+    $("#eliminar_quiniela").click(function() {
+        $("#dialog_eliminar").dialog("open");
+    });
+
+    $( "#dialog_eliminar_participacion" ).dialog({
+        autoOpen: false,
+        modal: true,
+        show: {
+          effect: "fade",
+          duration: 200
+        },
+        hide: {
+          effect: "explode",
+          duration: 200
+        },
+        buttons: {
+            "Eliminar": function() {
+                $("#form_eliminar_participacion").submit();
+                $( this ).dialog( "close" );
+            },
+            "Cancelar": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+      });
+
+      $(".eliminar_participacion").click(function() {
+        $("#dialog_eliminar_participacion").dialog("open");
+        $("#usuario_eliminar").html("¿Estás seguro de eliminar la participación de " + $(this).data('nombre') + "?")
+        $("#id_participacion").val($(this).data('id_participacion'));
+    });
+
 });

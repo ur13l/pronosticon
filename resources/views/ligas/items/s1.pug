@@ -1,4 +1,4 @@
-div.ten.columns.offset-by-one.white-background
+div.ten.columns.offset-by-one.white-background.rounded-corners
     div
         h4.ten.columns.offset-by-one= participacion.quiniela.nombre + " - Posiciones"
     div.row
@@ -19,4 +19,4 @@ div.ten.columns.offset-by-one.white-background
                                 td= p.usuario.nombre
                                 td= p.puntuacion
     .row
-        button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+        button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información

@@ -7,4 +7,7 @@
                     li.bar-item
                         a.title.user-corner(href=url('/login/logout')) Salir
                     li.bar-item
-                        a.title.user-corner= usuario.nombre
+                        //
+                        a.title.user-corner(href=url('/usuarios/editar/' + usuario.id))
+                            img(src= usuario.avatar, style="vertical-align:middle; display:inline-block" height="24")
+                            span #{usuario.nombre}

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $nombre
  * @property string $email
  * @property string $codigo
+ * @property string $avatar
  * @property string $created_at
  * @property string $updated_at
  * @property Participacion[] $participacions
@@ -25,7 +26,7 @@ class Usuario extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'email', 'codigo', 'admin', 'created_at', 'updated_at'];
+    protected $fillable = ['nombre', 'email', 'codigo', 'admin', 'avatar', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

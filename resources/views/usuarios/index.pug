@@ -17,7 +17,7 @@ block content
         h1.center Usuarios
         div.row
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
-            button.three.columns.offset-by-five.primary-color-background(onclick="location.href='"+ url('/usuarios/nuevo') +"'") Nuevo usuario
+            button.three.columns.offset-by-five.primary-btn(onclick="location.href='"+ url('/usuarios/nuevo') +"'") Nuevo usuario
         div.lista
             include /usuarios/lista
 

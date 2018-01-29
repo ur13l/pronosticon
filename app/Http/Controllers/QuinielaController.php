@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 use App\Quiniela;
 use App\TipoQuiniela;
 use App\Bolsa;
@@ -27,8 +28,10 @@ class QuinielaController extends Controller
     * @return Response
     */
    public function index(Request $request) {
-       $quinielas = Quiniela::paginate(9);
-       return view('quinielas.index', ['quinielas' => $quinielas]);
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first();
+        $quinielas = Quiniela::paginate(9);
+        return view('quinielas.index', ['quinielas' => $quinielas, 'usuario' => $usuario]);
    }
 
    /**
@@ -50,9 +53,11 @@ class QuinielaController extends Controller
     * @return Response
     */
    public function nuevo(Request $request) {
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first();
        $ligas = Liga::all();
        $tipo_quiniela = TipoQuiniela::all();
-       return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela]);
+       return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela, 'usuario' => $usuario]);
    }
 
   /**
@@ -61,9 +66,49 @@ class QuinielaController extends Controller
     * @param Request $request
     * @return Response
     */
-    public function editar($id) {   
+    public function editar(Request $request, $id) {  
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id);
-        return view('quinielas.editar', ['quiniela' => $quiniela]);
+        return view('quinielas.editar', ['quiniela' => $quiniela, 'usuario' => $usuario]);
+   }
+
+   /**
+    * Permite eliminar una quiniela.
+    *
+    * @param Request $request
+    * @return Response
+    */
+    public function eliminar(Request $request) {  
+        $quiniela = Quiniela::find($request->id);
+        foreach($quiniela->participacions as $participacion) {
+            foreach($participacion->participacionJornadas as $pj) {
+                $pj->delete();
+            }
+            $participacion->delete();
+        }
+        foreach($quiniela->bolsas as $bolsa) {
+            $bolsa->delete();
+        }
+        $quiniela->delete();
+        return redirect('quinielas');
+   }
+
+
+   /**
+    * Permite eliminar un participante de una quiniela.
+    *
+    * @param Request $request
+    * @return Response
+    */
+    public function eliminarParticipacion(Request $request) {  
+        $participacion = Participacion::find($request->id_participacion);
+        $id = $participacion->id_quiniela;
+        foreach($participacion->participacionJornadas as $pj) {
+            $pj->delete();
+        }
+        $participacion->delete();
+        return redirect('/quinielas/editar/' . $id);
    }
 
    /**
@@ -83,11 +128,14 @@ class QuinielaController extends Controller
         $request->validate($rules);
         $quiniela = new Quiniela();
        
-       $imagen = $request->file("imagen")->store('quinielas');
        $quiniela->nombre = $request->nombre;
        $quiniela->descripcion = $request->descripcion;
        $quiniela->id_liga = $request->id_liga;
-       $quiniela->imagen = $request->imagen;
+       if($request->file("imagen")) {
+            Storage::delete($quiniela->imagen);
+            $imagen = $request->file("imagen")->store('quinielas');
+            $quiniela->imagen = url('storage/' .$imagen);
+        }
        $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
        $quiniela->permitir_marcador = $request->permitir_marcador ? true : false;
        $quiniela->cantidad_reponches = $request->cantidad_reponches;
@@ -320,7 +368,7 @@ class QuinielaController extends Controller
 
         $participacionJornada->registrada = true;
         $participacionJornada->save();
-        return redirect('/');
+        return redirect('/quinielas/info/' . $quiniela->id);
     }
 
 
@@ -367,6 +415,18 @@ class QuinielaController extends Controller
 
     }
 
+     /**
+     * Función que devuelve la vista que desglosa los resultados de los usuarios por jornada.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function datosJornadaAdmin(Request $request) {
+        $quiniela = Quiniela::find($request->id_quiniela);
+        return view('quinielas.items.datos_jornada_admin', ['quiniela' => $quiniela ]);
+
+    }
+
 
     /**
      * Función que permite el reponche de un usuario de acuerdo a su número de reponches activos en una survivor.
@@ -382,5 +442,17 @@ class QuinielaController extends Controller
             $participacion->save();
         }
         return redirect('/quinielas/editar/' . $participacion->id_quiniela);
+    }
+
+    /**
+     * Devuelve una vista con las reglas de la quiniela
+     * @param Request, $id_quiniela
+     * @return Response
+     */
+    public function reglas(Request $request, $id_quiniela) {
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $quiniela = Quiniela::find($id_quiniela);
+        return view('reglas.reglas', ['quiniela' => $quiniela, 'usuario' => $usuario]);
     }
 }

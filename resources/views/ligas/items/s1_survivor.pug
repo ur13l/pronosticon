@@ -1,5 +1,5 @@
 - quiniela = participacion.quiniela
-div.twelve.columns.white-background
+div.twelve.columns.white-background.rounded-corners
     div
         h4.ten.columns.offset-by-one= quiniela.nombre + " - Posiciones"
     div.row
@@ -14,7 +14,7 @@ div.twelve.columns.white-background
                         th 
                 tbody
                     each p, key in quiniela.participacionesSurvivor
-                        if key < 10 || participacion.id == p.id
+                        if key < 6 || participacion.id == p.id
                             tr
                                 td.center.startd
                                     if p.activo
@@ -31,4 +31,4 @@ div.twelve.columns.white-background
                                     else
                                         span N/J
     .row
-    button.ten.columns.offset-by-one.primary-color-background(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información

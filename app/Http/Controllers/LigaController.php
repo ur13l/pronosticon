@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Liga;
 use App\Quiniela;
 use App\Deporte;
+use App\Usuario;
 use Auth;
 use Carbon\Carbon;
 
@@ -20,7 +21,9 @@ class LigaController extends Controller
     */
    public function index(Request $request) {
     $ligas = Liga::paginate(9);
-    return view('ligas.index', ['ligas' => $ligas]);
+    $codigo = $request->session()->get('codigo','');
+    $usuario = Usuario::where('codigo', $codigo)->first();
+    return view('ligas.index', ['ligas' => $ligas, 'usuario' => $usuario]);
 }
 
 /**
@@ -43,7 +46,9 @@ public function buscar(Request $request){
  */
 public function nuevo(Request $request) {
     $deportes = Deporte::all();
-    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => null]);
+    $codigo = $request->session()->get('codigo','');
+    $usuario = Usuario::where('codigo', $codigo)->first();
+    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => null, 'usuario' => $usuario]);
 }
 
 
@@ -53,10 +58,12 @@ public function nuevo(Request $request) {
  * @param Request $request
  * @return Response
  */
-public function detalle($id) {
+public function detalle(Request $request, $id) {
     $deportes = Deporte::all();
     $liga = Liga::find($id);
-    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => $liga]);
+    $codigo = $request->session()->get('codigo','');
+    $usuario = Usuario::where('codigo', $codigo)->first();
+    return view('ligas.detalle', ['deportes' => $deportes, 'liga' => $liga, 'usuario' => $usuario]);
 }
 
 /**
@@ -65,9 +72,11 @@ public function detalle($id) {
  * @param Request $request
  * @return Response
  */
- public function editar($id) {   
+ public function editar(Request $request, $id) {   
      $liga = Liga::find($id);
-     return view('ligas.editar', ['liga' => $liga]);
+     $codigo = $request->session()->get('codigo','');
+     $usuario = Usuario::where('codigo', $codigo)->first();
+     return view('ligas.editar', ['liga' => $liga, 'usuario'=> $usuario]);
 }
 
 /**

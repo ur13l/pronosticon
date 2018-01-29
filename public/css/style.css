@@ -52,19 +52,28 @@ input.big-input {
 .banner {
     height:100px;
     overflow-y: hidden;
-}
-
-.banner_img {
-    width:100%;
-}
-
-.banner_mask {
-    background: rgba(0,0,0,0.2);
-    z-index: 100;
-    height:100px;
     top: 0;
+    left: 0;
     position: absolute;
     width: 100%;
+    background-position: center center;
+    background-size: cover;
+}
+
+.banner_placeholder {
+    height:100px;
+    width: 100%;
+}
+
+
+.banner_mask {
+    background: rgba(0,0,0,0.8);
+    z-index: 100;
+    height:50px;
+    top: 50px;
+    left: 0;
+    position: absolute;
+    width: 40%;
 }
 
 .mask {
@@ -83,13 +92,7 @@ input.big-input {
     width: 100%;
 }
 
-.banner_title {
-    position: absolute;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    font-style: bold;
-}
+
 
 .partido_editar {
     margin-bottom: 10px;
@@ -130,7 +133,15 @@ input.big-input {
 
 .grey-color-background {
     background: #2f2f2f;
-    color: #022b3a;
+    color: white;
+}
+
+.grey-color-text {
+    color: #aaa;
+}
+
+.span-button {
+    cursor: pointer;
 }
 
 .primary-color-text {
@@ -386,8 +397,31 @@ input::-webkit-inner-spin-button {
   
 
     .mask2 {
-        background-color: #c2c2c2;
+        background-color: #2f2f2f;
         margin-bottom:20px;
     }
 
+    .banner_mask{
+        width: 100%;
+    }
+
 }
+
+.primary-btn {
+    background-color: #ff8000;
+    color: white;
+    border: none;
+}
+
+.primary-btn:hover{
+    color:#ff8000;
+    background-color: #eee;
+    -webkit-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+
+.rounded-corners {
+    border-radius: 4px;
+}
+

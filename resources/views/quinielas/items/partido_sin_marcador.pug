@@ -40,6 +40,17 @@ div
                     div.row.twelve.columns.center
                         img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
                     h6.row.twelve.columns.center= partido.equipoVisita.nombre
+            else if quiniela.tipoQuiniela.nombre == "Survivor"
+                if equipos_elegidos.search(partido.equipoVisita) !== false
+                    div.five.columns(data-key=key, data-ganador= partido.equipoVisita.id)
+                        div.row.twelve.columns.center
+                            img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                        h6.row.twelve.columns.center= partido.equipoVisita.nombre
+                else
+                    div.five.columns.selectable(data-key=key, data-ganador= partido.equipoVisita.id)
+                        div.row.twelve.columns.center
+                            img.resultado-height(src= url('/storage/' + partido.equipoVisita.imagen))
+                        h6.row.twelve.columns.center= partido.equipoVisita.nombre
             else 
                 div.five.columns.selectable(data-key=key, data-ganador= partido.equipoVisita.id)
                     div.row.twelve.columns.center
