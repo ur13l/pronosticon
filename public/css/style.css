@@ -206,6 +206,10 @@ a.error {
     white-space: nowrap;
     overflow: hidden;
 }
+.micro-space {
+    height:25px;
+}
+
 
 .small-space {
     height:50px;
@@ -221,6 +225,7 @@ a.error {
 
 .success-background {
     background: #039050;
+    color:white;
 }
 
 .success-text {
@@ -240,9 +245,14 @@ a.error {
     color: white;
 }
 
+.error-background {
+    background: #ff0000 !important;
+    color: white;
+}
+
 .error-block {
     width: 100%;
-    background: #F44336;
+    background: #Ff0000;
     color: white;
     padding: 20px;
     border-radius: 8px;
@@ -281,6 +291,7 @@ a.error {
 .bar {
     height:50px;
 }
+
 
 .container {
     padding: 10px;
@@ -354,6 +365,9 @@ input::-webkit-inner-spin-button {
     height:32px;
 }
 
+.bar-menu {
+    height:50px;
+}
 
 .bar-item {
     display: inline;
@@ -388,7 +402,13 @@ input::-webkit-inner-spin-button {
 
 
 @media screen and (max-width: 599px) {
-    
+    .small-center {
+        text-align:center;
+    }
+.bar {
+    height:100px;
+}
+
     .mask {
         background-color: white;
         float:right;
@@ -425,3 +445,14 @@ input::-webkit-inner-spin-button {
     border-radius: 4px;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

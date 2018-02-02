@@ -27,8 +27,9 @@ div.twelve.columns.white-background.rounded-corners
                                 td.center
                                     if p.ultimoPronostico.id_equipo_ganador !== null
                                         - url = url('/storage/' + p.ultimoPronostico.equipoGanador.imagen)
-                                        img(src=url height="32")
+                                        img(src=url height="50")
                                     else
                                         span N/J
     .row
-    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+        button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/info/' + participacion.quiniela.id) +"'") Más información
+    .micro-space

@@ -78,7 +78,7 @@ div.twelve.columns.white-background
                         each pronostico in participacion.participacionUltimaJornada.pronosticos
                             tr  
                                 td.center
-                                    img(src=url('/storage/' +pronostico.partido.equipoLocal.imagen) height="50")
+                                    img(src=url('/storage/' +pronostico.equipoGanador.imagen) height="50")
                                
                                 td.center
                                     if pronostico.partido.resultado[1] != "resultado" 

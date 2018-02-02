@@ -39,16 +39,22 @@ $(function() {
     $.ajax({
         method: "GET",
         headers: {
-            'Authorization': 'Client-ID 72c79f8aa136764'
+            'Authorization': 'Client-ID 6b46d712c33128a'
         },
-        url: 'https://api.imgur.com/3/album/O0peK/images',
+        url: 'https://api.imgur.com/3/album/tnhH8/images',
         type: 'json',
         success: function (data) {
+            var tr = null;
             for(i in data.data){
-                $("#avatars").append(
-                    ` <div class="selectable" style="padding: 10px; height: 50px; margin: 5px; display:inline;">
-                        <img height="50" src= "${data.data[i].link}" >
-                    </div>`
+                if(i%6 == 0) {
+                    tr = $('<tr/>');
+                    $("#avatars").append(tr);
+                }
+                tr.append(
+                    `   <td><div  class="selectable" style="height:60px; width:60px; display:inline;">
+                            <img height="50" src= "${data.data[i].link}" >
+                        </div></td>
+                    `
                 )
             }
         }

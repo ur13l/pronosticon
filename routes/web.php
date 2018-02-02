@@ -39,6 +39,12 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], fun
     Route::post('/update/{id}', 'QuinielaController@update');
     Route::post('/agregarparticipante', 'QuinielaController@agregarParticipante');
     Route::post('/actualizarbolsa', 'QuinielaController@actualizarBolsa');
+    Route::post('/datos_jornada_admin', 'QuinielaController@datosJornadaAdmin');
+    Route::post('/eliminar', 'QuinielaController@eliminar');
+    Route::post('/eliminar_participacion', 'QuinielaController@eliminarParticipacion');
+    Route::get('/reponche/{id_participacion}', 'QuinielaController@reponche');
+    Route::get('/reglas/editar/{id_quiniela}', 'QuinielaController@editarReglas');
+    Route::post('/actualizar', 'QuinielaController@actualizar');
 });
 
 Route::group(['prefix' => 'ligas', 'middleware' => 'auth.codigo.admin'], function() {
@@ -72,15 +78,10 @@ Route::group(['prefix' => 'jornadas', 'middleware' => 'auth.codigo.admin'], func
 });
 
 
-
 Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo'], function() {
     Route::get('/contestar/{id_jornada}/{id_quiniela}', 'QuinielaController@contestar')->name('contestar');
     Route::post('/contestarquiniela', 'QuinielaController@contestarQuiniela');
     Route::get('/info/{id}', 'QuinielaController@info');
     Route::post('/datos_jornada', 'QuinielaController@datosJornada');
-    Route::post('/datos_jornada_admin', 'QuinielaController@datosJornadaAdmin');
-    Route::post('/eliminar', 'QuinielaController@eliminar');
-    Route::post('/eliminar_participacion', 'QuinielaController@eliminarParticipacion');
-    Route::get('/reponche/{id_participacion}', 'QuinielaController@reponche');
     Route::get('/reglas/{id_quiniela}', 'QuinielaController@reglas');
 });

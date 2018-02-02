@@ -103,13 +103,20 @@ class UsuarioController extends Controller
     public function autocomplete(Request $request) {
         $usuarios = Usuario::where('usuario.nombre', 'like', '%' . $request->term . '%')
         ->select(['usuario.nombre', 'usuario.id'])->get();
-        
         $usuariosFormat = [];
-        foreach($usuarios as $usuario) {
-            $usuariosFormat[] = [
-                "label" => $usuario->nombre,
-                "value" => $usuario->id
-            ];
+        foreach ( $usuarios as $usuario ) {
+            $x = true;
+            foreach($usuario->participacions as $participacion) {
+                if($participacion->id_quiniela == $request->id_quiniela) {
+                     $x = false;
+                }
+            }
+            if($x) {
+                $usuariosFormat[] = [
+                    "label" => $usuario->nombre,
+                    "value" => $usuario->id
+                ];
+            }
         }
 
         return response()->json($usuariosFormat);

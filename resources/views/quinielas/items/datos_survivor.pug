@@ -1,14 +1,17 @@
 
 div(style="overflow-x: auto;")
-    table.ten.columns.offset-by-one
+    table.twelve.columns
         thead
             tr
+                th
                 th.center(style="min-width: 100px") Jugador
                 each jornada in quiniela.liga.jornadas
                     th.center(style="min-width: 100px")= jornada.nombre
         tbody
             each participacion in quiniela.participacions
                 tr 
+                    td 
+                        img(src=participacion.usuario.avatar height="50")
                     td.startd.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
                     each jornada in quiniela.liga.jornadas
                         - x = false;
@@ -18,13 +21,16 @@ div(style="overflow-x: auto;")
                                     - x = true;
                                     if pronostico.resultado && pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
                                         td.center.success-background
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
-                                    else if pronostico.resultado && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
+                                    else if pronostico.partido.resultado[1] != "resultado" && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
                                         td.center.error-background
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
                                     else
                                         td.center
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="32")
+                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
                                     
                         if !x
-                            td.center
+                            if jornada.registrada
+                                td.center.error-background
+                            else
+                                td.center

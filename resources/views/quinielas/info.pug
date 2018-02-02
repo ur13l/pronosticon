@@ -24,13 +24,17 @@ block content
         div.row
             .twelve.columns.orange-background
                 .row
-                    h1.five.columns.offset-by-one.white-color-text= "#" + posicion + " " + usuario.nombre
                     if quiniela.tipoQuiniela.nombre != "Survivor"
-                        h1.five.columns.white-color-text.right= participacion.puntuacion + "pts."
+                        h1.five.columns.offset-by-one.white-color-text.small-center= "#" + posicion + " " + usuario.nombre
+                    else    
+                        h1.five.columns.offset-by-one.white-color-text.small-center= usuario.nombre                        
+                    
+                    if quiniela.tipoQuiniela.nombre != "Survivor"
+                        h1.five.columns.white-color-text.right.small-center= participacion.puntuacion + "pts."
                     else
-                        h1.five.columns.white-color-text.right Activo
+                        h1.five.columns.white-color-text.right.small-center Activo
                             if participacion.no_reponches > 0
-                                span= "R(" + participacion.no_reponches + ")"
+                                span= "(R" + participacion.no_reponches + ")"
         
         br 
 

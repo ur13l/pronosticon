@@ -1,0 +1,41 @@
+extends /layouts/app
+
+block scripts
+    script(src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js")
+    script(src= url('/js/quinielas/reglas.js'))
+
+    style.
+        .ck-editor__editable {
+            min-height: 400px;
+        }
+
+block title
+    title= "Reglas - " + quiniela.nombre
+
+block content
+    br
+    div.container.white-background
+        include /quinielas/banner
+        br
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+            li
+                a(href=url('/quinielas/')) Quinielas
+            li
+                a(href=url('/quinielas/editar/' + quiniela.id))= quiniela.nombre
+            li
+                a.active(href = "#") Reglas
+
+        form(action=url('/quinielas/actualizar') method="POST"  enctype="multipart/form-data")
+            input(type="hidden" name="id_quiniela" value= quiniela.id)
+            input(type="hidden" name="_token" value= csrf_token())
+            textarea(name="reglas" id="reglas" rows=10)
+                if quiniela.reglas[1] != "reglas"
+                    = quiniela.reglas
+           
+            br
+            div.row
+                div.six.columns.offset-by-three
+                    button.primary-btn.twelve.columns(type="submit") Guardar
+        

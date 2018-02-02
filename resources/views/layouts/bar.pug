@@ -2,12 +2,12 @@
         div.row
             div.nine.columns
                 img(src=url('/img/logo.png') height="50")
-            div.three.columns.right
-                ul.bar-menu.bar.black-background
+            div.three.columns.right.bar-inner
+                ul.bar-menu.black-background
                     li.bar-item
                         a.title.user-corner(href=url('/login/logout')) Salir
                     li.bar-item
                         //
                         a.title.user-corner(href=url('/usuarios/editar/' + usuario.id))
-                            img(src= usuario.avatar, style="vertical-align:middle; display:inline-block" height="24")
+                            img(src= usuario.avatar, style="vertical-align:top; margin-right:5px; margin-top:-10px; display:inline-block" height="40")
                             span #{usuario.nombre}

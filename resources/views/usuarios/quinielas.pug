@@ -6,4 +6,7 @@ div.row
                 each participacion in usuario.participacions
                     tr
                         td
-                            a(href= url('/quinielas/editar/' + participacion.quiniela.id))= participacion.quiniela.nombre
+                            if usuario.admin
+                                a(href= url('/quinielas/editar/' + participacion.quiniela.id))= participacion.quiniela.nombre
+                            else
+                                a(href= url('/quinielas/info/' + participacion.quiniela.id))= participacion.quiniela.nombre

@@ -14,12 +14,36 @@ $(function() {
         source: $("#_url").val() + "/usuarios/autocomplete?id_quiniela=" + $("#_id_quiniela").val(),
         minLength: 1,
         select: function(event, ui) {
-            $("#id_usuario").val(ui.item.value);
-            setTimeout(function () {
-                $("#id_usuario_autocomplete").val(ui.item.label);
-            }, 20); 
-            $("#form_agregar_participante").submit();
+            var par = JSON.parse($("#participantes").val());
+            if (par.indexOf(ui.item.value) == -1) {
+                par.push(ui.item.value);
+                $("#participantes").val(JSON.stringify(par));
+                $("#tabla_participantes").append(`
+                    <tr>
+                        <td class="startd">
+                            ${ui.item.label}
+                        </td>
+                        <td>
+                            <span style="cursor:pointer" data-id="${ui.item.value}" class="eliminar_participante">&times;</span>
+                        </td>
+                    </tr>
+                `)
+            
+            }
+            setTimeout(function() {
+            $("#id_usuario_autocomplete").val("");
+            }, 20);
         }
+    });
+
+    $(document).on('click', ".eliminar_participante", function() {
+        var id =$(this).data('id'),
+            arr = JSON.parse($("#participantes").val());
+        $(this).parent().parent().remove();
+        console.log(id);
+        arr.pop(id);
+        $("#participantes").val(JSON.stringify(arr));
+        
     });
 
     /**
@@ -121,6 +145,10 @@ $(function() {
         $("#dialog_eliminar_participacion").dialog("open");
         $("#usuario_eliminar").html("¿Estás seguro de eliminar la participación de " + $(this).data('nombre') + "?")
         $("#id_participacion").val($(this).data('id_participacion'));
+    });
+
+    $("#imagen").change(function() {
+        $("#form_actualizar").submit();
     });
 
 });

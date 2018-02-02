@@ -13,6 +13,7 @@ block content
     div.container.white-background
         include /quinielas/banner
         div.row
+        
             a.two.columns.offset-by-ten.center.error#eliminar_quiniela(data-id=quiniela.id) Eliminar
             form(action=url('/quinielas/eliminar') id="form_eliminar" method="post")
                 input(type="hidden" name="_token" value=csrf_token())
@@ -38,6 +39,11 @@ block content
         br
         div.row
             div.six.columns.center 
+                form(action=url('/quinielas/actualizar') id="form_actualizar" enctype="multipart/form-data" method="post")
+                    input(type="hidden" name="_token" value=csrf_token())
+                    input(type="hidden" name="id_quiniela" value=quiniela.id)
+                    h4 Cambiar imagen
+                    input(type="file" name="imagen" id="imagen")
                 form(action=url('/quinielas/actualizarbolsa') id="form_actualizar_bolsa" method="post")
                     h4 Bolsa
                     input(type="hidden" name="_token" value=csrf_token())
@@ -51,6 +57,10 @@ block content
                             | Actualizar 
                 div.space
             
+                h4 Reglas
+                button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/reglas/editar/' + quiniela.id) + "'") Actualizar reglas
+                .space 
+                
                 h4 Participantes
                 if count(quiniela.participacions) == 0
                     h6 No hay participantes registrados
@@ -93,26 +103,31 @@ block content
                                                 span= " (R" + p.no_reponches + ")"
                                         td.center
                                             if p.ultimoPronostico.id_equipo_ganador
-                                                img(src= url('/storage/' + p.ultimoPronostico.equipoGanador.imagen) height=32)
+                                                img(src= url('/storage/' + p.ultimoPronostico.equipoGanador.imagen) height=50)
                                             else
                                                 span N/J
                                         td.center
-                                            if !p.activo 
-                                                if p.no_reponches < p.quiniela.cantidad_reponches
+                                            if !p.activo
+                                                if p.no_reponches < p.quiniela.cantidad_reponches && count(quiniela.liga.jornadas) > 1 && p.ultimoPronostico[1] != "ultimoPronostico"
                                                     a(href=url('/quinielas/reponche/'+p.id))
                                                         img.icon-button(src=url('/img/restore.png') height="18" alt="Reponche")
                                                 
                                                      
                                                             
-
                 h6 Agregar participante
+                div.ui-widget
+                    input.ten.columns.offset-by-one(type="text" placeholder="Introduzca el nombre " id="id_usuario_autocomplete" name="id_usuario_autocomplete")
+                .small-space
+                table#tabla_participantes.ten.columns.offset-by-one
+
                 form(action=url('/quinielas/agregarparticipante') method="post" id="form_agregar_participante")
                     input(type="hidden" name="_token" value=csrf_token())
-                    div.ui-widget
-                        input.ten.columns.offset-by-one(type="text" placeholder="Introduzca el nombre " id="id_usuario_autocomplete" name="id_usuario_autocomplete")
-                        input(type="hidden" id="id_usuario" name="id_usuario")
-                        input(type="hidden" name="id_quiniela" value=quiniela.id)
+                    input(type="hidden" id="participantes" name="participantes" value="[]")
+                    input(type="hidden" name="id_quiniela" value=quiniela.id)
+                    button.ten.columns.offset-by-one.primary-btn(type="submit")
+                        | Agregar participantes
                 div.space
+
                 
             div.six.columns.center
                 div.row

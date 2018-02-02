@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $imagen
  * @property boolean $permitir_marcador
  * @property integer $cantidad_reponches
+ * @property integer $reglas
  * @property string $created_at
  * @property string $updated_at
  * @property Liga $liga
@@ -32,7 +33,7 @@ class Quiniela extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_liga', 'id_tipo_quiniela', 'nombre', 'descripcion', 'imagen', 'permitir_marcador', 'cantidad_reponches', 'created_at', 'updated_at'];
+    protected $fillable = ['id_liga', 'id_tipo_quiniela', 'nombre', 'descripcion', 'imagen', 'permitir_marcador', 'cantidad_reponches', 'reglas', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

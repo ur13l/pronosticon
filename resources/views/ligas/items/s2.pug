@@ -17,7 +17,7 @@ div.ten.columns.offset-by-one
                  button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.jornadaActual.nombre}
 
         else 
-            h5 Espere al administrador para que cargue la próxima jornada.
+            h5.orange-text Espere al administrador para que cargue la próxima jornada.
     .center.row
         a(href=url('/quinielas/reglas/' + participacion.quiniela.id)) Ver Reglas
         

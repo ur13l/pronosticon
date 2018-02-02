@@ -139,6 +139,7 @@ class QuinielaController extends Controller
        $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
        $quiniela->permitir_marcador = $request->permitir_marcador ? true : false;
        $quiniela->cantidad_reponches = $request->cantidad_reponches;
+       $quiniela->reglas = $request->reglas;
        $quiniela->save();
 
        $bolsa1 = Bolsa::create([
@@ -146,21 +147,24 @@ class QuinielaController extends Controller
             'premio' => 1,
             'id_quiniela' => $quiniela->id
         ]);
+        if ($request->bolsa2) {
+            $bolsa2 = Bolsa::create([
+                'cantidad' => $request->bolsa2,
+                'premio' => 2,
+                'id_quiniela' => $quiniela->id
+            ]);
+        }
 
-        $bolsa2 = Bolsa::create([
-            'cantidad' => $request->bolsa2,
-            'premio' => 2,
-            'id_quiniela' => $quiniela->id
-        ]);
-
-        $bolsa3 = Bolsa::create([
-            'cantidad' => $request->bolsa3,
-            'premio' => 3,
-            'id_quiniela' => $quiniela->id
-        ]);
+        if ($request->bolsa3) {
+            $bolsa3 = Bolsa::create([
+                'cantidad' => $request->bolsa3,
+                'premio' => 3,
+                'id_quiniela' => $quiniela->id
+            ]);
+        }
 
 
-       return redirect()->route('quinielas.index');
+       return redirect('/quinielas/editar/' . $quiniela->id);
    }
 
 
@@ -172,20 +176,25 @@ class QuinielaController extends Controller
     */
    public function agregarParticipante(Request $request) {
         $rules = [
-            "id_usuario" => "required",
             "id_quiniela" => "required"
         ];
         $request->validate($rules);
 
-        $part = Participacion::where('id_usuario', $request->id_usuario)
-            ->where('id_quiniela', $request->id_quiniela)->first();
-        
-        if(!$part) {
-            Participacion::create($request->all() + [
-                'puntuacion' => 0,
-                'activo' => true,
-                'no_reponches' => 0,
-            ]);
+        $usuarios = json_decode($request->participantes);
+
+        foreach($usuarios as $id) {
+            $part = Participacion::where('id_usuario', $id)
+                ->where('id_quiniela', $request->id_quiniela)->first();
+            
+            if(!$part) {
+                Participacion::create([
+                    'id_quiniela' => $request->id_quiniela,
+                    'id_usuario' => $id,
+                    'puntuacion' => 0,
+                    'activo' => true,
+                    'no_reponches' => 0,
+                ]);
+            }
         }
         return back();
    }
@@ -423,7 +432,8 @@ class QuinielaController extends Controller
      */
     public function datosJornadaAdmin(Request $request) {
         $quiniela = Quiniela::find($request->id_quiniela);
-        return view('quinielas.items.datos_jornada_admin', ['quiniela' => $quiniela ]);
+        $jornada = Jornada::find($request->id_jornada);
+        return view('quinielas.items.datos_jornada_admin', ['quiniela' => $quiniela, 'jornada' => $jornada]);
 
     }
 
@@ -454,5 +464,38 @@ class QuinielaController extends Controller
         $usuario = Usuario::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id_quiniela);
         return view('reglas.reglas', ['quiniela' => $quiniela, 'usuario' => $usuario]);
+    }
+
+    /**
+     * Devuelve la vista para editar las reglas de una quiniela.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function editarReglas(Request $request, $id_quiniela) {
+        $codigo = $request->session()->get('codigo','');
+        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $quiniela = Quiniela::find($id_quiniela);
+        return view('quinielas.reglas', ['quiniela' => $quiniela, 'usuario' => $usuario]);
+    }
+
+    /**
+     * Actualizar la quiniela
+     */
+    public function actualizar(Request $request) {
+        $arr = [];
+        $quiniela = Quiniela::find($request->id_quiniela);
+        if($request->file("imagen")) {
+            Storage::delete($quiniela->imagen);
+            $imagen = $request->file("imagen")->store('quinielas');
+            $arr['imagen'] = url('storage/' .$imagen);
+        }
+        if($request->reglas) {
+            $arr['reglas'] = $request->reglas;
+        }
+        
+        
+        $quiniela->update($arr);
+        return redirect('/quinielas/editar/' . $quiniela->id);
     }
 }
