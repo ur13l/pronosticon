@@ -132,6 +132,7 @@ block content
             div.six.columns.center
                 div.row
                     h4 Próxima jornada
+                    h4= dd(quiniela.liga.proximaJornada)
                     if count(quiniela.liga.proximaJornada.partidos) == 0
                         h6 No hay jornadas registradas
                     else
