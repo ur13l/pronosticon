@@ -121,9 +121,49 @@ public function detalle(Request $request, $id) {
         public function eliminar(Request $request) {
             $liga = Liga::find($request->id);
             $id_liga = $liga->id_liga;
+
+            foreach($liga->jornadas as $jornada) {
+                foreach ($jornada->partidos as $partido) {
+                    if($partido->resultado) {
+                        $partido->resultado->delete();
+                    }
+
+                    foreach($partido->pronosticos as $pronostico) {
+                        $pronostico->delete();
+                    }
+                    $partido->delete();
+                }
+
+                foreach($jornada->participacionesJornada as $pj) {
+                    $pj->delete();
+                }
+                $jornada->delete();
+            }
+
+            foreach($liga->equipos as $equipo) {
+                $equipo->delete();
+            }
+
+            foreach($liga->quinielas as $quiniela) {
+                foreach($quiniela->participacions as $participacion) {
+                    foreach($participacion->participacionJornadas as $pj) {
+                        $pj->delete();
+                    }
+                    $participacion->delete();
+                }
+                foreach($quiniela->bolsas as $bolsa) {
+                    $bolsa->delete();
+                }
+                $quiniela->delete();
+            }
+
             $liga->delete();
             return redirect('/ligas');
     
+        }
+
+        public function limpiarJornadas() {
+
         }
 
 }
