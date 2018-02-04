@@ -58,10 +58,10 @@ block content
                                 each partido in liga.proximaJornada.partidos
                                     tr
                                         td.center
-                                            img(src=url('/storage/' +partido.equipoLocal.imagen) height="50")
+                                            img(src=partido.equipoLocal.imagen height="50")
                                         td.center vs
                                         td.center
-                                            img(src=url('/storage/' +partido.equipoVisita.imagen) height="50")
+                                            img(src= partido.equipoVisita.imagen height="50")
                         if liga.proximaJornada != null
                             button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/partidos/' + liga.proximaJornada.id) +"'")
                                 | Editar partidos
@@ -79,14 +79,14 @@ block content
                                 each partido in liga.ultimaJornada.partidos
                                     tr
                                         td.center
-                                            img(src=url('/storage/' + partido.equipoLocal.imagen) height="50")
+                                            img(src=partido.equipoLocal.imagen height="50")
                                         if liga.ultimaJornada.registrada
                                             td.center 
                                                | #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
                                         else
                                             td.center vs
                                         td.center
-                                            img(src=url('/storage/' + partido.equipoVisita.imagen) height="50")
+                                            img(src=partido.equipoVisita.imagen height="50")
                         
                     if liga.ultimaJornada != null
                         button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/resultados/' + liga.ultimaJornada.id) +"'")

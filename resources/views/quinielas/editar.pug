@@ -103,7 +103,7 @@ block content
                                                 span= " (R" + p.no_reponches + ")"
                                         td.center
                                             if p.ultimoPronostico.id_equipo_ganador
-                                                img(src= url('/storage/' + p.ultimoPronostico.equipoGanador.imagen) height=50)
+                                                img(src= p.ultimoPronostico.equipoGanador.imagen height=50)
                                             else
                                                 span N/J
                                         td.center
@@ -143,10 +143,10 @@ block content
                                 each partido in quiniela.liga.proximaJornada.partidos
                                     tr
                                         td.center
-                                            img(src=url('/storage/' +partido.equipoLocal.imagen) height="50")
+                                            img(src=partido.equipoLocal.imagen height="50")
                                         td.center vs
                                         td.center
-                                            img(src=url('/storage/' +partido.equipoVisita.imagen) height="50")
+                                            img(src=partido.equipoVisita.imagen height="50")
                         if quiniela.liga.proximaJornada != null
                             button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/partidos/' + quiniela.liga.proximaJornada.id) +"?from=" + quiniela.id + "'")
                                 | Editar partidos
@@ -164,14 +164,14 @@ block content
                                 each partido in quiniela.liga.ultimaJornada.partidos
                                     tr
                                         td.center
-                                            img(src=url('/storage/' + partido.equipoLocal.imagen) height="50")
+                                            img(src=partido.equipoLocal.imagen height="50")
                                         if quiniela.liga.ultimaJornada.registrada
                                             td.center 
                                                | #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
                                         else
                                             td.center vs
                                         td.center
-                                            img(src=url('/storage/' + partido.equipoVisita.imagen) height="50")
+                                            img(src=partido.equipoVisita.imagen height="50")
                         
                     if quiniela.liga.ultimaJornada != null
                         button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/resultados/' + quiniela.liga.ultimaJornada.id) +"?from=" + quiniela.id + "'")
