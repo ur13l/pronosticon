@@ -38,7 +38,7 @@ block content
                             each equipo in liga.equipos
                                 tr
                                     td
-                                        img(src=url("storage/" + equipo.imagen) height="50")
+                                        img(src=equipo.imagen height="50")
                                     td
                                         a(href=url('/equipos/editar/' + equipo.id))= equipo.siglas
                 button.primary-btn(onclick="location.href='"+ url('/equipos/nuevo?id_liga=' + liga.id) +"'") Agregar equipo
