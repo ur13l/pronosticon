@@ -21,13 +21,13 @@ div(style="overflow-x: auto;")
                                     - x = true;
                                     if pronostico.resultado && pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
                                         td.center.success-background
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
+                                            img(src= pronostico.equipoGanador.imagen height="50")
                                     else if pronostico.partido.resultado[1] != "resultado" && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
                                         td.center.error-background
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
+                                            img(src= pronostico.equipoGanador.imagen height="50")
                                     else
                                         td.center
-                                            img(src= url('/storage/' + pronostico.equipoGanador.imagen) height="50")
+                                            img(src= pronostico.equipoGanador.imagen height="50")
                                     
                         if !x
                             if jornada.registrada

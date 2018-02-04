@@ -26,7 +26,7 @@ div.twelve.columns.white-background.rounded-corners
                                         span= " (R" + p.no_reponches + ")"
                                 td.center
                                     if p.ultimoPronostico.id_equipo_ganador !== null
-                                        - url = url('/storage/' + p.ultimoPronostico.equipoGanador.imagen)
+                                        - url = p.ultimoPronostico.equipoGanador.imagen
                                         img(src=url height="50")
                                     else
                                         span N/J

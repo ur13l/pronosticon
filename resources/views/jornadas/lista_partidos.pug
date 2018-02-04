@@ -16,18 +16,18 @@ form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
                         select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_local_mod[]")
                             each equipo in jornada.liga.equipos
                                 if partido.id_equipo_local == equipo.id
-                                    option(data-img-src= url('/storage/' + equipo.imagen) selected value= equipo.id)= equipo.nombre   
+                                    option(data-img-src= equipo.imagen selected value= equipo.id)= equipo.nombre   
                                 else
-                                    option(data-img-src= url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre   
+                                    option(data-img-src= equipo.imagen value= equipo.id)= equipo.nombre   
                     .one.column.center
                         span  vs
                     div.three.columns  
                         select.twelve.columns.select_equipo.margin-responsive(name="id_equipo_visita_mod[]")
                             each equipo in jornada.liga.equipos
                                 if partido.id_equipo_visita == equipo.id
-                                    option(data-img-src=  url('/storage/' + equipo.imagen) selected value= equipo.id)= equipo.nombre
+                                    option(data-img-src=  equipo.imagen selected value= equipo.id)= equipo.nombre
                                 else
-                                    option(data-img-src=  url('/storage/' + equipo.imagen) value= equipo.id)= equipo.nombre
+                                    option(data-img-src=  equipo.imagen value= equipo.id)= equipo.nombre
                     div.two.columns.center
                         select.twelve.columns.margin-responsive(name="fecha_mod[]")
                             each fecha in fechas

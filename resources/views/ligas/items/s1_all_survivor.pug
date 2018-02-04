@@ -26,7 +26,7 @@ div.twelve.columns.white-background
                                     span= " (R" + p.no_reponches + ")"
                             td.center
                                 if p.ultimoPronostico.id_equipo_ganador
-                                    img(src= url('/storage/' + p.ultimoPronostico.equipoGanador.imagen) height="50")
+                                    img(src= p.ultimoPronostico.equipoGanador.imagen height="50")
                                 else
                                     span N/J
                             if usuario.admin == 1 && !p.activo 
