@@ -56,7 +56,7 @@ class EquipoController extends Controller
     if($request->file("imagen")) {
         Storage::delete($equipo->imagen);
         $imagen = $request->file("imagen")->store('equipos');
-        $equipo->imagen = $imagen;
+        $equipo->imagen = url('storage/' . $imagen);
     }
     $equipo->nombre = $request->nombre;
     $equipo->id_liga = $request->id_liga;
