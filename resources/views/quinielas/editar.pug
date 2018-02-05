@@ -90,6 +90,7 @@ block content
                                     th.center Nombre
                                     th.center Ult.
                                     th.center R
+                                    th.center &times;
                             tbody
                                 each p, key in quiniela.participacionesSurvivor
                                     tr
@@ -111,7 +112,9 @@ block content
                                                 if p.no_reponches < p.quiniela.cantidad_reponches && count(quiniela.liga.jornadas) > 1 && p.ultimoPronostico[1] != "ultimoPronostico"
                                                     a(href=url('/quinielas/reponche/'+p.id))
                                                         img.icon-button(src=url('/img/restore.png') height="18" alt="Reponche")
-                                                
+                                        td
+                                            span.eliminar_participacion.grey-color-text.span-button(data-id_participacion= p.id, data-nombre= p.usuario.nombre) &times;
+        
                                                      
                                                             
                 h6 Agregar participante

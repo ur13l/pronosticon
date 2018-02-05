@@ -166,6 +166,13 @@ public function detalle(Request $request, $id) {
             $liga = Liga::find($request->id);
             $id_liga = $liga->id;
 
+            foreach($liga->quinielas as $quiniela) {
+                foreach($quiniela->participacions as $p ) {
+                    $p->puntuacion = 0;
+                    $p->save();
+                }
+            }
+
             foreach($liga->jornadas as $jornada) {
                 foreach ($jornada->partidos as $partido) {
                     if($partido->resultado) {
