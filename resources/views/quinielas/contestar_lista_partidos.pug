@@ -1,29 +1,28 @@
-
-    form#form_contestar(action= url("/quinielas/contestarquiniela") method="post")
-        input(type="hidden" name="_token" value= csrf_token()) 
-        input(type="hidden" name="id_jornada" value= jornada.id) 
-        input(type="hidden" name="id_equipo_ganador_survivor") 
-        input(type="hidden" name="id_partido_survivor") 
-        input(type="hidden" name="id_participacion" value= participacion.id) 
-        if count(jornada.partidos) === 0 
-            h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
-            div#table_partidos
-        else
-            div#table_partidos
-                each partido, key in jornada.partidos   
-                    if quiniela.permitir_marcador && quiniela.tipoQuiniela.nombre != "Survivor"
-                        if today.lt(partido.fecha_hora)
-                            include /quinielas/items/partido_permitir_marcador
-                        else if quiniela.tipoQuiniela.nombre != "Survivor" 
-                            include /quinielas/items/partido_invalido
-                        else 
-                            h2 Esta jornada ya comenzó, no es posible contestar el Survivor de esta semana.
-                    else
-                        if today.lt(partido.fecha_hora)
-                            include /quinielas/items/partido_sin_marcador
-                        else 
-                            include /quinielas/items/partido_invalido_sin_marcador
-        br
-        br
-        div.row
-            button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Guardar
+form#form_contestar(action= url("/quinielas/contestarquiniela") method="post")
+    input(type="hidden" name="_token" value= csrf_token()) 
+    input(type="hidden" name="id_jornada" value= jornada.id) 
+    input(type="hidden" name="id_equipo_ganador_survivor") 
+    input(type="hidden" name="id_partido_survivor") 
+    input(type="hidden" name="id_participacion" value= participacion.id) 
+    if count(jornada.partidos) === 0 
+        h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
+        div#table_partidos
+    else
+        div#table_partidos
+            each partido, key in jornada.partidos   
+                if quiniela.permitir_marcador && quiniela.tipoQuiniela.nombre != "Survivor"
+                    if today.lt(partido.fecha_hora)
+                        include /quinielas/items/partido_permitir_marcador
+                    else if quiniela.tipoQuiniela.nombre != "Survivor" 
+                        include /quinielas/items/partido_invalido
+                    else 
+                        h2 Esta jornada ya comenzó, no es posible contestar el Survivor de esta semana.
+                else
+                    if today.lt(partido.fecha_hora)
+                        include /quinielas/items/partido_sin_marcador
+                    else 
+                        include /quinielas/items/partido_invalido_sin_marcador
+    br
+    br
+    div.row
+        button.three.columns.offset-by-nine.primary-color-background#enviar(type="submit") Guardar
