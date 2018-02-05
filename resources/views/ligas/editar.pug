@@ -9,6 +9,11 @@ block title
 block content
     input(type="hidden" id="_id_liga" name="_id_liga" value=liga.id)
     
+    div#dialog_eliminar(title="¿Eliminar?")
+        p ¿Estás seguro que deseas eliminar todas las jornadas? Esto solo lo deberías hacer al finalizar una temporada.
+    form(action=url('/ligas/eliminarjornadas') id="form_eliminar" method="post")
+        input(type="hidden" name="_token" value=csrf_token())
+        input(type="hidden" name="id" value=liga.id)
     div.container.white-background
         include /ligas/banner
 
@@ -122,6 +127,7 @@ block content
                                 
 
                 button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/nuevo?id_liga=' + liga.id) +"'") Agregar jornada
-                div.space
+                br()
+                button#eliminar_jornadas.ten.columns.offset-by-one.error-btn(style="margin-top:30px;") Borrar jornadas
                 
             

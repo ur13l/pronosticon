@@ -187,6 +187,7 @@ a.error {
 .frame {
     padding: 2rem;
     cursor:pointer;
+    margin-top:10px;    
     background: #2f2f2f;
 }
 
@@ -369,6 +370,9 @@ input::-webkit-inner-spin-button {
     height:50px;
 }
 
+.bar-logo {
+    width: 100%;
+}
 .bar-item {
     display: inline;
     float: right;
@@ -435,6 +439,20 @@ input::-webkit-inner-spin-button {
 
 .primary-btn:hover{
     color:#ff8000;
+    background-color: #eee;
+    -webkit-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+}
+
+.error-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+}
+
+.error-btn:hover{
+    color:#ff0000;
     background-color: #eee;
     -webkit-transition: background-color 200ms linear;
     -ms-transition: background-color 200ms linear;

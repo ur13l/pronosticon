@@ -162,8 +162,29 @@ public function detalle(Request $request, $id) {
     
         }
 
-        public function limpiarJornadas() {
+        public function eliminarJornadas(Request $request) {
+            $liga = Liga::find($request->id);
+            $id_liga = $liga->id;
 
+            foreach($liga->jornadas as $jornada) {
+                foreach ($jornada->partidos as $partido) {
+                    if($partido->resultado) {
+                        $partido->resultado->delete();
+                    }
+
+                    foreach($partido->pronosticos as $pronostico) {
+                        $pronostico->delete();
+                    }
+                    $partido->delete();
+                }
+
+                foreach($jornada->participacionesJornada as $pj) {
+                    $pj->delete();
+                }
+                $jornada->delete();
+            }
+
+            return redirect('/ligas/editar/' . $id_liga);
         }
 
 }

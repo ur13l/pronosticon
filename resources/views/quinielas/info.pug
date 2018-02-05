@@ -52,8 +52,6 @@ block content
                     include /ligas/items/jornada_actual
                 else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
                     include /ligas/items/ultima_jornada
-                else 
-                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.jornadaActual.nombre}
 
 
         br

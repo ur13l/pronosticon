@@ -57,6 +57,7 @@ Route::group(['prefix' => 'ligas', 'middleware' => 'auth.codigo.admin'], functio
     Route::post('/createorupdate', 'LigaController@createOrUpdate');
     Route::post('/update/{id}', 'LigaController@update');
     Route::post('/agregarjornada', 'LigaController@agregarJornada');
+    Route::post('/eliminarjornadas', 'LigaController@eliminarJornadas');
 });
 
 Route::group(['prefix' => 'equipos', 'middleware' => 'auth.codigo.admin'], function() {
