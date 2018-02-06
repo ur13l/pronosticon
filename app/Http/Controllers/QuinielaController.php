@@ -274,7 +274,7 @@ class QuinielaController extends Controller
 
 
         $equipos_elegidos = [];
-        if($quiniela->tipoQuiniela->nombre == "Survivor") {
+        if($quiniela->tipoQuiniela->nombre == "Survivor") { 
             foreach ($participacion->participacionJornadas as $pj) {
                 $equipos_elegidos[] = $pj->pronosticos->first()->equipoGanador;
             }
@@ -302,7 +302,9 @@ class QuinielaController extends Controller
             $data['id_participacion'] = $id_participacion;
             if($quiniela->tipoQuiniela->nombre != "Survivor") {
                 foreach($request->id_partido as $key => $dummy) {
-
+                    $data['resultado_local'] = null;
+                    $data['resultado_visita'] = null;
+                    $data['id_equipo_ganador'] = null;
                     $id_partido = $request->id_partido[$key];
                     $partido = Partido::find($id_partido);
                     
