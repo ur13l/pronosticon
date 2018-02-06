@@ -8,13 +8,13 @@ div.twelve.columns.white-background
         if quiniela.tipoQuiniela.nombre != "Survivor" 
 
             if quiniela.permitir_marcador
-
                 table.ten.columns.offset-by-one
                     thead
                         tr
                             th.center(colspan=6)= quiniela.liga.ultimaJornada.nombre
                     tbody
                         each pronostico in participacion.participacionUltimaJornada.pronosticos
+                            
                             tr  
                                 td.center
                                     img(src=pronostico.partido.equipoLocal.imagen height="50")

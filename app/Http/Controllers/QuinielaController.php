@@ -397,13 +397,17 @@ class QuinielaController extends Controller
         $quiniela = Quiniela::find($id);
         $participacion = Participacion::where('id_quiniela', $quiniela->id)->where('id_usuario', $usuario->id)->first();
         $posicion = $participacion->calcularPosicion();
-        if($quiniela->liga->proximaJornada) {
-            $participacionJornada = ParticipacionJornada::where('id_participacion', $participacion->id)
-            ->where('id_jornada', $quiniela->liga->proximaJornada->id)->first();
-        }
-        else if($quiniela->liga->jornadaActual){
+        if($quiniela->liga->jornadaActual){
             $participacionJornada = ParticipacionJornada::where('id_participacion', $participacion->id)
             ->where('id_jornada', $quiniela->liga->jornadaActual->id)->first();
+        }
+        else if($quiniela->liga->ultimaJornada) {
+            $participacionJornada = ParticipacionJornada::where('id_participacion', $participacion->id)
+            ->where('id_jornada', $quiniela->liga->ultimaJornada->id)->first();
+        }
+        else if($quiniela->liga->proximaJornada) {
+            $participacionJornada = ParticipacionJornada::where('id_participacion', $participacion->id)
+            ->where('id_jornada', $quiniela->liga->proximaJornada->id)->first();
         }
         else {
             $participacionJornada = null;
