@@ -153,12 +153,21 @@ class JornadaController extends Controller
         $jornada = Jornada::find($request->id_jornada);
         if($request->id_equipo_local) {
             foreach($request->id_equipo_local as $key => $id_equipo_local) {
-                Partido::create([
+                $p = Partido::create([
                     'id_equipo_local' => $request->id_equipo_local[$key],
                     'id_equipo_visita' => $request->id_equipo_visita[$key],
                     'id_jornada' => $request->id_jornada,
                     'fecha_hora' => Carbon::createFromFormat('d/m/Y H:i', $request->fecha[$key] . " " . $request->hora[$key])
                 ]);
+
+                if($p->fecha_hora < $jornada->fecha_inicio || $key == 0) {
+                    $jornada->fecha_inicio  = $p->fecha_hora;
+                    $jornada->save();
+                }
+                if($p->fecha_hora > $jornada->fecha_inicio || $key == 0) {
+                    $jornada->fecha_fin  = $p->fecha_hora;
+                    $jornada->save();                    
+                }
             }
         }
 

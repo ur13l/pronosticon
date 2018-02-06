@@ -78,11 +78,11 @@ div.twelve.columns.white-background
                         each pronostico in participacion.participacionJornadaActual.pronosticos
                             tr  
                                 td.center
-                                    img(src=pronostico.partido.equipoLocal.imagen height="50")
+                                    img(src=pronostico.equipoGanador.imagen height="50")
                                
                                 td.center
                                     if pronostico.partido.resultado[1] != "resultado" 
-                                        if pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador
+                                        if (pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador || pronostico.partido.resultado.id_equipo_ganador[1] = "id_equipo_ganador")
                                             img(src=url('/img/success.png'))
                                         else
                                             img(src=url('/img/cancel.png'))
