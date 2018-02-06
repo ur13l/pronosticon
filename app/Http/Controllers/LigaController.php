@@ -169,6 +169,7 @@ public function detalle(Request $request, $id) {
             foreach($liga->quinielas as $quiniela) {
                 foreach($quiniela->participacions as $p ) {
                     $p->puntuacion = 0;
+                    $p->activo = 1;
                     $p->save();
                 }
             }
