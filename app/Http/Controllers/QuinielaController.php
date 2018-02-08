@@ -18,6 +18,7 @@ use App\Liga;
 use Carbon\Carbon;
 use App\Participacion;
 use App\ParticipacionJornada;
+use Imgur;
 
 class QuinielaController extends Controller
 {
