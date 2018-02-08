@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Equipo;
 use App\Liga;
+use Imgur;
 
 class EquipoController extends Controller
 {
@@ -53,10 +54,22 @@ class EquipoController extends Controller
         $another = true;
      }
     
-    if($request->file("imagen")) {
+     $file = $request->file("imagen");
+    if($file) {
+        $image = Imgur::setHeaders([
+            'headers' => [
+                'authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID'),
+                'content-type' => 'application/x-www-form-urlencoded',
+            ]
+        ])->upload($file);
+        
+        $equipo->imagen = $image->link();
+        
+        /*
         Storage::delete($equipo->imagen);
         $imagen = $request->file("imagen")->store('equipos');
         $equipo->imagen = url('storage/' . $imagen);
+        */
     }
     $equipo->nombre = $request->nombre;
     $equipo->id_liga = $request->id_liga;

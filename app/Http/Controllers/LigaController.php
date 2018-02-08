@@ -98,17 +98,37 @@ public function detalle(Request $request, $id) {
          if(!$liga) {
             $liga = new Liga();
          }
-        
-        if($request->file("logo")) {
+         $file = $request->file("logo");
+        if($file) {
+            $image = Imgur::setHeaders([
+                'headers' => [
+                    'authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID'),
+                    'content-type' => 'application/x-www-form-urlencoded',
+                ]
+            ])->upload($file);
+            
+            $liga->logo = $image->link();
+            /*
             Storage::delete($liga->logo);
             $logo = $request->file("logo")->store('ligas');
             $liga->logo = url('storage/' . $logo);
+            */
         }
 
-        if($request->file("imagen")) {
+        $file2 = $request->file("imagen");
+        if($file2) {
+            $image2 = Imgur::setHeaders([
+                'headers' => [
+                    'authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID'),
+                    'content-type' => 'application/x-www-form-urlencoded',
+                ]
+            ])->upload($file2);
+            $liga->imagen = $image2->link();
+            /*
             Storage::delete($liga->imagen);
             $imagen = $request->file("imagen")->store('equipos');
             $liga->imagen = url('storage/' .$imagen);
+            */
         }
         $liga->nombre = $request->nombre;
         $liga->id_deporte = $request->id_deporte;
