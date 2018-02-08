@@ -82,7 +82,7 @@ div.twelve.columns.white-background
                         each pronostico in ppj.pronosticos
                             tr  
                                 td.center
-                                    img(src=pronostico.partido.equipoLocal.imagen height="50")
+                                    img(src=pronostico.equipoGanador.imagen height="50")
                                
                                 td.center
                                     if pronostico.partido.resultado[1] != "resultado" 

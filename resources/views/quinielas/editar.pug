@@ -176,7 +176,7 @@ block content
                                         td.center
                                             img(src=partido.equipoVisita.imagen height="50")
                         
-                    if quiniela.liga.ultimaJornada != null
+                    if quiniela.liga.ultimaJornada[1] != "ultimaJornada"
                         button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/resultados/' + quiniela.liga.ultimaJornada.id) +"?from=" + quiniela.id + "'")
                             | Actualizar resultados
                 div.space 

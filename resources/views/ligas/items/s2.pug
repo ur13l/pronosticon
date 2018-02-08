@@ -5,7 +5,7 @@ div.ten.columns.offset-by-one
     .center.row 
         if participacion.quiniela.liga.proximaJornada[1] != "proximaJornada"
             if participacion.participacionProximaJornada[1] != "participacionProximaJornada"
-                button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quiniela/participacion/' + participacion.participacionProximaJornada.id) +"'") Ver últimos resultados
+                button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' +  participacion.quiniela.liga.proximaJornada.id +'/' + participacion.quiniela.id) +"'") Ver últimos resultados
 
             else 
                  button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.proximaJornada.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.proximaJornada.nombre}
