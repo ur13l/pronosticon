@@ -144,7 +144,7 @@ class QuinielaController extends Controller
                 ]
             ])->upload($file);
             
-            $equipo->imagen = $image->link();
+            $quiniela->imagen = $image->link();
             /*
             Storage::delete($quiniela->imagen);
             $imagen = $request->file("imagen")->store('quinielas');
