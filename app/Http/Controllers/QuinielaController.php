@@ -131,10 +131,21 @@ class QuinielaController extends Controller
        $quiniela->nombre = $request->nombre;
        $quiniela->descripcion = $request->descripcion;
        $quiniela->id_liga = $request->id_liga;
-       if($request->file("imagen")) {
+       $file = $request->file("imagen");
+       if($file) {
+            $image = Imgur::setHeaders([
+                'headers' => [
+                    'authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID'),
+                    'content-type' => 'application/x-www-form-urlencoded',
+                ]
+            ])->upload($file);
+            
+            $equipo->imagen = $image->link();
+            /*
             Storage::delete($quiniela->imagen);
             $imagen = $request->file("imagen")->store('quinielas');
             $quiniela->imagen = url('storage/' .$imagen);
+            */
         }
        $quiniela->id_tipo_quiniela = $request->id_tipo_quiniela;
        $quiniela->permitir_marcador = $request->permitir_marcador ? true : false;

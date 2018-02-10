@@ -97,12 +97,24 @@ class JornadaController extends Controller
         $jornada = Jornada::find($request->id);
         
         foreach($jornada->partidos as $partido) {
+            foreach($jornada->participacionesJornada as $pj) {
+                foreach($pj->pronosticos as $pronostico) {
+                    $pronostico->delete();
+                }
+                $pj->delete();
+            }
             Resultado::whereIn('id_partido',[$partido->id])->delete();
         }
         Partido::whereIn('id_jornada',[$jornada->id])->delete();
  
         $id_liga = $jornada->id_liga;
         $jornada->delete();
+
+        foreach($jornada->liga->quinielas as $quiniela) {
+            foreach($quiniela->participacions as $participacion) {
+                $participacion->calcularPuntuacion();
+            }
+        }
         return redirect('/ligas/editar/' . $id_liga);
     
     }
