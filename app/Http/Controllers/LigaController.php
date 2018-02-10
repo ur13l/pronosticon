@@ -9,6 +9,7 @@ use App\Quiniela;
 use App\Deporte;
 use App\Usuario;
 use Auth;
+use Imgur;
 use Carbon\Carbon;
 
 class LigaController extends Controller

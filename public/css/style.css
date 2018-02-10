@@ -233,6 +233,10 @@ a.error {
     color: #039050;
 }
 
+.success-extra-text {
+    color: #04b404;
+}
+
 .warning-background {
     background: #e0b030;
 }

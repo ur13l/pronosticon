@@ -18,6 +18,7 @@ use App\Liga;
 use Carbon\Carbon;
 use App\Participacion;
 use App\ParticipacionJornada;
+use Imgur;
 
 class QuinielaController extends Controller
 {
@@ -83,6 +84,9 @@ class QuinielaController extends Controller
         $quiniela = Quiniela::find($request->id);
         foreach($quiniela->participacions as $participacion) {
             foreach($participacion->participacionJornadas as $pj) {
+                foreach($pj->pronosticos as $pronostico) {
+                    $pronostico->delete();
+                }
                 $pj->delete();
             }
             $participacion->delete();
@@ -140,7 +144,7 @@ class QuinielaController extends Controller
                 ]
             ])->upload($file);
             
-            $equipo->imagen = $image->link();
+            $quiniela->imagen = $image->link();
             /*
             Storage::delete($quiniela->imagen);
             $imagen = $request->file("imagen")->store('quinielas');
