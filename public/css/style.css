@@ -73,6 +73,7 @@ input.big-input {
 }
 
 .dragscroll {
+    overflow: auto; 
 }
 
 .mask {
