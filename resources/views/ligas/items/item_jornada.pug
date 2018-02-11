@@ -1,0 +1,16 @@
+table.ten.columns.offset-by-one
+    thead
+        tr
+            th.center(colspan="3")= jornada.nombre
+    tbody
+        each partido in jornada.partidos
+            tr
+                td.center
+                    img(src=partido.equipoLocal.imagen height="50")
+                if jornada.registrada
+                    td.center 
+                        | #{partido.resultado.resultado_local} - #{partido.resultado.resultado_visita}
+                else
+                    td.center vs
+                td.center
+                    img(src=partido.equipoVisita.imagen height="50")

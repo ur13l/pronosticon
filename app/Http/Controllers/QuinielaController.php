@@ -255,7 +255,7 @@ class QuinielaController extends Controller
         $usuario = Usuario::where('codigo', $codigo)->first();
         $quiniela = Quiniela::find($id_quiniela);
         $participacion = Participacion::where('id_usuario', $usuario->id)->where('id_quiniela', $quiniela->id)->first();
-        if($quiniela->usuarioParticipa($usuario)) {
+        if($quiniela->usuarioParticipa($usuario) && $participacion->activo) {
             $jornada = Jornada::find($id_jornada);
             $participacionJornada = ParticipacionJornada::where('id_jornada', $id_jornada)->where('id_participacion', $participacion->id)->first();
             $today = Carbon::now('America/Mexico_City');
@@ -518,5 +518,17 @@ class QuinielaController extends Controller
         
         $quiniela->update($arr);
         return redirect('/quinielas/editar/' . $quiniela->id);
+    }
+
+     /**
+     * Función que devuelve la vista que desglosa los resultados de los usuarios por jornada.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function resultadosJornada(Request $request) {
+        $jornada = Jornada::find($request->id_jornada);
+        return view('ligas.items.item_jornada', ['jornada'=>$jornada]);
+
     }
 }

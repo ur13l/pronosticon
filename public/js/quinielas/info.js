@@ -4,6 +4,7 @@ $(function() {
         var id_jornada = $(this).data('id'),
             id_participacion = $('#_id_participacion').val();
         $("#datos_jornada").html("<h5>Cargando...</h5>")
+        $("#resultados_jornada").html("<h5>Cargando...</h5>")
         $(".item-jornada").removeClass("selected");
         $(this).addClass("selected");
         $.ajax({
@@ -16,6 +17,18 @@ $(function() {
             },
             success:function (data) {
                 $("#datos_jornada").html(data);
+            }
+        });
+
+        $.ajax({
+            url: $("#_url").val() + "/quinielas/resultados_jornada",
+            method: 'POST',
+            data: {
+                id_jornada: id_jornada,
+                _token: $("#_token").val()
+            },
+            success:function (data) {
+                $("#resultados_jornada").html(data);
             }
         });
     });

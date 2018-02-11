@@ -44,6 +44,17 @@ block content
                     include /ligas/items/s1_all
                 else
                     include /ligas/items/s1_all_survivor
+                div.resultados_jornada
+                    if participacion.participacionJornadaActual[1] != "participacionJornadaActual"
+                        - var jornada = quiniela.liga.jornadaActual
+                        div#resultados_jornada
+                            include /ligas/items/item_jornada
+                    else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
+                        - var jornada = quiniela.liga.ultimaJornada 
+                        div#resultados_jornada
+                            include /ligas/items/item_jornada
+                    else
+                        div#resultados_jornada
             .six.columns
                 include /ligas/items/bolsa
                 if participacion.participacionProximaJornada[1] != "participacionProximaJornada"

@@ -171,15 +171,7 @@ class JornadaController extends Controller
                     'id_jornada' => $request->id_jornada,
                     'fecha_hora' => Carbon::createFromFormat('d/m/Y H:i', $request->fecha[$key] . " " . $request->hora[$key])
                 ]);
-
-                if($p->fecha_hora < $jornada->fecha_inicio || $key == 0) {
-                    $jornada->fecha_inicio  = $p->fecha_hora;
-                    $jornada->save();
-                }
-                if($p->fecha_hora > $jornada->fecha_inicio || $key == 0) {
-                    $jornada->fecha_fin  = $p->fecha_hora;
-                    $jornada->save();                    
-                }
+                
             }
         }
 
@@ -201,7 +193,7 @@ class JornadaController extends Controller
                 $partido->delete();
             }
         }
-
+        $jornada->actualizarFechas();
         return redirect('/ligas/editar/'. $jornada->liga->id);
     }
 
