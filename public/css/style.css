@@ -73,7 +73,6 @@ input.big-input {
 }
 
 .dragscroll {
-    overflow: auto; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;
 }
 
 .mask {
