@@ -39,10 +39,6 @@ input[type="time"]:focus   {
     background: none;
 }
 
-input[type="time"], select.select_equipo {
-    height:38px;
-    background: none;
-}
 
 input.big-input {
     font-size:3em;
