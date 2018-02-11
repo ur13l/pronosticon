@@ -1,5 +1,4 @@
-
-div(style="overflow-x: auto;")
+div.dragscroll
     table.twelve.columns
         thead
             tr
@@ -8,7 +7,7 @@ div(style="overflow-x: auto;")
                 each jornada in quiniela.liga.jornadas
                     th.center(style="min-width: 100px")= jornada.nombre
         tbody
-            each participacion in quiniela.participacions
+            each participacion in quiniela.participacionesSurvivor
                 tr 
                     td 
                         img(src=participacion.usuario.avatar height="50")
