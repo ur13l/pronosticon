@@ -8,7 +8,7 @@ block title
 
 block content   
     each participacion,key in usuario.participacions
-        section(style="background-image: url('"+participacion.quiniela.imagen+"'); background-size: cover; background-position:center; ")
+        section(style="background-image: url('"+participacion.quiniela.liga.imagen+"'); background-size: cover; background-position:center; ")
             if key % 2 == 0
                 div.mask
                     include /ligas/seccion
