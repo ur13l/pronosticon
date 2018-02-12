@@ -17,4 +17,7 @@ block content
         br
         div.row
             div.twelve.columns.center 
-                div !{quiniela.reglas}
+                if quiniela.reglas[1] != "reglas"
+                    div !{quiniela.reglas}
+                else 
+                    div No se han actualizado las reglas.
