@@ -39,10 +39,6 @@ input[type="time"]:focus   {
     background: none;
 }
 
-input[type="time"], select.select_equipo {
-    height:25px;
-    background: none;
-}
 
 input.big-input {
     font-size:3em;
@@ -74,6 +70,10 @@ input.big-input {
     left: 0;
     position: absolute;
     width: 40%;
+}
+
+.dragscroll {
+    overflow: auto; 
 }
 
 .mask {
@@ -409,7 +409,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 780px) {
     .small-center {
         text-align:center;
     }

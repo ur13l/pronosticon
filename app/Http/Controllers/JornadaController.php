@@ -97,12 +97,24 @@ class JornadaController extends Controller
         $jornada = Jornada::find($request->id);
         
         foreach($jornada->partidos as $partido) {
+            foreach($jornada->participacionesJornada as $pj) {
+                foreach($pj->pronosticos as $pronostico) {
+                    $pronostico->delete();
+                }
+                $pj->delete();
+            }
             Resultado::whereIn('id_partido',[$partido->id])->delete();
         }
         Partido::whereIn('id_jornada',[$jornada->id])->delete();
  
         $id_liga = $jornada->id_liga;
         $jornada->delete();
+
+        foreach($jornada->liga->quinielas as $quiniela) {
+            foreach($quiniela->participacions as $participacion) {
+                $participacion->calcularPuntuacion();
+            }
+        }
         return redirect('/ligas/editar/' . $id_liga);
     
     }
@@ -159,15 +171,7 @@ class JornadaController extends Controller
                     'id_jornada' => $request->id_jornada,
                     'fecha_hora' => Carbon::createFromFormat('d/m/Y H:i', $request->fecha[$key] . " " . $request->hora[$key])
                 ]);
-
-                if($p->fecha_hora < $jornada->fecha_inicio || $key == 0) {
-                    $jornada->fecha_inicio  = $p->fecha_hora;
-                    $jornada->save();
-                }
-                if($p->fecha_hora > $jornada->fecha_inicio || $key == 0) {
-                    $jornada->fecha_fin  = $p->fecha_hora;
-                    $jornada->save();                    
-                }
+                
             }
         }
 
@@ -189,7 +193,7 @@ class JornadaController extends Controller
                 $partido->delete();
             }
         }
-
+        $jornada->actualizarFechas();
         return redirect('/ligas/editar/'. $jornada->liga->id);
     }
 

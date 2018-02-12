@@ -8,14 +8,20 @@ div.ten.columns.offset-by-one
                 button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' +  participacion.quiniela.liga.proximaJornada.id +'/' + participacion.quiniela.id) +"'") Ver últimos resultados
 
             else 
-                 button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.proximaJornada.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.proximaJornada.nombre}
+                if participacion.activo
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.proximaJornada.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.proximaJornada.nombre}
+                else 
+                    h4 No puedes contestar esta jornada, ponte en contacto con el administrador.
+
         else if participacion.quiniela.liga.jornadaActual[1] != "jornadaActual"
             if participacion.participacionJornadaActual[1] != "participacionJornadaActual"
                 button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Ver últimos resultados
 
             else 
-                 button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.jornadaActual.nombre}
-
+                if participacion.activo
+                    button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/quinielas/contestar/' + participacion.quiniela.liga.jornadaActual.id + "/" + participacion.quiniela.id) +"'") Contestar #{participacion.quiniela.liga.jornadaActual.nombre}
+                else 
+                    h4 No puedes contestar esta jornada, ponte en contacto con el administrador.
         else 
             h5.orange-text Espere al administrador para que cargue la próxima jornada.
     br

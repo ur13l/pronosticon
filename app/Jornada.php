@@ -95,4 +95,10 @@ class Jornada extends Model
 
  
     }
+
+    public function actualizarFechas() {
+        $this->fecha_inicio = $this->partidos()->min('fecha_hora');
+        $this->fecha_fin = $this->partidos()->max('fecha_hora');
+        $this->save();
+    }
 }

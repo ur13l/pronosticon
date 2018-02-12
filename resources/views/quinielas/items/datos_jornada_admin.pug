@@ -1,5 +1,5 @@
 
-div(style="overflow-x: auto;")
+div.dragscroll
     table.twelve.columns
         thead
             tr
@@ -30,8 +30,12 @@ div(style="overflow-x: auto;")
                                                 else 
                                                     td.center.success-extra-text= pronostico.resultado_local + "-" + pronostico.resultado_visita
 
-                                            else                                                   
-                                                td.center= pronostico.resultado_local + "-" + pronostico.resultado_visita
+                                            else 
+                                                if pronostico.partido.resultado[1] != "resultado"                                                   
+                                                    td.center.grey-color-text= pronostico.resultado_local + "-" + pronostico.resultado_visita
+                                                else
+                                                    td.center= pronostico.resultado_local + "-" + pronostico.resultado_visita
+                                        
                                         else if pronostico.id_equipo_ganador == partido.resultado.id_equipo_ganador ||  (pronostico.id_equipo_ganador[1] == "id_equipo_ganador" && partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
                                             td.center.success-background.center
                                                 if pronostico.id_equipo_ganador[1] != "id_equipo_ganador" 

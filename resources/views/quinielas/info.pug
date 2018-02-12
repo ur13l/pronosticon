@@ -38,12 +38,25 @@ block content
         
         br 
 
+        
         div.row
             .six.columns
                 if quiniela.tipoQuiniela.nombre != "Survivor"
                     include /ligas/items/s1_all
                 else
                     include /ligas/items/s1_all_survivor
+                div.resultados_jornada
+                    if participacion.participacionJornadaActual[1] != "participacionJornadaActual"
+                        - var jornada = quiniela.liga.jornadaActual
+                        div#resultados_jornada
+                            include /ligas/items/item_jornada
+                    else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
+                        - var jornada = quiniela.liga.ultimaJornada 
+                        div#resultados_jornada
+                            include /ligas/items/item_jornada
+                    else
+                        div#resultados_jornada
+            
             .six.columns
                 include /ligas/items/bolsa
                 if participacion.participacionProximaJornada[1] != "participacionProximaJornada"
@@ -52,7 +65,6 @@ block content
                     include /ligas/items/jornada_actual
                 else if participacion.participacionUltimaJornada[1] != "participacionUltimaJornada"
                     include /ligas/items/ultima_jornada
-
 
         br
         div.row
