@@ -507,9 +507,19 @@ class QuinielaController extends Controller
         $arr = [];
         $quiniela = Quiniela::find($request->id_quiniela);
         if($request->file("imagen")) {
+            $image = Imgur::setHeaders([
+                'headers' => [
+                    'authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID'),
+                    'content-type' => 'application/x-www-form-urlencoded',
+                ]
+            ])->upload($request->file("imagen"));
+            
+            $arr['imagen'] = $image->link();
+            /*
             Storage::delete($quiniela->imagen);
             $imagen = $request->file("imagen")->store('quinielas');
             $arr['imagen'] = url('storage/' .$imagen);
+            */
         }
         if($request->reglas) {
             $arr['reglas'] = $request->reglas;
