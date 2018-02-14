@@ -17,6 +17,7 @@ use App\Partido;
 use App\Liga;
 use Carbon\Carbon;
 use App\Participacion;
+use App\Reponche;
 use App\ParticipacionJornada;
 use Imgur;
 
@@ -58,7 +59,7 @@ class QuinielaController extends Controller
         $usuario = Usuario::where('codigo', $codigo)->first();
        $ligas = Liga::all();
        $tipo_quiniela = TipoQuiniela::all();
-       return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela, 'usuario' => $usuario]);
+       return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela, 'usuario' => $usuario, 'today' => $today]);
    }
 
   /**
@@ -299,23 +300,26 @@ class QuinielaController extends Controller
             }
         }
 
-        $participacionJornada = ParticipacionJornada::where('id_participacion', $id_participacion)
-            ->where('id_jornada', $id_jornada)->first();
-        if(!$participacionJornada) {
-            $participacionJornada = ParticipacionJornada::create([
-                'id_participacion' => $id_participacion,
-                'id_jornada' => $id_jornada,
-                'registrada' => false
-            ]);
-        }
-
-
-        if (!$participacionJornada->registrada) {
+        
 
             $data = [];
-            $data['id_participacion_jornada'] = $participacionJornada->id;
             $data['id_participacion'] = $id_participacion;
             if($quiniela->tipoQuiniela->nombre != "Survivor") {
+                $participacionJornada = ParticipacionJornada::where('id_participacion', $id_participacion)
+                ->where('id_jornada', $id_jornada)->first();
+                if(!$participacionJornada) {
+                    $participacionJornada = ParticipacionJornada::create([
+                        'id_participacion' => $id_participacion,
+                        'id_jornada' => $id_jornada,
+                        'registrada' => false
+                    ]);
+                }
+
+                $data['id_participacion_jornada'] = $participacionJornada->id;
+                if(count($request->id_partido) < Jornada::find($id_jornada)->partidosPendientes()) {
+                    return back();
+                }
+
                 foreach($request->id_partido as $key => $dummy) {
                     $data['resultado_local'] = null;
                     $data['resultado_visita'] = null;
@@ -363,6 +367,8 @@ class QuinielaController extends Controller
                         }
                     }
                 }
+                $participacionJornada->registrada = true;
+                $participacionJornada->save();
             }
             //SURVIVOR
             else {
@@ -378,6 +384,18 @@ class QuinielaController extends Controller
                 else {
                     $data['id_equipo_ganador'] = null;
                 }
+
+                $participacionJornada = ParticipacionJornada::where('id_participacion', $id_participacion)
+                ->where('id_jornada', $id_jornada)->first();
+                if(!$participacionJornada) {
+                    $participacionJornada = ParticipacionJornada::create([
+                        'id_participacion' => $id_participacion,
+                        'id_jornada' => $id_jornada,
+                        'registrada' => false
+                    ]);
+                }
+                
+                $data['id_participacion_jornada'] = $participacionJornada->id;
                 $pronostico = Pronostico::where('id_partido', $request->id_partido_survivor)
                 ->where('id_participacion', $request->id_participacion_survivor)->first();
             
@@ -389,11 +407,12 @@ class QuinielaController extends Controller
                     $data['puntos'] = 0;
                     Pronostico::create($data);
                 }
-            }
-        }
 
-        $participacionJornada->registrada = true;
-        $participacionJornada->save();
+
+                $participacionJornada->registrada = true;
+                $participacionJornada->save();
+            }
+
         return redirect('/quinielas/info/' . $quiniela->id);
     }
 
@@ -427,7 +446,8 @@ class QuinielaController extends Controller
         else {
             $participacionJornada = null;
         }
-        return view('quinielas.info', ['participacion_jornada' => $participacionJornada, 'posicion' => $posicion, 'quiniela' => $quiniela, 'usuario' => $usuario, 'participacion' => $participacion]);
+        $today = Carbon::now('America/Mexico_City');
+        return view('quinielas.info', ['participacion_jornada' => $participacionJornada, 'posicion' => $posicion, 'quiniela' => $quiniela, 'usuario' => $usuario, 'participacion' => $participacion, 'today' => $today]);
     }
 
 
@@ -440,8 +460,9 @@ class QuinielaController extends Controller
     public function datosJornada(Request $request) {
         $participacionJornada = ParticipacionJornada::where('id_participacion', $request->id_participacion)
             ->where('id_jornada', $request->id_jornada)->first();
+        $today = Carbon::now('America/Mexico_City');
         $quiniela = $participacionJornada ? $participacionJornada->participacion->quiniela : null;
-        return view('quinielas.items.datos_jornada', ['participacion_jornada'=>$participacionJornada, 'quiniela' => $quiniela ]);
+        return view('quinielas.items.datos_jornada', ['participacion_jornada'=>$participacionJornada, 'quiniela' => $quiniela, 'today' => $today ]);
 
     }
 
@@ -465,11 +486,16 @@ class QuinielaController extends Controller
      * @param Request $request
      * @return void
      */
-    public function reponche($id_participacion) {
+    public function reponche($id_participacion, $id_jornada) {
         $participacion = Participacion::find($id_participacion);
         if($participacion->no_reponches < $participacion->quiniela->cantidad_reponches) {
             $participacion->no_reponches += 1;
             $participacion->activo = true;
+            Reponche::create([
+                'id_participacion' => $id_participacion,
+                'id_jornada' => $id_jornada
+            ]);
+
             $participacion->save();
         }
         return redirect('/quinielas/editar/' . $participacion->id_quiniela);

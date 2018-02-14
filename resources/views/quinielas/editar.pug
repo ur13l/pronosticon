@@ -109,8 +109,8 @@ block content
                                                 span N/J
                                         td.center
                                             if !p.activo
-                                                if p.no_reponches < p.quiniela.cantidad_reponches && count(quiniela.liga.jornadas) > 1 && p.ultimoPronostico[1] != "ultimoPronostico"
-                                                    a(href=url('/quinielas/reponche/'+p.id))
+                                                if p.no_reponches < p.quiniela.cantidad_reponches && count(quiniela.liga.jornadas) >= 1 && p.ultimoPronostico[1] != "ultimoPronostico"
+                                                    a(href=url('/quinielas/reponche/'+p.id + '/' + quiniela.liga.ultimaJornada.id))
                                                         img.icon-button(src=url('/img/restore.png') style="padding:15px" height="18" alt="Reponche")
                                         td
                                             span.eliminar_participacion.grey-color-text.span-button(data-id_participacion= p.id, style="padding:15px", data-nombre= p.usuario.nombre) &times;

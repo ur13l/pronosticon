@@ -42,7 +42,7 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], fun
     Route::post('/datos_jornada_admin', 'QuinielaController@datosJornadaAdmin');
     Route::post('/eliminar', 'QuinielaController@eliminar');
     Route::post('/eliminar_participacion', 'QuinielaController@eliminarParticipacion');
-    Route::get('/reponche/{id_participacion}', 'QuinielaController@reponche');
+    Route::get('/reponche/{id_participacion}/{id_jornada}', 'QuinielaController@reponche');
     Route::get('/reglas/editar/{id_quiniela}', 'QuinielaController@editarReglas');
     Route::post('/actualizar', 'QuinielaController@actualizar');
 });

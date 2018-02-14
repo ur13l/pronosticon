@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 /**
  * @property int $id
@@ -71,8 +72,11 @@ class Jornada extends Model
                         }
                     }
                     else if($resultado->id_equipo_ganador != null && $pj->participacion->quiniela->tipoQuiniela->nombre == "Survivor") {
-                        $pj->participacion->activo = false;
-                        $pj->participacion->save();
+                        $reponche = Reponche::where('id_jornada', $pj->id_jornada)->where('id_participacion', $pj->id_participacion)->first();
+                        if(!$reponche) {
+                            $pj->participacion->activo = false;
+                            $pj->participacion->save();
+                        }
                     }
                 }
             }
@@ -82,6 +86,7 @@ class Jornada extends Model
             $pj->participacion->calcularPuntuacion();
             
             //Eliminar a los de survivor que no enviaron respuesta.
+
             foreach($this->liga->quinielasSurvivor as $q ) {
                 foreach ($q->participacions as $p) {
                     $pj = $p->participacionJornada($this->id);
@@ -94,6 +99,12 @@ class Jornada extends Model
         }
 
  
+    }
+
+
+    public function partidosPendientes() {
+        $p = $this->partidos()->where('fecha_hora', '>=', Carbon::now('America/Mexico_City'))->get();
+        return $p->count();
     }
 
     public function actualizarFechas() {

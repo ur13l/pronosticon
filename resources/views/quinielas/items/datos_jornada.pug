@@ -1,4 +1,4 @@
-if participacion_jornada
+if participacion_jornada && today.gt(participacion_jornada.jornada.fecha_inicio)
     div.dragscroll
         table.twelve.columns
             thead
@@ -54,4 +54,4 @@ if participacion_jornada
                                 td.center 
 
 else
-    h6 No es posible ver los resultados de esta jornada al no haber enviado tu quiniela.
+    h6 No es posible ver los resultados de los demás ya que esta jornada no ha comenzado.

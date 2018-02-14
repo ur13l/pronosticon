@@ -71,8 +71,9 @@ class Liga extends Model
 
     public function quinielasSurvivor() 
     {
+        $tq = TipoQuiniela::where('nombre', 'Survivor')->first();
         return $this->hasMany('App\Quiniela', 'id_liga')
-            ->where('id_tipo_quiniela', '11');
+            ->where('id_tipo_quiniela', $tq->id);
             
     }
 

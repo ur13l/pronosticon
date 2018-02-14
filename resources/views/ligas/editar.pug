@@ -93,7 +93,7 @@ block content
                                         td.center
                                             img(src=partido.equipoVisita.imagen height="50")
                         
-                    if liga.ultimaJornada != null
+                    if liga.ultimaJornada[1] != "ultimaJornada"
                         button.ten.columns.offset-by-one.primary-btn(onclick="location.href='"+ url('/jornadas/editar/resultados/' + liga.ultimaJornada.id) +"'")
                             | Actualizar resultados
                     div.space
