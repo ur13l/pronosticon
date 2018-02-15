@@ -14,7 +14,7 @@ div.dragscroll
                     td.startd.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
                     each jornada in quiniela.liga.jornadas
                         - x = false;
-                        if today.gt(jornada.fecha_inicio)
+                        if today.gt(jornada.fecha_inicio) || usuario.admin
                             each part in jornada.participacionesJornada
                                 if part.id_participacion == participacion.id
                                     each pronostico in part.pronosticos

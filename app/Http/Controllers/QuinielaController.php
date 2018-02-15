@@ -72,7 +72,8 @@ class QuinielaController extends Controller
         $codigo = $request->session()->get('codigo','');
         $usuario = Usuario::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id);
-        return view('quinielas.editar', ['quiniela' => $quiniela, 'usuario' => $usuario]);
+        $today = Carbon::now('America/Mexico_City');
+        return view('quinielas.editar', ['quiniela' => $quiniela, 'usuario' => $usuario, 'today' => $today]);
    }
 
    /**
