@@ -14,21 +14,26 @@ div.dragscroll
                     td.startd.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
                     each jornada in quiniela.liga.jornadas
                         - x = false;
-                        each part in jornada.participacionesJornada
-                            if part.id_participacion == participacion.id
-                                each pronostico in part.pronosticos
-                                    - x = true;
-                                    if pronostico.resultado && (pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador || pronostico.partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
-                                        td.center.success-background
-                                            img(src= pronostico.equipoGanador.imagen height="50")
-                                    else if pronostico.partido.resultado[1] != "resultado" && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
-                                        td.center.error-background
-                                            img(src= pronostico.equipoGanador.imagen height="50")
-                                    else
-                                        td.center
-                                            img(src= pronostico.equipoGanador.imagen height="50")
-                                    
-                        if !x
+                        if today.gt(jornada.fecha_inicio)
+                            each part in jornada.participacionesJornada
+                                if part.id_participacion == participacion.id
+                                    each pronostico in part.pronosticos
+                                        - x = true;
+                                        if pronostico.resultado && (pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador || pronostico.partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
+                                            td.center.success-background
+                                                img(src= pronostico.equipoGanador.imagen height="50")
+                                        else if pronostico.partido.resultado[1] != "resultado" && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
+                                            td.center.error-background
+                                                img(src= pronostico.equipoGanador.imagen height="50")
+                                        else
+                                            td.center
+                                                img(src= pronostico.equipoGanador.imagen height="50")          
+                            if !x
+                                if jornada.registrada
+                                    td.center.error-background
+                                else
+                                    td.center
+                        else
                             if jornada.registrada
                                 td.center.error-background
                             else

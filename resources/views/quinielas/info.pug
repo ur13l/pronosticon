@@ -32,10 +32,14 @@ block content
                     if quiniela.tipoQuiniela.nombre != "Survivor"
                         h1.five.columns.white-color-text.right.small-center= participacion.puntuacion + "pts."
                     else
-                        h1.five.columns.white-color-text.right.small-center Activo
-                            if participacion.no_reponches > 0
-                                span= "(R" + participacion.no_reponches + ")"
-        
+                        if participacion.activo
+                            h1.five.columns.white-color-text.right.small-center Activo
+                                if participacion.no_reponches > 0
+                                    span= "(R" + participacion.no_reponches + ")"
+                        else
+                            h1.five.columns.white-color-text.right.small-center Eliminado
+                                if participacion.no_reponches > 0
+                                    span= "(R" + participacion.no_reponches + ")"
         br 
 
         
