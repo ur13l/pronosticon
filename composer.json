@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "~7.1.0",
+        "php": "^7.1.0",
         "bkwld/laravel-pug": "^1.5",
         "fideloper/proxy": "~3.3",
         "krlove/eloquent-model-generator": "^1.2",

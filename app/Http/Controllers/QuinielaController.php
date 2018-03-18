@@ -59,6 +59,7 @@ class QuinielaController extends Controller
         $usuario = Usuario::where('codigo', $codigo)->first();
        $ligas = Liga::all();
        $tipo_quiniela = TipoQuiniela::all();
+       $today = Carbon::now('America/Mexico_City');
        return view('quinielas.nueva', ['quiniela' => null, 'ligas' => $ligas, 'tipo_quiniela' => $tipo_quiniela, 'usuario' => $usuario, 'today' => $today]);
    }
 
