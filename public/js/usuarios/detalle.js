@@ -1,6 +1,6 @@
 $(function() {
     //Validación de formulario para nueva convocatoria
-    $("form").validate({
+    $("#form_usuario").validate({
         submitHandler: function(form) {
             form.submit();
         },

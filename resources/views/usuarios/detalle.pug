@@ -19,16 +19,16 @@ block content
                 a(href=url('/usuarios/')) Usuarios
             li
                 a.active(href=url('/usuarios/' + (user.id? "editar/" + user.id : "nuevo")))= (user.nombre? user.nombre: "Nuevo")
-        
-        br
         div.row     
             a.two.columns.offset-by-ten.center.error#eliminar_usuario(data-id=user.id) Eliminar
-            form(action=url('/usuarios/eliminar') id="form_eliminar" method="post")
+            form(action=url('/usuarios/eliminar'), id="form_eliminar", method="post")
                 input(type="hidden" name="_token" value=csrf_token())
                 input(type="hidden" name="id" value=user.id)
             div#dialog_eliminar(title="¿Eliminar?")
                 p ¿Estás seguro que deseas eliminar al usuario #{user.nombre}?
-        form(action=url('/usuarios/createorupdate') method="POST")
+        br
+        
+        form#form_usuario(action=url('/usuarios/createorupdate'), method="POST")
             input(type="hidden" name="_token" value=csrf_token())
             input(type="hidden" id="id" name="id" value= user.id)
             div.row
