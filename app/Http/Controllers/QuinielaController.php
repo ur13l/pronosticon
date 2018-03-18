@@ -268,7 +268,25 @@ class QuinielaController extends Controller
                     $equipos_elegidos[] = $pj->pronosticos->first()->equipoGanador;
                 }
             }
-            return view('quinielas.contestar_regular', ['participacion_jornada'=> $participacionJornada, 'liga' => $jornada->liga, 'participacion' => $participacion, 'usuario' => $usuario, 'quiniela' => $quiniela, 'jornada' => $jornada, 'today' => $today, 'equipos_elegidos' => collect($equipos_elegidos)]);
+            $jornadaPrevia = Jornada::where('fecha_inicio', '<', $jornada->fecha_inicio)
+                ->where('id_liga', $jornada->id_liga)
+                ->orderBy('fecha_inicio', 'desc')->first();
+            $jornadaProxima = Jornada::where('fecha_inicio', '>', $jornada->fecha_inicio)
+                ->where('id_liga', $jornada->id_liga)
+                ->orderBy('fecha_inicio')->first();
+            return view('quinielas.contestar_regular', 
+                ['participacion_jornada'=> $participacionJornada, 
+                'liga' => $jornada->liga, '
+                participacion' => $participacion, 
+                'usuario' => $usuario, 
+                'quiniela' => $quiniela, 
+                'jornada' => $jornada, 
+                'today' => $today, 
+                'equipos_elegidos' => collect($equipos_elegidos),
+                'jornadaPrevia' => $jornadaPrevia,
+                'jornadaProxima' => $jornadaProxima
+                ]
+            );
        }
        else {
             //TODO: Error cuando el usuario no participa en la quiniela.

@@ -17,7 +17,11 @@ block content
         ul.breadcrumb
             li 
                 a(href=url('/')) Inicio
-            
+        div.row
+            if jornadaPrevia
+                a.two.columns(href=url("/quinielas/contestar/" + jornadaPrevia.id + "/" + quiniela.id))= "<" + jornadaPrevia.nombre
+            if jornadaProxima
+                a.two.columns.offset-by-eight(href=url("/quinielas/contestar/" + jornadaProxima.id + "/" + quiniela.id))= jornadaProxima.nombre + ">"
         br
         if !participacion_jornada.registrada && today.gt(jornada.fecha_inicio) && today.lt(jornada.fecha_fin)
             div.warning-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.

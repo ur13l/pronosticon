@@ -23,6 +23,7 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'auth.codigo.admin'], func
     Route::get('/', 'UsuarioController@index')->name('usuarios.index');
     Route::get('/buscar', 'UsuarioController@buscar');
     Route::get('/nuevo', 'UsuarioController@nuevo');
+    Route::post('/eliminar', 'UsuarioController@eliminar');
     Route::get('/autocomplete', 'UsuarioController@autocomplete');
 });
 

@@ -121,5 +121,24 @@ class UsuarioController extends Controller
 
         return response()->json($usuariosFormat);
     }   
+
+
+    /**
+     * Método para eliminar a un usuario.
+     */
+    public function eliminar(Request $request) {
+        $u = Usuario::find($request->id);
+        foreach($u->participacions as $participacion) {
+            foreach($participacion->participacionJornadas as $pj) {
+                foreach($pj->pronosticos as $pronostico) {
+                    $pronostico->delete();
+                }
+                $pj->delete();
+            }
+            $participacion->delete();
+        }
+        $u->delete();
+        return back();
+    }
    
 }
