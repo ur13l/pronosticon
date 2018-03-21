@@ -276,8 +276,8 @@ class QuinielaController extends Controller
                 ->orderBy('fecha_inicio')->first();
             return view('quinielas.contestar_regular', 
                 ['participacion_jornada'=> $participacionJornada, 
-                'liga' => $jornada->liga, '
-                participacion' => $participacion, 
+                'liga' => $jornada->liga, 
+                'participacion' => $participacion, 
                 'usuario' => $usuario, 
                 'quiniela' => $quiniela, 
                 'jornada' => $jornada, 
