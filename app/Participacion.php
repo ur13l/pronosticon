@@ -57,6 +57,11 @@ class Participacion extends Model
         return $this->hasMany('App\Pronostico', 'id_participacion');
     }
 
+
+    public function reponches() {
+        return $this->hasMany('App\Reponche', 'id_participacion');
+    }
+
     public function participacionJornadas() {
         return $this->hasMany('App\ParticipacionJornada', 'id_participacion');
     }

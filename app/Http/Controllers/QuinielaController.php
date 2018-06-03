@@ -92,6 +92,10 @@ class QuinielaController extends Controller
                 }
                 $pj->delete();
             }
+
+            foreach($participacion->reponches as $r) {
+                $r->delete();
+            }
             $participacion->delete();
         }
         foreach($quiniela->bolsas as $bolsa) {
