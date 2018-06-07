@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 /**
@@ -19,6 +21,7 @@ use Carbon\Carbon;
  */
 class Liga extends Model
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      * 
