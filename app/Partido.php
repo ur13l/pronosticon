@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * @property int $id
  * @property int $id_equipo_local
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Partido extends Model
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      * 
