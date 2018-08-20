@@ -1,10 +1,11 @@
 if participacion_jornada && today.gt(participacion_jornada.jornada.fecha_inicio)
     div.dragscroll
-        table.twelve.columns
+        table#example.twelve.columns
             thead
                 tr
                     th
-                    th.center(style="min-width: 100px") Jugador
+                    th.center( style='min-width: 100px')
+                        div(style="width:50px!Important;") Jugador
                     each partido in participacion_jornada.jornada.partidos
                         th.center(style="min-width: 100px")
                             img(src=  partido.equipoLocal.imagen height="50")
