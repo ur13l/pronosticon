@@ -2,7 +2,8 @@ extends /layouts/app
 
 block scripts
     script(src= url('/js/usuarios/detalle.js'))
-
+block styles
+    link(rel="stylesheet" href=url('/plugins/bootstrap/css/bootstrap.min.css'))
 block title
     if user != null
        title= user.nombre
@@ -43,7 +44,7 @@ block content
                         input.big-input.twelve.columns.center(readonly type="text" name="nombre" id="nombre" placeholder="Nombre" value= (user.nombre? user.nombre : old('nombre')))
             br
             br
-            div.row
+            div.row.oculto
                 div.six.columns.offset-by-three
                     each error in errors.all()
                     span.error #{error}
@@ -64,7 +65,7 @@ block content
 
             br
             div.row
-                div.six.columns.offset-by-three
+                div.six.columns.offset-by-three.table-responsive
                     label Avatar:
                     table#avatars
                     input#avatar(type="hidden" name='avatar')

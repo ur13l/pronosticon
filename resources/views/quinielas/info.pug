@@ -2,6 +2,13 @@ extends /layouts/app
 
 block scripts
     script(src= url('/js/quinielas/info.js'))
+    script(src= url('https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js'))
+    script(src= url('https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js'))
+    script(src= url('/plugins/bootstrap/js/bootstrap.min.js'))
+
+block styles
+    link(rel="stylesheet" href=url('https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css'))
+    link(rel="stylesheet" href=url('https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css'))
 
 block title
     title= quiniela.nombre
