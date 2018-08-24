@@ -1,22 +1,23 @@
 if participacion_jornada && today.gt(participacion_jornada.jornada.fecha_inicio)
     div.dragscroll
-        table.twelve.columns
+        table#example.twelve.columns
             thead
                 tr
-                    th
-                    th.center(style="min-width: 100px") Jugador
+                    th.center( style='min-width: 35px')
+                        div(style="width:0px!Important; font-size: 10pt") Jugador
                     each partido in participacion_jornada.jornada.partidos
-                        th.center(style="min-width: 100px")
-                            img(src=  partido.equipoLocal.imagen height="50")
+                        th.center(style="min-width: 70px")
+                            img(src=  partido.equipoLocal.imagen height="40")
                             span vs
-                            img(src= partido.equipoVisita.imagen height="50")
+                            img(src= partido.equipoVisita.imagen height="40")
             tbody
                 each participacion in quiniela.participacions
                     tr 
-                        td 
-                            img(src=participacion.usuario.avatar height="50")
-                        td.hideextra(style="overflow-x: hidden;")= participacion.usuario.nombre  
+                        td.hideextra(style="overflow-x: hidden;")
+                            img(src=participacion.usuario.avatar height="40" width="35") 
+                            p(style="font-size: 10pt")=participacion.usuario.nombre
                         - x = false;
+
                         each partido in participacion_jornada.jornada.partidos
                             
                             each part in participacion_jornada.jornada.participacionesJornada

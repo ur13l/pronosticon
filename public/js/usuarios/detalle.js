@@ -36,7 +36,7 @@ $(function() {
         }
     });
 
-    $.ajax({
+   $.ajax({
         method: "GET",
         headers: {
             'Authorization': 'Client-ID 6b46d712c33128a'
@@ -51,20 +51,21 @@ $(function() {
                     $("#avatars").append(tr);
                 }
                 tr.append(
-                    `   <td><div  class="selectable" style="height:60px; width:60px; display:inline;">
-                            <img height="50" src= "${data.data[i].link}" >
+                    `   <td><div  class="selectable" style="height:60px; width:60px; display:inline; text-align: center;">
+                            <img height="50" width="50" src= "${data.data[i].link}" >
                         </div></td>
                     `
                 )
             }
         }
     });
-
-    $(document).on('click', '.selectable', function() {
+  $(document).on('click', '.selectable', function() {
         var imagen = $(this).find('img').attr('src');
         $(".selectable *").css('background', 'white');
         $(this).find("img").css('background', '#ff8000');
         $("#img_avatar").attr('src', imagen);
+        $("#img_avatar").css('width', 300);
+        $("#img_avatar").css('height', 300);
         $("#avatar").val(imagen);
     });
 
