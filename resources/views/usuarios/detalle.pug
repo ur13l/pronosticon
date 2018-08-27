@@ -42,7 +42,7 @@ block content
                         input.big-input.twelve.columns.center(readonly type="text" name="nombre" id="nombre" placeholder="Nombre" value= (user.nombre? user.nombre : old('nombre')))
             br
             br
-            div.row
+            div.row.oculto
                 div.six.columns.offset-by-three
                     each error in errors.all()
                     span.error #{error}
