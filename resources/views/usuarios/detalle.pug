@@ -2,7 +2,6 @@ extends /layouts/app
 
 block scripts
     script(src= url('/js/usuarios/detalle.js'))
-
 block title
     if user != null
        title= user.nombre
@@ -34,7 +33,7 @@ block content
             div.row
                 div.six.columns.offset-by-three.center
                     if user.avatar
-                        img#img_avatar(src=  (user.avatar? user.avatar : old('avatar')) )
+                        img#img_avatar(src=  (user.avatar? user.avatar : old('avatar') )  height="300" width="300")
                     else
                         img#img_avatar
                     if usuario.admin
@@ -47,12 +46,13 @@ block content
                 div.six.columns.offset-by-three
                     each error in errors.all()
                     span.error #{error}
-                    label(for="email") Email:
 
                     if usuario.admin
+                        label(for="email") Email:
                         input.twelve.columns.center(type="email" name="email" id="email" placeholder="user@example.com" value= (user.email? user.email : old('email')))
                     else
-                        input.twelve.columns.center(readonly type="email" name="email" id="email" placeholder="user@example.com" value= (user.email? user.email : old('email')))
+                        label.oculto(for="email") Email:
+                        input.twelve.columns.center.oculto(readonly type="email" name="email" id="email" placeholder="user@example.com" value= (user.email? user.email : old('email')))
             br
             div.row
                 div.six.columns.offset-by-three
@@ -64,7 +64,7 @@ block content
 
             br
             div.row
-                div.six.columns.offset-by-three
+                div.six.columns.offset-by-three.table-responsive
                     label Avatar:
                     table#avatars
                     input#avatar(type="hidden" name='avatar')
