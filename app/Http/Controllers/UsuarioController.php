@@ -74,6 +74,7 @@ class UsuarioController extends Controller
                 "codigo" => "required|unique:usuario",
                 'avatar' => 'required'
             ];
+            
             $request->validate($rules);
             $usuario = new Usuario();
         }
@@ -88,7 +89,6 @@ class UsuarioController extends Controller
             $usuario->codigo = $request->codigo;
         }
         $usuario->avatar = $request->avatar;
-
         $usuario->save();
 
         return redirect()->route('usuarios.index');
