@@ -3,7 +3,7 @@ php:
 - 7.2
 branches:
   only:
-  - master
+  - prod
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
@@ -20,7 +20,7 @@ before_script:
 - gcloud auth activate-service-account --key-file client-secret.json
 stages:
 - name: prod
-  if: branch = master
+  if: branch = prod
 jobs:
   include:
   - stage: prod
