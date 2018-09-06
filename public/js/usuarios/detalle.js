@@ -9,10 +9,6 @@ $(function() {
             nombre: {
                 required: true
             },
-            email: {
-                required: true,
-                email: true
-            },
             codigo: {
                 required: true,
                 maxlength: 10,

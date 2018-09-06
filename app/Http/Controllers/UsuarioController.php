@@ -83,7 +83,6 @@ class UsuarioController extends Controller
         
         if($u->admin) {
             $usuario->nombre = $request->nombre;
-            $usuario->email = $request->email;
             $usuario->codigo = $request->codigo;
         }
         $usuario->avatar = $request->avatar;
