@@ -1,6 +1,12 @@
 html
     head
         block title
+        script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-125313252-1')
+        script.
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-125313252-1');
 
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
@@ -19,6 +25,7 @@ html
         script(src="https://momentjs.com/downloads/moment-with-locales.js")
         script(src=url('/js/lib/chosen.jquery.js'))
         script(src=url('/js/lib/imageselect.jquery.js'))
+        
         block scripts
     body
         include /layouts/bar

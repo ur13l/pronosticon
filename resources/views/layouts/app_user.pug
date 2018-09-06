@@ -1,7 +1,12 @@
 html
     head
         block title
-
+        script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-125313252-1')
+        script.
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-125313252-1');
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
         link(href=(url('/css/libs/skeleton.css')) rel="stylesheet" type="text/css") 

@@ -61,7 +61,6 @@ class UsuarioController extends Controller
         if($usuario) {
             $rules = [
                 "nombre" => "required",
-                "email" => "required|email",
                 "codigo" => "required",
                 'avatar' => 'required'
             ];
@@ -70,7 +69,6 @@ class UsuarioController extends Controller
         else {
             $rules = [
                 "nombre" => "required",
-                "email" => "required|unique:usuario",
                 "codigo" => "required|unique:usuario",
                 'avatar' => 'required'
             ];
