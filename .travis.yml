@@ -21,6 +21,8 @@ before_script:
 stages:
 - name: prod
   if: branch = prod
+- name: develop
+  if: branch = develop
 jobs:
   include:
   - stage: prod
@@ -30,6 +32,14 @@ jobs:
     - gcloud compute ssh pronosticon_quinielas@pronosticon --zone us-east1-b -- '(sudo
       rm -rf /var/www/html/pronosticon || true) && mv /var/www/html/pronosticon-temp
       /var/www/html/pronosticon && cd /var/www/html/pronosticon && sudo chmod -R 777
+      . && composer install --no-interaction && php artisan migrate --no-interaction'
+  - stage: develop
+    script:
+    - gcloud compute scp --recurse . pronosticon_quinielas@pronosticon:/var/www/html/pronosticon-dev-temp
+      --zone us-east1-b
+    - gcloud compute ssh pronosticon_quinielas@pronosticon --zone us-east1-b -- '(sudo
+      rm -rf /var/www/html/pronosticon-dev || true) && mv /var/www/html/pronosticon-dev-temp
+      /var/www/html/pronosticon-dev && cd /var/www/html/pronosticon-dev && sudo chmod -R 777
       . && composer install --no-interaction && php artisan migrate --no-interaction'
 notifications: 
 email:
