@@ -16,6 +16,7 @@ before_script:
   | sudo apt-key add - ; sudo apt-get update && sudo apt-get install google-cloud-sdk;
   fi
 - tar -xzf credentials.tar.gz
+- mv .env.
 - ssh-keygen -q -N "" -f ~/.ssh/google_compute_engine
 - gcloud config set project 'trim-technique-215502'
 - gcloud auth activate-service-account --key-file client-secret.json
@@ -28,6 +29,7 @@ jobs:
   include:
   - stage: prod
     script:
+    - mv .env.prod .env
     - gcloud compute scp --recurse $TRAVIS_BUILD_DIR pronosticon_quinielas@pronosticon:/var/www/html/pronosticon-temp
       --zone us-east1-b
     - gcloud compute ssh pronosticon_quinielas@pronosticon --zone us-east1-b -- '
@@ -39,6 +41,7 @@ jobs:
       php artisan migrate --no-interaction'
   - stage: develop
     script:
+    - .env.develop .env
     - gcloud compute scp --recurse $TRAVIS_BUILD_DIR pronosticon_quinielas@pronosticon:/var/www/html/pronosticon-dev-temp
       --zone us-east1-b
     - gcloud compute ssh pronosticon_quinielas@pronosticon --zone us-east1-b -- '
@@ -53,5 +56,4 @@ email:
   on_failure: change
   on_success: change
 before_install:
-- openssl aes-256-cbc -K $encrypted_adea68ea33ee_key -iv $encrypted_adea68ea33ee_iv
-  -in credentials.tar.gz.enc -out credentials.tar.gz -d
+  - openssl aes-256-cbc -K $encrypted_adea68ea33ee_key -iv $encrypted_adea68ea33ee_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
