@@ -4,6 +4,7 @@ php:
 branches:
   only:
   - prod
+  - develop
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
