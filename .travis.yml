@@ -41,7 +41,7 @@ jobs:
       php artisan migrate --no-interaction'
   - stage: develop
     script:
-    - mv  .env.develop .env
+    - mv .env.develop .env
     - gcloud compute scp --recurse $TRAVIS_BUILD_DIR pronosticon_quinielas@pronosticon:/var/www/html/pronosticon-dev-temp
       --zone us-east1-b
     - gcloud compute ssh pronosticon_quinielas@pronosticon --zone us-east1-b -- '
