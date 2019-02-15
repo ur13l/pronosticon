@@ -16,7 +16,6 @@ before_script:
   | sudo apt-key add - ; sudo apt-get update && sudo apt-get install google-cloud-sdk;
   fi
 - tar -xzf credentials.tar.gz
-- mv .env.
 - ssh-keygen -q -N "" -f ~/.ssh/google_compute_engine
 - gcloud config set project 'trim-technique-215502'
 - gcloud auth activate-service-account --key-file client-secret.json
