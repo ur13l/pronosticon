@@ -3,7 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 /**
  * @property int $id
  * @property string $nombre
@@ -14,8 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  * @property Participacion[] $participacions
  */
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
+    use HasApiTokens, Notifiable;
+
     /**
      * The table associated with the model.
      * 
