@@ -76,7 +76,7 @@ class Quiniela extends Model
             ->orderBy('no_reponches');
     }
 
-    public function usuarioParticipa(Usuario $usuario) {
+    public function usuarioParticipa(User $usuario) {
         foreach($this->participacions as $participacion) {
             if ($usuario->id == $participacion->usuario->id) {
                 return true;

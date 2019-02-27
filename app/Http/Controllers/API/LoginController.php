@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Usuario;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -18,7 +18,7 @@ class LoginController extends Controller
      */
     public function login(Request $request) {
         $codigo = $request->codigo;
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         if($usuario) {
             $usuario->token_ = $usuario->createToken('Pronosticon')->accessToken;
             return new UserResource($usuario);

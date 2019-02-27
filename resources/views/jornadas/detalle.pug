@@ -42,7 +42,7 @@ block content
             br
             div.row
                 div.six.columns.offset-by-three
-                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value=(jornada.nombre? jornada.nombre : (old('nombre') ? old('nombre') : 'Jornada ' + (liga.jornadas.count() + 1))))
+                    input.big-input.twelve.columns.center(type="text" name="nombre" id="nombre" placeholder="Nombre" value=(jornada.nombre? jornada.nombre : (old('nombre') ? old('nombre') : 'Jornada ' + (liga.jornadas.count + 1))))
             br
             br
             div.row

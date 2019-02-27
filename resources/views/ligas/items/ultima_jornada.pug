@@ -2,7 +2,7 @@
 
 div.twelve.columns.white-background
     h4.ten.columns.offset-by-one Última Jornada
-    if count(quiniela.liga.ultimaJornada.partidos) == 0
+    if quiniela.liga.ultimaJornada.partidos.count == 0
         h6 No hay partidos registradas
     else
         if quiniela.tipoQuiniela.nombre != "Survivor" 

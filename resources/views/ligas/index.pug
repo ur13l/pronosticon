@@ -19,7 +19,7 @@ block content
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
             button.three.columns.offset-by-five.primary-btn(onclick="location.href='"+ url('/ligas/nuevo') +"'") Nueva liga
         div.lista 
-            if count(ligas) == 0 
+            if ligas.count == 0 
                 br
                 br
                 br

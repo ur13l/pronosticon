@@ -1,12 +1,12 @@
 
 - jornada = quiniela.liga.proximaJornada 
 - ppj = participacion.participacionProximaJornada
-if count(jornada.partidos) == 0 
+if jornada.partidos.count == 0 
     - jornada = quiniela.liga.jornadaActual
     - ppj = participacion.participacionJornadaActual
 div.twelve.columns.white-background
     h4.ten.columns.offset-by-one Próxima Jornada
-    if count(jornada.partidos) == 0
+    if jornada.partidos.count == 0
         h6.ten.columns.offset-by-one No hay partidos registrados
     else
         if quiniela.tipoQuiniela.nombre != "Survivor" 

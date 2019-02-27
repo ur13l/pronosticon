@@ -1,7 +1,7 @@
 div.twelve.columns.white-background
     h4.ten.columns.offset-by-one Jornada actual    
 
-    if count(quiniela.liga.jornadaActual.partidos) == 0
+    if quiniela.liga.jornadaActual.partidos.count == 0
         h6 No hay partidos registradas
     else
         if quiniela.tipoQuiniela.nombre != "Survivor" 

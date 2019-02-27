@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Usuario;
+use App\User;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -28,7 +28,7 @@ class LoginController extends Controller
      */
     public function signIn(Request $request) {
         $codigo = $request->codigo;
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         if($usuario) {
             $request->session()->put('codigo', $codigo);
             if($request->redirectTo) {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use App\Usuario;
+use App\User;
 
 class UsuarioController extends Controller
 {
@@ -15,9 +15,9 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function index(Request $request) {
-        $usuarios = Usuario::paginate(9);
+        $usuarios = User::paginate(9);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         return view('usuarios.index', ['usuarios' => $usuarios, 'usuario' => $usuario]);
     }
 
@@ -29,7 +29,7 @@ class UsuarioController extends Controller
      */
     public function buscar(Request $request){
         $q = $request->q;
-        $usuarios = Usuario::where('nombre', 'like', "%$q%")->paginate(9);      
+        $usuarios = User::where('nombre', 'like', "%$q%")->paginate(9);      
         return View::make('usuarios.lista', ['usuarios' => $usuarios])->render();      
       }
 
@@ -39,14 +39,14 @@ class UsuarioController extends Controller
     public function nuevo(Request $request) {
         $random = str_random(9);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         return view('usuarios.detalle', ['user' => null, 'random' => $random, 'usuario' => $usuario]);
     }
 
     public function editar(Request $request, $id) {
-        $user = Usuario::find($id);
+        $user = User::find($id);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         return view('usuarios.detalle', ['user' => $user, 'usuario'=> $usuario]);
     }
 
@@ -57,7 +57,7 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function createOrUpdate(Request $request) {
-        $usuario = Usuario::find($request->id);
+        $usuario = User::find($request->id);
         if($usuario) {
             $rules = [
                 "nombre" => "required",
@@ -74,12 +74,12 @@ class UsuarioController extends Controller
             ];
             
             $request->validate($rules);
-            $usuario = new Usuario();
+            $usuario = new User();
         }
 
 
         $codigo = $request->session()->get('codigo','');
-        $u = Usuario::where('codigo', $codigo)->first(); 
+        $u = User::where('codigo', $codigo)->first(); 
         
         if($u->admin) {
             $usuario->nombre = $request->nombre;
@@ -98,7 +98,7 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function autocomplete(Request $request) {
-        $usuarios = Usuario::where('usuario.nombre', 'like', '%' . $request->term . '%')
+        $usuarios = User::where('usuario.nombre', 'like', '%' . $request->term . '%')
         ->select(['usuario.nombre', 'usuario.id'])->get();
         $usuariosFormat = [];
         foreach ( $usuarios as $usuario ) {
@@ -124,7 +124,7 @@ class UsuarioController extends Controller
      * Método para eliminar a un usuario.
      */
     public function eliminar(Request $request) {
-        $u = Usuario::find($request->id);
+        $u = User::find($request->id);
         foreach($u->participacions as $participacion) {
             foreach($participacion->participacionJornadas as $pj) {
                 foreach($pj->pronosticos as $pronostico) {

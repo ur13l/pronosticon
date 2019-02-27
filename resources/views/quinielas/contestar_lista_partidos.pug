@@ -4,7 +4,7 @@ form#form_contestar(action= url("/quinielas/contestarquiniela") method="post")
     input(type="hidden" name="id_equipo_ganador_survivor") 
     input(type="hidden" name="id_partido_survivor") 
     input(type="hidden", name="id_participacion", value= participacion.id) 
-    if count(jornada.partidos) === 0 
+    if jornada.partidos.count === 0 
         h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
         div#table_partidos
     else

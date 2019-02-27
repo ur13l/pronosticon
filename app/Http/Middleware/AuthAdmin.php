@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Usuario;
+use App\User;
 
 class AuthAdmin
 {
@@ -17,7 +17,7 @@ class AuthAdmin
     public function handle($request, Closure $next)
     {
         $code = $request->session()->get('codigo','');
-        $user = Usuario::where('codigo', $code)->first();
+        $user = User::where('codigo', $code)->first();
         if (!$user || !$user->admin) {
             return redirect('/');
         }

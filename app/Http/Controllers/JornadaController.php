@@ -7,7 +7,7 @@ use App\Jornada;
 use Auth;
 use App\Equipo;
 use App\Resultado;
-use App\Usuario;
+use App\User;
 use App\Quiniela;
 use App\Liga;
 use App\Partido;
@@ -27,7 +27,7 @@ class JornadaController extends Controller
     public function nuevo(Request $request) {
         $liga = Liga::find($request->id_liga);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         return view('jornadas.detalle', ['jornada' => null, 'liga' => $liga, 'usuario' => $usuario]);
     }
 
@@ -41,7 +41,7 @@ class JornadaController extends Controller
         $jornada = Jornada::find($id);
         $liga = Liga::find($jornada->id_liga);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         return view('jornadas.detalle', ['jornada' => $jornada, 'liga' => $liga, 'usuario' => $usuario]);
     }
 
@@ -131,7 +131,7 @@ class JornadaController extends Controller
         $fechas = [];
         $from = Quiniela::find($request->from);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         
         for($date = $jornada->fecha_inicio; $date->lte($jornada->fecha_fin); $date->addDay()) {
             $fechas[] = $date->format('d/m/Y');
@@ -151,7 +151,7 @@ class JornadaController extends Controller
         $today = Carbon::now('America/Mexico_City');
         $from = Quiniela::find($request->from);
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         return view('jornadas.resultados', ["jornada" => $jornada, 'today' => $today, 'f' => $from, 'usuario' => $usuario]);
     }
 

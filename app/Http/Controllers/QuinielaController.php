@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Quiniela;
 use App\TipoQuiniela;
 use App\Bolsa;
-use App\Usuario;
+use App\User;
 use App\Jornada;
 use App\Pronostico;
 use App\Equipo;
@@ -31,7 +31,7 @@ class QuinielaController extends Controller
     */
    public function index(Request $request) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         $quinielas = Quiniela::paginate(9);
         return view('quinielas.index', ['quinielas' => $quinielas, 'usuario' => $usuario]);
    }
@@ -56,7 +56,7 @@ class QuinielaController extends Controller
     */
    public function nuevo(Request $request) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
        $ligas = Liga::all();
        $tipo_quiniela = TipoQuiniela::all();
        $today = Carbon::now('America/Mexico_City');
@@ -71,7 +71,7 @@ class QuinielaController extends Controller
     */
     public function editar(Request $request, $id) {  
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id);
         $today = Carbon::now('America/Mexico_City');
         return view('quinielas.editar', ['quiniela' => $quiniela, 'usuario' => $usuario, 'today' => $today]);
@@ -259,7 +259,7 @@ class QuinielaController extends Controller
     */
     public function contestar($id_jornada, $id_quiniela, Request $request) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         $quiniela = Quiniela::find($id_quiniela);
         $participacion = Participacion::where('id_usuario', $usuario->id)->where('id_quiniela', $quiniela->id)->first();
         if($quiniela->usuarioParticipa($usuario) && $participacion->activo) {
@@ -451,7 +451,7 @@ class QuinielaController extends Controller
      */
     public function info($id, Request $request) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         $quiniela = Quiniela::find($id);
         $participacion = Participacion::where('id_quiniela', $quiniela->id)->where('id_usuario', $usuario->id)->first();
         $posicion = $participacion->calcularPosicion();
@@ -532,7 +532,7 @@ class QuinielaController extends Controller
      */
     public function reglas(Request $request, $id_quiniela) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id_quiniela);
         return view('reglas.reglas', ['quiniela' => $quiniela, 'usuario' => $usuario]);
     }
@@ -545,7 +545,7 @@ class QuinielaController extends Controller
      */
     public function editarReglas(Request $request, $id_quiniela) {
         $codigo = $request->session()->get('codigo','');
-        $usuario = Usuario::where('codigo', $codigo)->first(); 
+        $usuario = User::where('codigo', $codigo)->first(); 
         $quiniela = Quiniela::find($id_quiniela);
         return view('quinielas.reglas', ['quiniela' => $quiniela, 'usuario' => $usuario]);
     }

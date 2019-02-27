@@ -16,7 +16,7 @@ use App\ParticipacionJornada;
  * @property string $created_at
  * @property string $updated_at
  * @property Quiniela $quiniela
- * @property Usuario $usuario
+ * @property User $usuario
  * @property Pronostico[] $pronosticos
  */
 class Participacion extends Model
@@ -46,7 +46,7 @@ class Participacion extends Model
      */
     public function usuario()
     {
-        return $this->belongsTo('App\Usuario', 'id_usuario');
+        return $this->belongsTo('App\User', 'id_usuario');
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Usuario;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index(Request $request) {
         $codigo = $request->session()->get('codigo', '');
-        $usuario = Usuario::where('codigo', $codigo)->first();
+        $usuario = User::where('codigo', $codigo)->first();
         if($usuario->admin) {
             return view('home.admin', ['usuario' => $usuario]);
         }

@@ -30,7 +30,7 @@ block content
         div.row
             div.four.columns.center 
                 h4 Equipos
-                if count(liga.equipos) == 0
+                if liga.equipos.count == 0
                     h6 No hay equipos registrados
                 else
                     table.ten.columns.offset-by-one
@@ -52,7 +52,7 @@ block content
             div.four.columns.center
                 div.row
                     h4 Próxima jornada
-                    if count(liga.proximaJornada.partidos) == 0
+                    if liga.proximaJornada.partidos.count == 0
                         h6 No hay jornadas registradas
                     else
                         table.ten.columns.offset-by-one
@@ -73,7 +73,7 @@ block content
                 br
                 div.row
                     h4 Última jornada
-                    if count(liga.ultimaJornada.partidos) == 0
+                    if liga.ultimaJornada.partidos.count == 0
                         h6 No hay jornadas registradas
                     else
                         table.ten.columns.offset-by-one
@@ -99,7 +99,7 @@ block content
                     div.space
             div.four.columns.center 
                 h4 Jornadas
-                if count(liga.jornadas) == 0
+                if liga.jornadas.count == 0
                     h6 No hay jornadas registradas
                 else
                     table.ten.columns.offset-by-one

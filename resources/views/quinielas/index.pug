@@ -20,7 +20,7 @@ block content
             input.four.columns#busqueda(type="search" name="busqueda" placeholder="Buscar...")
             button.three.columns.offset-by-five.primary-btn(onclick="location.href='"+ url('/quinielas/nuevo') +"'") Nueva quiniela
         div.lista 
-            if quinielas.count() == 0 
+            if quinielas.count == 0 
                 br
                 br
                 br

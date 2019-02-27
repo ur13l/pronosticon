@@ -2,7 +2,7 @@ div.ten.columns.offset-by-one.white-background.rounded-corners
     div
         h4.ten.columns.offset-by-one= participacion.quiniela.nombre + " - Posiciones"
     div.row
-        if count(participacion.quiniela.participacions) == 0
+        if participacion.quiniela.participacions.count == 0
             h6 No hay participantes registrados
         else
             table.ten.columns.offset-by-one

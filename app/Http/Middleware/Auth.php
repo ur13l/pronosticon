@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Usuario;
+use App\User;
 
 class Auth
 {
@@ -17,7 +17,7 @@ class Auth
     public function handle($request, Closure $next)
     {
         $codigo = $request->session()->get('codigo','');
-        $user = Usuario::where('codigo', $codigo)->first();
+        $user = User::where('codigo', $codigo)->first();
         if (!$user) {
             return redirect('/login?redirectTo='.$request->path());
         }

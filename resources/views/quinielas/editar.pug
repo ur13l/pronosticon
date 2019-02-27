@@ -70,7 +70,7 @@ block content
                 .space 
                 
                 h4 Participantes
-                if count(quiniela.participacions) == 0
+                if quiniela.participacions.count == 0
                     h6 No hay participantes registrados
                 else
                     if quiniela.tipoQuiniela.nombre != "Survivor"
@@ -117,7 +117,7 @@ block content
                                                 span N/J
                                         td.center
                                             if !p.activo
-                                                if p.no_reponches < p.quiniela.cantidad_reponches && count(quiniela.liga.jornadas) >= 1 && p.ultimoPronostico[1] != "ultimoPronostico"
+                                                if p.no_reponches < p.quiniela.cantidad_reponches && quiniela.liga.jornadas.count >= 1 && p.ultimoPronostico[1] != "ultimoPronostico"
                                                     a(href=url('/quinielas/reponche/'+p.id + '/' + quiniela.liga.ultimaJornada.id))
                                                         img.icon-button(src=url('/img/restore.png') style="padding:15px" height="18" alt="Reponche")
                                         td
@@ -143,7 +143,7 @@ block content
             div.six.columns.center
                 div.row
                     h4 Próxima jornada
-                    if count(quiniela.liga.proximaJornada.partidos) == 0
+                    if quiniela.liga.proximaJornada.partidos.count == 0
                         h6 No hay jornadas registradas
                     else
                         table.ten.columns.offset-by-one
@@ -164,7 +164,7 @@ block content
                 br
                 div.row
                     h4 Última jornada
-                    if count(quiniela.liga.ultimaJornada.partidos) == 0
+                    if quiniela.liga.ultimaJornada.partidos.count == 0
                         h6 No hay jornadas registradas
                     else
                         table.ten.columns.offset-by-one
@@ -189,7 +189,7 @@ block content
                             | Actualizar resultados
                 div.space 
             br
-        if count(quiniela.participacions) > 0 && count(quiniela.liga.jornadas) > 0
+        if quiniela.participacions.count > 0 && quiniela.liga.jornadas.count > 0
             div.row
                 if quiniela.tipoQuiniela.nombre != "Survivor"
                     .twelve.colums.white-background

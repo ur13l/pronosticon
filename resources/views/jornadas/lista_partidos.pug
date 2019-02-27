@@ -4,7 +4,7 @@ form#form_partidos(action= url("/jornadas/actualizar_equipos") method="post")
     input(type="hidden" name="_token" value= csrf_token()) 
     input(type="hidden" name="id_jornada" value= jornada.id) 
     input#id_partidos_eliminar(type="hidden" name="id_partidos_eliminar" value= "[]") 
-    if jornada.partidos().count() === 0 
+    if jornada.partidos.count === 0 
         h5.twelve.columns.center#empty_partidos No hay partidos registrados. 
         div#table_partidos
     else
