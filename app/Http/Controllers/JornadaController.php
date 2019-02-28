@@ -28,7 +28,7 @@ class JornadaController extends Controller
         $liga = Liga::find($request->id_liga);
         $codigo = $request->session()->get('codigo','');
         $usuario = User::where('codigo', $codigo)->first();
-        return view('jornadas.detalle', ['jornada' => null, 'liga' => $liga, 'usuario' => $usuario]);
+        return view('jornadas.detalle', ['jornada' => null, 'liga' => $liga, 'usuario' => $usuario, 'siguiente_jornada' => $liga->jornadas->count() + 1]);
     }
 
     /**

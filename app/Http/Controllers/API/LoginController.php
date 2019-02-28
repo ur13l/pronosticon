@@ -7,10 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\User;
 
+/**
+ * @group Auth
+ */
 class LoginController extends Controller
 {
     
     /**
+     * Login
      * Método post que procesa el logueo.
      *
      * @param Request $request

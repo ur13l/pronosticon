@@ -13,10 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('cors')->options('{any?}', function ($any = null) {
+    return response(['options' => true  ], 200);
+})->where('any', '.*');
+
 Route::group(['prefix' => 'auth', 'middleware' =>['cors']], function () {
     Route::post('login', 'API\LoginController@login');
 });
-
 
 Route::group(['prefix' => 'quinielas', 'middleware' =>['cors', 'auth:api']], function () {
     Route::get('/', 'API\QuinielaController@index');

@@ -10,9 +10,13 @@ use App\User;
 use App\Quiniela;
 use Auth;
 
+/**
+ * @group Quinielas
+ */
 class QuinielaController extends Controller
 {
     /**
+     * Index
      * Devuelve el index, ya sea vista de jugador o administrador.
      *
      * @param Request $request
@@ -25,6 +29,7 @@ class QuinielaController extends Controller
 
 
     /**
+     * Detalle Quiniela
      * Devuelve el detalle de una quiniela dando su ID como entrada.
      * 
      * @param int $id_quiniela
