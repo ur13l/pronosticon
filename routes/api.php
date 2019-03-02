@@ -21,6 +21,10 @@ Route::group(['prefix' => 'auth', 'middleware' =>['cors']], function () {
     Route::post('login', 'API\LoginController@login');
 });
 
+Route::group(['prefix' => 'usuarios', 'middleware' => ['cors', 'auth:api']], function() {
+    Route::get('perfil', 'API\UsuarioController@perfil');
+});
+
 Route::group(['prefix' => 'quinielas', 'middleware' =>['cors', 'auth:api']], function () {
     Route::get('/', 'API\QuinielaController@index');
     Route::get('/{id_quiniela}', 'API\QuinielaController@detalleQuiniela');

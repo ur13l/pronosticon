@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ParticipacionJornada;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $id
@@ -21,6 +22,7 @@ use App\ParticipacionJornada;
  */
 class Participacion extends Model
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      * 
