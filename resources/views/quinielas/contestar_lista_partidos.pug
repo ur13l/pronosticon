@@ -10,7 +10,7 @@ form#form_contestar(action= url("/quinielas/contestarquiniela") method="post")
     else
         div#table_partidos
             each partido, key in jornada.partidos   
-                if quiniela.permitir_marcador && quiniela.tipoQuiniela.nombre != "Survivor"
+                if (quiniela.permitir_marcador)&&(quiniela.tipoQuiniela.nombre != "Survivor")
                     if today.lt(partido.fecha_hora)
                         include /quinielas/items/partido_permitir_marcador
                     else if quiniela.tipoQuiniela.nombre != "Survivor" 

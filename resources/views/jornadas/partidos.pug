@@ -44,7 +44,7 @@ block content
                 b= jornada.fecha_fin.format("d/m/Y")
             a.two.columns.center(href=url('/jornadas/editar/' + jornada.id)) Editar datos de la jornada
         br
-        if today.gt(jornada.fecha_inicio) && today.lt(jornada.fecha_fin)
+        if (today.gt(jornada.fecha_inicio))&&(today.lt(jornada.fecha_fin))
             div.warning-block Esta jornada ya se está jugando, agregar o eliminar partidos podría afectar los resultados de los participantes ya capturados.
         else if today.gt(jornada.fecha_fin)
             div.warning-block Esta jornada ya se jugó, agregar o eliminar partidos podría alterar los resultados de los participantes.

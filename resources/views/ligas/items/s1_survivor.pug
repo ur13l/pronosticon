@@ -14,7 +14,7 @@ div.twelve.columns.white-background.rounded-corners
                         th 
                 tbody
                     each p, key in quiniela.participacionesSurvivor
-                        if key < 6 || participacion.id == p.id
+                        if (key < 6)||(participacion.id == p.id)
                             tr
                                 td.center.startd
                                     if p.activo

@@ -11,7 +11,7 @@ div.twelve.columns.white-background
                         th.center A
                         th Nombre
                         th.center 
-                        if usuario.admin == 1 && !p.activo
+                        if (usuario.admin == 1)&&(!p.activo)
                             th.center R
                 tbody
                     each p, key in quiniela.participacionesSurvivor
@@ -29,7 +29,7 @@ div.twelve.columns.white-background
                                     img(src= p.ultimoPronostico.equipoGanador.imagen height="50")
                                 else
                                     span N/J
-                            if usuario.admin == 1 && !p.activo 
+                            if (usuario.admin == 1)&&(!p.activo) 
                                 td.center
                                     if p.no_reponches < p.quiniela.cantidad_reponches
                                         form(action= url('/usuarios/reponche') method='post')

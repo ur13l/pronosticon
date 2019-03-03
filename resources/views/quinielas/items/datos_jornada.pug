@@ -26,8 +26,8 @@ if participacion_jornada && today.gt(participacion_jornada.jornada.fecha_inicio)
                                         if pronostico.id_partido == partido.id
                                             - x = true; 
                                             if quiniela.permitir_marcador
-                                                if pronostico.id_equipo_ganador == partido.resultado.id_equipo_ganador || (pronostico.id_equipo_ganador[1] == "id_equipo_ganador" && partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
-                                                    if pronostico.resultado_local == partido.resultado.resultado_local &&pronostico.resultado_visita == partido.resultado.resultado_visita
+                                                if (pronostico.id_equipo_ganador == partido.resultado.id_equipo_ganador)||(pronostico.id_equipo_ganador[1] == "id_equipo_ganador" && partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
+                                                    if (pronostico.resultado_local == partido.resultado.resultado_local)&&(pronostico.resultado_visita == partido.resultado.resultado_visita)
                                                         td.center.success-background= pronostico.resultado_local + "-" + pronostico.resultado_visita
                                                     else 
                                                         td.center.success-extra-text= pronostico.resultado_local + "-" + pronostico.resultado_visita
@@ -37,7 +37,7 @@ if participacion_jornada && today.gt(participacion_jornada.jornada.fecha_inicio)
                                                         td.center.grey-color-text= pronostico.resultado_local + "-" + pronostico.resultado_visita
                                                     else
                                                         td.center= pronostico.resultado_local + "-" + pronostico.resultado_visita
-                                            else if pronostico.id_equipo_ganador == partido.resultado.id_equipo_ganador ||  (pronostico.id_equipo_ganador[1] == "id_equipo_ganador" && partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
+                                            else if (pronostico.id_equipo_ganador == partido.resultado.id_equipo_ganador)||((pronostico.id_equipo_ganador[1] == "id_equipo_ganador")&&(partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador"))
                                                 td.center.success-background.center
                                                     if pronostico.id_equipo_ganador[1] != "id_equipo_ganador" 
                                                         img(src= pronostico.equipoGanador.imagen height="50")

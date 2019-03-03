@@ -23,13 +23,13 @@ block content
             if jornadaProxima
                 a.two.columns.offset-by-eight(href=url("/quinielas/contestar/" + jornadaProxima.id + "/" + quiniela.id))= jornadaProxima.nombre + ">"
         br
-        if !participacion_jornada.registrada && today.gt(jornada.fecha_inicio) && today.lt(jornada.fecha_fin)
+        if (!participacion_jornada.registrada)&&(today.gt(jornada.fecha_inicio))&&(today.lt(jornada.fecha_fin))
             div.warning-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
         br
         div#error_placement.error-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
         br
         div.row
-            if !participacion_jornada || !participacion_jornada.registrada || !participacion_jornada.participacion.activo
+            if (!participacion_jornada)||(!participacion_jornada.registrada)||(!participacion_jornada.participacion.activo)
                 if today.gt(jornada.fecha_fin)
                     h5.center Esta jornada ya terminó, prueba tu suerte enviando el pronóstico de la 
                         if jornada.liga.proximaJornada[1] != "proximaJornada"

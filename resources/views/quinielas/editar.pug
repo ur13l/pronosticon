@@ -117,7 +117,7 @@ block content
                                                 span N/J
                                         td.center
                                             if !p.activo
-                                                if p.no_reponches < p.quiniela.cantidad_reponches && quiniela.liga.jornadas.count >= 1 && p.ultimoPronostico[1] != "ultimoPronostico"
+                                                if (p.no_reponches < p.quiniela.cantidad_reponches)&&(quiniela.liga.jornadas.count >= 1)&&(p.ultimoPronostico[1] != "ultimoPronostico")
                                                     a(href=url('/quinielas/reponche/'+p.id + '/' + quiniela.liga.ultimaJornada.id))
                                                         img.icon-button(src=url('/img/restore.png') style="padding:15px" height="18" alt="Reponche")
                                         td
@@ -189,14 +189,14 @@ block content
                             | Actualizar resultados
                 div.space 
             br
-        if quiniela.participacions.count > 0 && quiniela.liga.jornadas.count > 0
+        if (quiniela.participacions.count > 0)&&(quiniela.liga.jornadas.count > 0)
             div.row
                 if quiniela.tipoQuiniela.nombre != "Survivor"
                     .twelve.colums.white-background
                         h4 Resultados por jornada
                         ul.menu
                             each jornada in quiniela.liga.jornadas
-                                if quiniela.liga.proximaJornada.id == jornada.id || quiniela.liga.jornadaActual.id == jornada.id 
+                                if (quiniela.liga.proximaJornada.id == jornada.id)||(quiniela.liga.jornadaActual.id == jornada.id)
                                     li.item-jornada.selected(data-id= jornada.id)
                                         a= jornada.nombre
                                 else 

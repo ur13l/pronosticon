@@ -19,10 +19,10 @@ div.dragscroll
                                 if part.id_participacion == participacion.id
                                     each pronostico in part.pronosticos
                                         - x = true;
-                                        if pronostico.resultado && (pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador || pronostico.partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador")
+                                        if (pronostico.resultado)&&((pronostico.partido.resultado.id_equipo_ganador == pronostico.id_equipo_ganador)||(pronostico.partido.resultado.id_equipo_ganador[1] == "id_equipo_ganador"))
                                             td.center.success-background
                                                 img(src= pronostico.equipoGanador.imagen height="50")
-                                        else if pronostico.partido.resultado[1] != "resultado" && pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador
+                                        else if (pronostico.partido.resultado[1] != "resultado")&&(pronostico.partido.resultado.id_equipo_ganador != pronostico.id_equipo_ganador)
                                             td.center.error-background
                                                 img(src= pronostico.equipoGanador.imagen height="50")
                                         else

@@ -84,7 +84,7 @@ block content
                     h4 Resultados por jornada
                     ul.menu
                         each jornada in quiniela.liga.jornadas
-                            if quiniela.liga.ultimaJornada.id == jornada.id || quiniela.liga.jornadaActual.id == jornada.id 
+                            if (quiniela.liga.ultimaJornada.id == jornada.id)||(quiniela.liga.jornadaActual.id == jornada.id) 
                                 li.item-jornada.selected(data-id= jornada.id)
                                     a= jornada.nombre
                             else 

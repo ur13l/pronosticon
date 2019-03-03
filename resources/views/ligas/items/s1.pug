@@ -13,7 +13,7 @@ div.ten.columns.offset-by-one.white-background.rounded-corners
                         th Pts.
                 tbody
                     each p, key in participacion.quiniela.participacions
-                        if key < 10 || participacion.id == p.id
+                        if (key < 10)||(participacion.id == p.id)
                             tr
                                 td= key + 1
                                 td= p.usuario.nombre
