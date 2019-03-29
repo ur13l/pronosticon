@@ -102,7 +102,7 @@ $(document).ready(function() {
     function table() {
 
         $('#example').DataTable({
-            scrollY:        "240px",
+            scrollY:        "640px",
             scrollX:        true,
             scrollCollapse: true,
             ordering: false,

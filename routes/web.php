@@ -46,6 +46,7 @@ Route::group(['prefix' => 'quinielas', 'middleware' => 'auth.codigo.admin'], fun
     Route::get('/reponche/{id_participacion}/{id_jornada}', 'QuinielaController@reponche');
     Route::get('/reglas/editar/{id_quiniela}', 'QuinielaController@editarReglas');
     Route::post('/actualizar', 'QuinielaController@actualizar');
+    Route::get('/contestar_admin/{id_jornada}/{id_quiniela}/{id_usuario}', 'QuinielaController@contestarAdmin');
 });
 
 Route::group(['prefix' => 'ligas', 'middleware' => 'auth.codigo.admin'], function() {

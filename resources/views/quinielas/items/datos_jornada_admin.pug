@@ -1,5 +1,5 @@
 
-div.dragscroll
+div
     table#example.twelve.columns
         thead
             tr
@@ -13,9 +13,13 @@ div.dragscroll
         tbody
             each participacion in quiniela.participacions
                 tr 
-                    td.hideextra(style="overflow-x: hidden;")
+                    td.hideextra(style="overflow-x: hidden;text-align:center;")
                         img(src=participacion.usuario.avatar height="40" width="35") 
-                        p(style="font-size: 10pt")=participacion.usuario.nombre
+                        p(style="font-size: 10pt; text-align:center;")
+                            span=participacion.usuario.nombre
+                            br
+                            span 
+                                a(href=url('/quinielas/contestar_admin/'+ jornada.id +"/"+ quiniela.id +"/" + participacion.usuario.id)) Editar resultados
                     - x = false;
                     each partido in jornada.partidos
                         each part in jornada.participacionesJornada

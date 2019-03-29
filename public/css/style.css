@@ -480,3 +480,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 .oculto{
     display: none;
 }
+
+.DTFC_ScrollWrapper, .DTFC_LeftBodyWrapper, .DTFC_LeftBodyLiner, .dataTables_scrollBody{
+    height: 640px !important;
+}

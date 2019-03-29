@@ -1,0 +1,37 @@
+extends /layouts/app
+
+block scripts
+    script(src=url('/js/utils/guid.js'))
+    script(src=url('/js/quinielas/contestar_regular.js'))
+
+block title
+    title= jornada.nombre + " - " + jornada.liga.nombre
+    
+block content
+    input(type="hidden" id="_id_jornada" name="_id_jornada" value=jornada.id)
+    input(type="hidden" id="tipo_quiniela" value= quiniela.tipoQuiniela.nombre)
+    input(type="hidden" id="permitir_marcador" value= quiniela.permitir_marcador)
+   
+    div.container.white-background
+        include /quinielas/banner
+        ul.breadcrumb
+            li 
+                a(href=url('/')) Inicio
+        div.row
+            if jornadaPrevia
+                a.two.columns(href=url("/quinielas/contestar/" + jornadaPrevia.id + "/" + quiniela.id))= "<" + jornadaPrevia.nombre
+            if jornadaProxima
+                a.two.columns.offset-by-eight(href=url("/quinielas/contestar/" + jornadaProxima.id + "/" + quiniela.id))= jornadaProxima.nombre + ">"
+        br
+        if (!participacion_jornada.registrada)&&(today.gt(jornada.fecha_inicio))&&(today.lt(jornada.fecha_fin))
+            div.warning-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
+        br
+        div#error_placement.error-block Esta jornada ya comenzó, es posible que ya no puedas contestar algunos partidos.
+        br
+        div.row
+            if quiniela.tipoQuiniela.nombre == "Survivor"
+                h5 Elige a un equipo de los participantes para contestar esta jornada. Suerte.
+            else if !quiniela.permitir_marcador
+                h5 Elige a tu equipo favorito de cada partido. Suerte.
+                h5 Introduce los marcadores de cada partido para ganar. Suerte.
+            include /quinielas/contestar_lista_partidos_admin

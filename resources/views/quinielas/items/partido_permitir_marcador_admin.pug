@@ -1,0 +1,23 @@
+input(type="hidden" name="id_partido[]" value= partido.id)
+div.partido_editar.partido_mod.row
+    .row
+        div.three.columns 
+            div.row.twelve.columns.center
+                img.resultado-height(src= partido.equipoLocal.imagen)
+            h6.row.twelve.columns.center= partido.equipoLocal.nombre
+        
+        each pron in participacion_jornada.pronosticos   
+            if pron.partido.id == partido.id
+                .two.columns
+                    .resultado-height        
+                        input.big-input.center.twelve.columns(type="text" name="resultado_local[" + key + "]" maxlength="2" value=pron.resultado_local)
+                .two.columns.center
+                    .resultado-height
+                        h1  vs
+                .two.columns
+                    .resultado-height
+                        input.big-input.center.twelve.columns(type="text" name="resultado_visita["+ key + "]" maxlength="2" value=pron.resultado_visita)
+        div.three.columns 
+            div.row.twelve.columns.center
+                img.resultado-height(src= partido.equipoVisita.imagen)
+            h6.row.twelve.columns.center= partido.equipoVisita.nombre

@@ -37,8 +37,6 @@
                 $("#resultados_jornada").html(data);
             }
         });
-
-
     });
     table();
 });
@@ -47,7 +45,7 @@
 function table() {
 
     $('#example').DataTable({
-        scrollY:        "280px",
+        scrollY:        "640px",
         scrollX:        true,
         scrollCollapse: true,
         ordering: false,

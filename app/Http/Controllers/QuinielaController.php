@@ -298,6 +298,46 @@ class QuinielaController extends Controller
         
    }
 
+   public function contestarAdmin($id_jornada, $id_quiniela, $id_usuario, Request $request) {
+    $usuario = User::find($id_usuario);
+    $quiniela = Quiniela::find($id_quiniela);
+    $participacion = Participacion::where('id_usuario', $usuario->id)->where('id_quiniela', $quiniela->id)->first();
+    if($quiniela->usuarioParticipa($usuario) && $participacion->activo) {
+        $jornada = Jornada::find($id_jornada);
+        $participacionJornada = ParticipacionJornada::where('id_jornada', $id_jornada)->where('id_participacion', $participacion->id)->first();
+        $today = Carbon::now('America/Mexico_City');
+        $equipos_elegidos = [];
+        if($quiniela->tipoQuiniela->nombre == "Survivor") {
+            foreach ($participacion->participacionJornadas as $pj) {
+                $equipos_elegidos[] = $pj->pronosticos->first()->equipoGanador;
+            }
+        }
+        $jornadaPrevia = Jornada::where('fecha_inicio', '<', $jornada->fecha_inicio)
+            ->where('id_liga', $jornada->id_liga)
+            ->orderBy('fecha_inicio', 'desc')->first();
+        $jornadaProxima = Jornada::where('fecha_inicio', '>', $jornada->fecha_inicio)
+            ->where('id_liga', $jornada->id_liga)
+            ->orderBy('fecha_inicio')->first();
+        return view('quinielas.contestar_regular_admin', 
+            ['participacion_jornada'=> $participacionJornada, 
+            'liga' => $jornada->liga, 
+            'participacion' => $participacion, 
+            'usuario' => $usuario, 
+            'quiniela' => $quiniela, 
+            'jornada' => $jornada, 
+            'today' => $today, 
+            'equipos_elegidos' => collect($equipos_elegidos),
+            'jornadaPrevia' => $jornadaPrevia,
+            'jornadaProxima' => $jornadaProxima
+            ]
+        );
+   }
+   else {
+        //TODO: Error cuando el usuario no participa en la quiniela.
+   }
+    
+   }
+
    /**
     * Método POST que recibe las respuestas de la quiniela y las guarda.
     *
@@ -308,10 +348,10 @@ class QuinielaController extends Controller
         //Se comprueba si la quiniela tiene resultados
         $id_participacion = $request->id_participacion;
         $id_jornada = $request->id_jornada;
+        $jornada = Jornada::find($id_jornada);
         $participacion = Participacion::find($id_participacion);
         $quiniela = $participacion->quiniela;
         $today = Carbon::now('America/Mexico_City');
-
 
         $equipos_elegidos = [];
         if($quiniela->tipoQuiniela->nombre == "Survivor") { 
@@ -340,7 +380,11 @@ class QuinielaController extends Controller
                 }
 
                 $data['id_participacion_jornada'] = $participacionJornada->id;
-                if(count($request->id_partido) < Jornada::find($id_jornada)->partidosPendientes()) {
+
+                $code = $request->session()->get('codigo','');
+                $a = User::where('codigo', $code)->first();
+                if((count($request->id_partido) < Jornada::find($id_jornada)->partidosPendientes())
+                    || !$a->admin) {
                     return back();
                 }
 
@@ -392,6 +436,9 @@ class QuinielaController extends Controller
                     }
                 }
                 $participacionJornada->registrada = true;
+                if($a->admin) {
+                    $jornada->calcularPuntuaciones();
+                }
                 $participacionJornada->save();
             }
             //SURVIVOR
@@ -432,8 +479,10 @@ class QuinielaController extends Controller
                     Pronostico::create($data);
                 }
 
-
                 $participacionJornada->registrada = true;
+                if($a->admin) {
+                    $jornada->calcularPuntuaciones();
+                }
                 $participacionJornada->save();
             }
 
