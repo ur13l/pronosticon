@@ -418,9 +418,6 @@ class QuinielaController extends Controller
                             }
                         }
                         
-                       
-
-
                         $pronostico = Pronostico::where('id_partido', $id_partido)
                             ->where('id_participacion', $id_participacion)->first();
                         //Si el usuario ya había contestado
@@ -436,10 +433,12 @@ class QuinielaController extends Controller
                     }
                 }
                 $participacionJornada->registrada = true;
+                
+                $participacionJornada->save();
                 if($a->admin) {
                     $jornada->calcularPuntuaciones();
+                   return redirect('/quinielas/editar/' . $quiniela->id);
                 }
-                $participacionJornada->save();
             }
             //SURVIVOR
             else {
@@ -485,7 +484,7 @@ class QuinielaController extends Controller
                 }
                 $participacionJornada->save();
             }
-
+        
         return redirect('/quinielas/info/' . $quiniela->id);
     }
 
